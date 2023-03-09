@@ -2,7 +2,7 @@
 
 ## Figma Design
 
-The Figma design can be accessed via thisThe Figma design can be accessed via this [Link](https://www.figma.com/file/7L6pEMRGbgdbh6JVgKV4No/Untitled?node-id=11%3A1059&t=3QqyBjJdF3QYhT2j-0)
+The Figma design can be accessed via this [Link](https://www.figma.com/file/7L6pEMRGbgdbh6JVgKV4No/Untitled?node-id=11%3A1059&t=3QqyBjJdF3QYhT2j-0)
 
 ## Setup
 
