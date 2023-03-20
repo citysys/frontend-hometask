@@ -20,7 +20,7 @@ const CityList: React.FC = () => {
         const data = await response.json();
         setCities(data.result.records);
       } catch (error) {
-        setError(error.message);
+        setError('');
       }
     }
 
