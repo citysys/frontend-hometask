@@ -1,87 +1,79 @@
-import React, { useState } from "react";
+import { Key, useEffect, useState } from "react";
 import "./signUp.scss";
-import { BiUser } from "react-icons/bi";
-import { AiFillLock } from "react-icons/ai";
 import { z } from "zod";
-import CityList from "../components/CityList";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "../components/Input/Input";
+
+const formSchema = z.object({
+  fullName: z.string().min(1, "שדה זה הוא חובה"),
+  id: z.string().min(9,"חייב להיות תעדות זהות תקנית").max(9,"חייב להיות תעדות זהות תקנית"),
+  dateOfBirth: z.date(),
+  phone: z.string().min(10,"מספר חייב להיות תיקני").max(14,"שזה זה הוא חובה").optional(),
+  email: z.string().min(1, "שדה האימייל הוא חובה").email("האיימיל לא תקין "),
+  city: z.string().min(1, "שדה זה הוא חובה"),
+  street: z.string().min(1, "שדה זה הוא חובה"),
+  homeNumber: z.string().min(1, "שדה זה הוא חובה"),
+});
+
+
+type FormValues = z.infer<typeof formSchema>;
+
+interface City {
+  [x: string]: Key | null | undefined;
+  שם_ישוב: string;
+  שם_רחוב: string;
+}
+
 
 const Signup: React.FC = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+  });
 
-  const [fullName, setFullName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-  const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
-  const [globalStatus, setGlobalStatus] = useState<string>("");
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    switch (name) {
-      case "fullName":
-        setFullName(value);
-        break;
-      case "lastName":
-        setLastName(value);
-        break;
-      case "email":
-        setEmail(value);
-        break;
-      case "password":
-        setPassword(value);
-        break;
-      case "confirmPassword":
-        setConfirmPassword(value);
-        break;
-      default:
-        break;
-    }
+  const onFormSubmit = (data: FormValues) => {
+    console.log(data);
   };
+  
 
-  const validateForm = (): boolean => {
-    const errors: Record<string, string> = {};
+  const [cityList, setCityList] = useState<City[]>([]);
+  const [streetList, setStreetList] = useState<City[]>([]);
 
-    if (!fullName.trim()) {
-      errors.fullName = "Full name is required";
-    }
+  useEffect(() => {
+    axios
+      .get(
+        "https://data.gov.il/api/3/action/datastore_search?resource_id=5c78e9fa-c2e2-4771-93ff-7f400a12f7ba&limit=100000"
+      )
+      .then((response) => {
+        setCityList(response.data.result.records);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
+  useEffect(() => {
+    axios
+      .get(
+        "https://data.gov.il/api/3/action/datastore_search?resource_id=9ad3862c-8391-4b2f-84a4-2d4c68625f4b&limit=1000"
+      )
+      .then((response) => {
+        setStreetList(response.data.result.records);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
-    if (!email.trim()) {
-      errors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      errors.email = "Email is invalid";
-    }
-
-    if (!password.trim()) {
-      errors.password = "Password is required";
-    } else if (password.trim().length < 6) {
-      errors.password = "Password must be at least 6 characters long";
-    }
-
-    if (!confirmPassword.trim()) {
-      errors.confirmPassword = "Confirm password is required";
-    } else if (confirmPassword !== password) {
-      errors.confirmPassword = "Passwords do not match";
-    }
-
-    setFormErrors(errors);
-
-    return Object.keys(errors).length === 0;
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (validateForm()) {
-      setGlobalStatus("Submitting form...");
-      // Here you can add your code to submit the form data to the server
-      setFormSubmitted(true);
-    }
-  };
 
   return (
-    <div className="container">
+    <form className="container" onSubmit={handleSubmit(onFormSubmit)}>
       <div className="top">
         <h1> הרשמה :</h1>
         <span className="span"> * שדות המסומנים בכוכב הם שדות חובה </span>
@@ -91,102 +83,128 @@ const Signup: React.FC = () => {
         <div className="line" />
       </div>
       <div className="form">
-        <div className="form-input">
-          <input type="fullName" placeholder="שם מלא" id="fullName" value={fullName}
-              onChange={handleInputChange} />
-          <label htmlFor="fullName"> * שם מלא </label>
-        </div>
-        <div className="form-input">
-          <input type="number" placeholder="שם מלא" id="id" />
-          <label htmlFor="id"> * ת'ז</label>
-        </div>
-        <div className="form-input">
-          <input type="date" placeholder="שם מלא" id="date" />
-          <label htmlFor="date"> * תאריך לידה</label>
-        </div>
+        <Input
+          id="fullName"
+          label="*שם מלא"
+          inputProps={register("fullName")}
+          error={errors?.fullName?.message as string}
+        />
+
+       
+        <Input
+          id="id"
+          label="*ת'ז "
+          type="number"
+          inputProps={register("id")}
+          error={errors?.id?.message}
+        />
+
+        {/* <div className="form-input">
+          <input
+            type="date"
+            placeholder="תאריך לידה*"
+            id="dateOfBirth"
+            {...register("dateOfBirth")}
+          />
+          <label htmlFor="dateOfBirth"> * תאריך לידה</label>
+        </div> */}
+
+          {/* <Input
+          id="dateOfBirth"
+          label="*תאריך לידה"
+          type="date"
+          inputProps={register("dateOfBirth")}
+          error={errors?.dateOfBirth?.message}
+        /> */}
+
       </div>
       <div className="bottom">
         <h4> פרטי תקשורת :</h4>
         <div className="line" />
       </div>
       <div className="form">
-        <div className="form-input">
-          <input type="number" placeholder="נייד" id="phone" />
-          <label htmlFor="phone"> * נייד</label>
-        </div>
-        <div className="form-input">
-          <input type="text" placeholder="שם מלא" id="email" />
-          <label htmlFor="email"> * מייל</label>
-        </div>
+        
+
+        <Input
+          id="phone"
+          label="*נייד  "
+          type="number"
+          inputProps={register("phone")}
+          error={errors?.phone?.message}
+        />
+        <Input
+          id="email"
+          label="*אימייל "
+          inputProps={register("email")}
+          error={errors?.email?.message}
+        />
       </div>
       <div className="bottom">
         <h4> כתובת :</h4>
         <div className="line" />
       </div>
+
       <div className="form">
         <div className="form-input">
-          <input type="text" placeholder="עיר" id="city" />
+          <input
+            list="cities"
+            placeholder="עיר"
+            id="city"
+            {...register("city")}
+          />
           <label htmlFor="city"> * עיר</label>
+          <datalist id="cities">
+            {cityList.map((city, index) => (
+              <option key={index} value={city.שם_ישוב} />
+            ))}
+          </datalist>
+          <p className="error-message">{errors?.city?.message}</p>
         </div>
-        <div className="form-input">
-          <input type="text" placeholder="שם מלא" id="street" />
-          <label htmlFor="street"> * רחוב</label>
-        </div>
+
         <div className="form-input">
           <input
-            style={{ width: "50%" }}
-            type="number"
-            placeholder="מספר בית"
-            id="homeNumber"
+            list="cities"
+            placeholder="רחוב"
+            id="street"
+            {...register("street")}
           />
-          <label htmlFor="homeNumber"> * מספר בית</label>
+          <label htmlFor="street"> * עיר</label>
+          <datalist id="street">
+            {streetList.map((street, index) => (
+              <option key={index} value={street.שם_רחוב} />
+            ))}
+          </datalist>
+          <p className="error-message">{errors?.street?.message}</p>
         </div>
+
+        <Input
+          id="homeNumber"
+          label="*מספר בית"
+          type="number"
+          inputProps={register("homeNumber")}
+          error={errors?.homeNumber?.message}
+        />
+
       </div>
       <div className="mui-container-fluid">
-        <form>
+        <div>
           <div className="mui-checkbox">
             <input id="sed" type="checkbox" value="" />
             <label htmlFor="sed">אני מסכים לקבל דיוור במסרון ובמייל</label>
           </div>
-        </form>
+        </div>
       </div>
 
       <div className="mui-container-fluid">
-        <form>
+        <div>
           <div className="mui-checkbox">
             <input id="sed" type="checkbox" value="" />
             <label htmlFor="sed">אני מסכים לתנאי השירות </label>
           </div>
-        </form>
+        </div>
       </div>
-      <button className="btn">שליחה</button>
-    </div>
-
-    // <div className="container">
-    //   <div className="form">
-    //     <div className="header">
-    //     <div className="register"><p>:הרשמה</p></div>
-    //     <div className="small"><p> שדות המסומנים בכוכב הם שדות חובה*</p>
-    //     </div>
-    //     </div>
-    //     <small> פרטים אישיים</small>
-    //     <div className="stripe" />
-    //     <div className="inputBox">
-    //       <input type="text" />
-    //       <span>שם מלא</span>
-    //     </div>
-    //     <div className="inputBox">
-    //       <input type="text" />
-    //       <span>ת"ז</span>
-    //     </div>
-    //     <div className="inputBox">
-    //       <input className="date" type="date" />
-    //       <span>תאריך לידה</span>
-    //     </div>
-    //     <button className="btn">שלח</button>
-    //   </div>
-    //   <div className="stripe" />
-    // </div>
+      <button type="submit" className="btn">שליחה</button>
+    </form>
   );
 };
 
