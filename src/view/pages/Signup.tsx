@@ -89,8 +89,6 @@ const Signup: React.FC = () => {
           inputProps={register("fullName")}
           error={errors?.fullName?.message as string}
         />
-
-       
         <Input
           id="id"
           label="*ת'ז "
@@ -109,13 +107,13 @@ const Signup: React.FC = () => {
           <label htmlFor="dateOfBirth"> * תאריך לידה</label>
         </div> */}
 
-          {/* <Input
+          <Input
           id="dateOfBirth"
           label="*תאריך לידה"
           type="date"
           inputProps={register("dateOfBirth")}
           error={errors?.dateOfBirth?.message}
-        /> */}
+        />
 
       </div>
       <div className="bottom">
