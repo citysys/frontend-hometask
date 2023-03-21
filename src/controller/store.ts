@@ -1,5 +1,3 @@
-import { userSlice } from "./entities/user.slice";
-import { UserSlice } from "./entities/user.types";
 import create, { State, SetState } from 'zustand';
 
 type FormState = {
