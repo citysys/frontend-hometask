@@ -44,6 +44,7 @@ const Signup: React.FC = () => {
     handleReset();
   };
   }
+  
   const handleReset = () => {
     // Reset the form using the reset function from react-hook-form
     // This will clear all form fields and errors
