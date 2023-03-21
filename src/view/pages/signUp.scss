@@ -3,10 +3,8 @@ $background-image: url('/9ebb30957657304c5daed62720b81b64.jpg');
 .App {
     background-image: $background-image;
     background-size: cover;
-    height: 100vh;
     opacity: 70%;
-    padding:100px;
-
+    padding:80px;
 }
 
 .container {
@@ -14,22 +12,22 @@ $background-image: url('/9ebb30957657304c5daed62720b81b64.jpg');
     border: 1px solid rgba(255, 255, 255, 0.7);
     box-shadow: rgba(255, 255, 255, 0.7);
     background: rgba(255, 255, 255, 0.7);
-    margin-left: auto;
-    margin-right: auto;
-    height: 80%;
+    height: 70%;
     display: flex;
-    width: 80%;
+    width: 100%;
     margin-inline: auto;
     display: flex;
     flex-direction: column;
     direction: rtl;
 }
-
+#homeNumber{
+  width: 50%;
+}
 .top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding:20px;
+    padding:10px;
     
 }
 .span{
@@ -41,7 +39,7 @@ $background-image: url('/9ebb30957657304c5daed62720b81b64.jpg');
     display: flex;
     align-items: center;
     gap: 20px;
-    padding:20px;  
+    padding-right:20px;  
 }
 
 .line {
@@ -52,6 +50,8 @@ $background-image: url('/9ebb30957657304c5daed62720b81b64.jpg');
 .form{
     display: flex;
     gap:10px;
+    padding:10px;
+
     
 }
 .form-input {
@@ -143,6 +143,7 @@ $background-image: url('/9ebb30957657304c5daed62720b81b64.jpg');
     border-radius: 2px;
     cursor: pointer;
     transition: all 400ms;
+    
   }
   
   
@@ -201,6 +202,11 @@ $background-image: url('/9ebb30957657304c5daed62720b81b64.jpg');
  .error-message{
   color:red;
  }
+.mui-checkbox{
+  gap:10px;
+  padding:5px;
+}
+
 
  @media screen and (max-width: 768px) {
   .App {
@@ -240,7 +246,13 @@ $background-image: url('/9ebb30957657304c5daed62720b81b64.jpg');
 }
 .btn{
   width:157px;
-  height:43px ;
+  height:43px;
+  align-items: center;
+  justify-content: center;
+  
+}
+.bottom{
+  width:100%;
 }
 
 }

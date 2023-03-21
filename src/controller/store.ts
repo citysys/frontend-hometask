@@ -1,9 +1,21 @@
-import { create } from "zustand";
 import { userSlice } from "./entities/user.slice";
 import { UserSlice } from "./entities/user.types";
+import create, { State, SetState } from 'zustand';
 
-type Store = UserSlice;
+type FormState = {
+  isFormValid: boolean;
+};
 
-export const useStore = create<Store>((...slices) => ({
-  ...userSlice(...slices),
+type FormActions = {
+  setFormValid: (isValid: boolean) => void;
+};
+
+type UseFormStore = FormState & FormActions;
+
+//  we're using useStore instead of useFormStore to access the setFormValid action from the Zustand store.
+// We've also moved the validateForm function into a separate file for organization and reusability.
+
+export const useStore = create<UseFormStore>((set: SetState<UseFormStore>) => ({
+  isFormValid: false,
+  setFormValid: (isValid: boolean) => set({ isFormValid: isValid }),
 }));

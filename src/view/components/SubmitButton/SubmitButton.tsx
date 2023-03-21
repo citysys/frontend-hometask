@@ -5,8 +5,8 @@ export interface SubmitButtonProps {
   className: string;
 }
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({ className }) => {
-  return <button type="submit" className={className}></button>;
+const SubmitButton: React.FC<SubmitButtonProps> = () => {
+  return <button type="submit" className="btn">שליחה</button>;
 };
 
 export default SubmitButton;

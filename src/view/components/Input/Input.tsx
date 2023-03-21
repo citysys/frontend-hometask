@@ -17,7 +17,7 @@ interface TextFieldProps {
     required?: boolean;
     disabled?: boolean;
   };
-  type?:  'string' | 'phone-number' | 'number' | 'date';
+  type?:  'string' | 'phone-number' | 'number' | 'dateTime' | 'date';
   placeholder?:string;
 }
 
