@@ -22,7 +22,8 @@ const Signup: React.FC = () => {
 
   const [cityList, setCityList] = useState<City[]>([]);
   const [streetList, setStreetList] = useState<Street[]>([]);
-  
+  const [cities, setCities] = useState<City[]>([]);
+
   const {
     register,
     handleSubmit,
@@ -58,20 +59,6 @@ const Signup: React.FC = () => {
         ) 
              .then((response) => {
         setCityList(response.data.result.records);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get(
-        "https://data.gov.il/api/3/action/datastore_search?resource_id=9ad3862c-8391-4b2f-84a4-2d4c68625f4b&limit=10000"
-        ) 
-             .then((response) => {
-            setStreetList(response.data.result.records);
-                        
       })
       .catch((error) => {
         console.error(error);
@@ -159,7 +146,7 @@ const Signup: React.FC = () => {
 
         <div className="form-input">
           <input
-            list="street"
+            list="cities"
             placeholder="רחוב"
             id="street"
             {...register("street")}
@@ -203,3 +190,7 @@ const Signup: React.FC = () => {
 };
 
 export default Signup;
+function setValue(arg0: string, arg1: string) {
+  throw new Error("Function not implemented.");
+}
+

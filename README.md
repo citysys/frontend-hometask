@@ -1,38 +1,27 @@
-# Front End Home Task
+### Sign up
+I developed a registration system with React-form-hook and Zod libraries
+In order to perform verifications on the form,
+As soon as the user fills out the form and forgets or misses to fill in one of the fields, an error note will appear below the field that he has not filled in yet.
+In addition, when the user has filled out the form, the form is validated,
+If the validation is successful, the form will go into the Zustand state
+and the form will reset.
+technologically -
+Initially the form is set to isFormValid: false
+This means that the form has not been validated
+After the user has filled out the form and the validation has passed successfully, the console will see isFormValid become true
+And it indicates that the authentication was successful and moved to the Zustand state
+The identification field has been validated so that if the user has entered an ID that is not according to the Israeli standard, the field will display an appropriate error.
+The list of cities was taken from:
+             "https://data.gov.il/api/3/action/datastore_search?resource_id=5c78e9fa-c2e2-4771-93ff-7f400a12f7ba&limit=100000"
+The design is taken from a Figma customer requirement
+The site supports computer resolution and mobile resolution
+Link to the live website:
+https://signupohad.netlify.app/
 
-## Figma Design
 
-The Figma design can be accessed via this [Link](https://www.figma.com/file/7L6pEMRGbgdbh6JVgKV4No/Untitled?node-id=11%3A1059&t=3QqyBjJdF3QYhT2j-0)
+<img width="203" alt="catgoryPage1" src="/public/1.png"/>
+<br>
+<img width="203" alt="catgoryPage1" src="/public/2.png"/>
+<br>
 
-## Setup
-
-To get started with the project, please follow these steps:
-
-- Fork the repository to your Github account
-- Run the command `npm i` in your terminal
-- Run the command `npm run dev` to start the development server
-
-## Requirements
-
-**Technical Requirements**
-
-- Use TypeScript & SCSS
-- For form validation, use react-hook-form + zod
-- Follow the initial file structure provided
-- Write readable code
-- Create reusable components that are scalable for other services
-- Show errors to the user in a user-friendly way (e.g. a red border around the field) and in Hebrew.
-- When user is hitting submit, the form should be validated and if there are no errors, the form should be submitted to a global state (Zustand)
-
-**Features:**
-To complete this project, the form must include the following features:
-
-- Validate the user's ID according to the Israeli identification standard
-- Use the gov.il site to populate the 'city' and 'street' fields. The street is dependent on the chosen city of the gov.il code.
-- The user cannot insert a value that is not in the array that has come from the API (for 'street' & city)
-
-## Submission
-
-After completing the project, please submit it by creating a pull request to our repository.
-
-Thank you and good luck!
+<img width="203" alt="catgoryPage1" src="/public/3.png"/>

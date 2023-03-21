@@ -15,7 +15,7 @@ export const NewUserSchema = z.object({
     fullName: z.string().min(1, "שדה זה הוא חובה"),
     id:IsraeliIdNumberSchema,
     dateOfBirth:birthdayValid,
-    phone: z.string().min(10, "תעודת זהות חייב להיות תקינה"),
+    phone: z.string().min(10, "מספר פלאפון לא תקין"),
     email: z.string().min(1, "שדה האימייל הוא חובה").email("האיימיל לא תקין "),
     city: z.string().min(1, "שדה זה הוא חובה"),
     street: z.string().min(1, "שדה זה הוא חובה"),

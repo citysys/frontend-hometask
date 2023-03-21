@@ -10,7 +10,7 @@ function SomeOtherComponent() {
   }, [isFormValid]);
 // When the form is submitted with valid details, the isFormValid value in this component should be true, and you should see a console log with the message "isFormValid: true".
 
-  return <div>Some other component</div>;
+  return <div></div>;
 }
 
 export default SomeOtherComponent;
