@@ -191,13 +191,15 @@ $background-image: url('/9ebb30957657304c5daed62720b81b64.jpg');
   }
 
  .btn{
-    width: 462px;
+    width: 400px;
     height: 43px;
     align-items: center;
     justify-content: center;
     border-radius: 11.94px;
     background: rgba(80, 117, 134, 1);
     color:white;
+    margin-right: 80px;
+
  }
   
  .error-message{
@@ -223,11 +225,16 @@ $background-image: url('/9ebb30957657304c5daed62720b81b64.jpg');
     background-size: cover;
     height:100%;
     padding:20px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+
 }
 
   .container{
     width:100%;
     height: 100%;
+    padding-bottom: 120px;
+
     
   }
 
@@ -239,7 +246,7 @@ $background-image: url('/9ebb30957657304c5daed62720b81b64.jpg');
 
   .form{
     display: grid;
-    gap:20px;
+    gap:17px;
     
 }
 .top {
@@ -259,6 +266,7 @@ $background-image: url('/9ebb30957657304c5daed62720b81b64.jpg');
   height:43px;
   align-items: center;
   justify-content: center;
+  margin-right: 50px;
   
 }
 .bottom{
@@ -268,8 +276,8 @@ $background-image: url('/9ebb30957657304c5daed62720b81b64.jpg');
 .real_estate{
   height: 200px;
   width: 125px;
-  margin-bottom: -190px;
   left: 30px;
+  margin-bottom: -320px;
 }
 
 }
