@@ -1,11 +1,8 @@
-import create, { State, SetState } from 'zustand';
+import create, { SetState } from 'zustand';
+import { FormActions, UserSlice } from './entities/user.types';
 
 type FormState = {
   isFormValid: boolean;
-};
-
-type FormActions = {
-  setFormValid: (isValid: boolean) => void;
 };
 
 type UseFormStore = FormState & FormActions;

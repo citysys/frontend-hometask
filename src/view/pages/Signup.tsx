@@ -8,22 +8,34 @@ import { NewUser, NewUserSchema, validateForm } from "../../model";
 import { SubmitButton } from "../components/SubmitButton";
 import { useStore } from "../../controller";
 import SomeOtherComponent from "../components/Test";
+import { City } from "../components/api/city";
+import { useStreetList } from "../components/api/street";
 
 interface City {
   [x: string]: Key | null | undefined;
   שם_ישוב: string;
 }
+
 interface Street {
   [x: string]: Key | null | undefined;
   שם_רחוב: string;
 }
 
 const Signup: React.FC = () => {
-
+  const { setFormValid } = useStore();
   const [cityList, setCityList] = useState<City[]>([]);
-  const [streetList, setStreetList] = useState<Street[]>([]);
-  const [cities, setCities] = useState<City[]>([]);
+  const [selectedCity, setSelectedCity] = useState("");
 
+
+  const streetList = useStreetList();
+
+  useEffect(() => {
+    City().then((data) => {
+      setCityList(data);
+    });
+  }, []);
+
+  
   const {
     register,
     handleSubmit,
@@ -33,41 +45,25 @@ const Signup: React.FC = () => {
     resolver: zodResolver(NewUserSchema),
   });
 
-  const { setFormValid } = useStore();
-
   // I imported NewUser from model components
   const onFormSubmit = (data: NewUser) => {
     const isValid = validateForm(data);
     if (isValid) {
       setFormValid(true);
-    console.log(data);
-    handleReset();
+      console.log(data);
+      handleReset();
+    }
   };
-  }
-  
+
   const handleReset = () => {
     // Reset the form using the reset function from react-hook-form
     // This will clear all form fields and errors
     reset();
-  }
-
-
-  // API of all cities in Israel
-  useEffect(() => {
-    axios
-      .get(
-        "https://data.gov.il/api/3/action/datastore_search?resource_id=5c78e9fa-c2e2-4771-93ff-7f400a12f7ba&limit=100000"
-        ) 
-             .then((response) => {
-        setCityList(response.data.result.records);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+  };
 
   return (
-    <form className="container" onSubmit={handleSubmit(onFormSubmit)}>
+    <div className="container">
+    <form  onSubmit={handleSubmit(onFormSubmit)}>
       <div className="top">
         <h1> הרשמה :</h1>
         <span className="span"> * שדות המסומנים בכוכב הם שדות חובה </span>
@@ -121,6 +117,7 @@ const Signup: React.FC = () => {
           error={errors?.email?.message}
         />
       </div>
+
       <div className="bottom">
         <h4> כתובת :</h4>
         <div className="line" />
@@ -133,6 +130,14 @@ const Signup: React.FC = () => {
             placeholder="עיר"
             id="city"
             {...register("city")}
+            value={selectedCity}
+            onChange={(e) => {
+              const value = e.target.value;
+              const cityExists = cityList.some(city => city.שם_ישוב === value);
+              if (cityExists) {
+                setSelectedCity(value);
+              }
+            }}
 
           />
           <label htmlFor="city"> * עיר</label>
@@ -143,21 +148,20 @@ const Signup: React.FC = () => {
           </datalist>
           <p className="error-message">{errors?.city?.message}</p>
         </div>
-
-
         <div className="form-input">
           <input
-            list="cities"
+            list="streets"
             placeholder="רחוב"
             id="street"
             {...register("street")}
-            
           />
           <label htmlFor="street"> * רחוב</label>
-          <datalist id="street">
-            {streetList.map((street, index) => (
-              <option key={index} value={street.שם_רחוב} />
-            ))}
+          <datalist id="streets">
+            {streetList
+              .filter((street) => street.שם_רחוב === selectedCity)
+              .map((street, index) => (
+                <option key={index} value={street.שם_רחוב} />
+              ))}
           </datalist>
           <p className="error-message">{errors?.street?.message}</p>
         </div>
@@ -184,9 +188,11 @@ const Signup: React.FC = () => {
           </div>
         </div>
       </div>
-      <SomeOtherComponent/>
-      <SubmitButton className={"btn"}/>
+      <SomeOtherComponent />
+      <SubmitButton className="btn" />
+      <img src="/real-estate.png" alt="" className="real_estate" />
     </form>
+    </div>
   );
 };
 
@@ -194,4 +200,3 @@ export default Signup;
 function setValue(arg0: string, arg1: string) {
   throw new Error("Function not implemented.");
 }
-
