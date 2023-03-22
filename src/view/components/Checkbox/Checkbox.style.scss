@@ -1,0 +1,25 @@
+.checkbox-container {
+  display: flex;
+  padding-top: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.checkbox-container > input {
+  color: #4799be;
+  outline: none;
+  border: none;
+  height: fit-content;
+  accent-color: #ffffff;
+  cursor: pointer;
+}
+
+.checkbox-container > input:checked {
+  border: none;
+  outline: 1px solid #636161;
+  cursor: pointer;
+}
+
+.checkbox-form-label {
+  margin-right: 5px;
+}

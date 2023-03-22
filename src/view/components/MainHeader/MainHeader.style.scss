@@ -1,0 +1,41 @@
+.main-header {
+  width: 100%;
+  height: 60px;
+  align-items: center;
+  display: flex;
+  font-weight: 600;
+}
+
+.main-header-value {
+  color: #303030;
+  font-size: 33px;
+  width: 46%;
+}
+
+.mandatory-field-header {
+  color: #b73d3d;
+  font-style: bold;
+  font-size: 13px;
+  text-align: center;
+  width: 64%;
+  margin: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .main-header {
+    display: block;
+  }
+
+  .main-header-value {
+    font-size: 28px;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .mandatory-field-header {
+    text-align: right;
+    font-size: 12px;
+    margin: 0;
+    width: 100%;
+  }
+}

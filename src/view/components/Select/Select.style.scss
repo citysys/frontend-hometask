@@ -1,0 +1,23 @@
+.select-container {
+  width: 33.333%;
+}
+
+.select-container > select {
+  height: 100%;
+  width: 90%;
+  border-radius: 5.42px;
+  border: 1px solid #bfbfbf;
+  padding: 0 10px;
+}
+@media screen and (max-width: 768px) {
+  .select-container {
+    width: 100%;
+    height: 35px;
+    margin: 25px 0;
+  }
+
+  .select-container > select {
+    display: block;
+    width: 100%;
+  }
+}

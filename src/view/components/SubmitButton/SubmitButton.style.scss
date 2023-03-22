@@ -1,0 +1,25 @@
+.submit-button {
+  display: block;
+  margin: auto;
+  margin-top: 10px;
+  background-color: #507586;
+  color: #ffffff;
+  padding: 6px;
+  width: 300px;
+  max-width: 90%;
+  border-radius: 11.94px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .submit-button {
+    margin: 0;
+    margin-top: 10px;
+    width: 45%;
+    min-width: 80px;
+    padding: 8px;
+    font-size: 18px;
+  }
+}

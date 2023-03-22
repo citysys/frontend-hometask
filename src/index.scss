@@ -1,0 +1,19 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Overpass', sans-serif;
+  color: #636161;
+}
+
+body {
+  background-image: url('./assets/desktop-bg.png');
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    background-image: url('./assets/phone-bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}

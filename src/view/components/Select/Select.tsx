@@ -1,26 +1,28 @@
 import React from 'react';
-import './Input.style.scss';
+import './Select.style.scss';
 import { FormData } from '../../../model';
 import { UseFormRegister } from 'react-hook-form';
 
-export interface InputProps {
+export interface Select {
   className: string;
-  type: string;
   label: string;
   mandatory: boolean;
+  options: string[];
   registeredValue: string | any;
   register: UseFormRegister<FormData>;
   error: string | undefined;
+  onChange: any;
 }
 
-const Input: React.FC<InputProps> = ({
+const Select: React.FC<Select> = ({
   className,
-  type,
   label,
   mandatory,
+  options,
   registeredValue,
   register,
   error,
+  onChange,
 }) => {
   return (
     <div className={className}>
@@ -28,14 +30,20 @@ const Input: React.FC<InputProps> = ({
         {mandatory && <span>*</span>}
         {label}
       </label>
-      <input
-        type={type}
+      <select
         {...register(registeredValue)}
         className={error ? 'error-input' : ''}
-      />
+        onChange={onChange}
+      >
+        {options &&
+          options.map((val, i) => {
+            return <option key={i}>{val}</option>;
+          })}
+      </select>
+
       {error && <span className='error-msg'>{error}</span>}
     </div>
   );
 };
 
-export default Input;
+export default Select;
