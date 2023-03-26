@@ -1,17 +1,22 @@
-import React from "react";
-import "./Input.style.scss";
+import React from 'react'
 
-export interface InputProps {
-  className: string;
-  type: string;
+type InputProps = {
+	inputId: string
+	label: string
+	inputType: string
+	register: any
 }
 
-const Input: React.FC<InputProps> = ({ className, type }) => {
-  return (
-    <div className={className}>
-      <input type={type} />
-    </div>
-  );
-};
+const Input: React.FC<InputProps> = ({ inputId, label, inputType, register }: InputProps) => {
+	return (
+		<div className='input-wrapper'>
+			<label className='input-label'>
+				<span className='asterisk'>*</span>
+				{label}
+			</label>
+			<input type={inputType} id={inputId} required />
+		</div>
+	)
+}
 
-export default Input;
+export default Input

@@ -1,11 +1,11 @@
-import Signup from './view/pages/Signup'
+import Signup from "./view/pages/Signup";
 
 function App() {
-	return (
-		<div className='App'>
-			<Signup />
-		</div>
-	)
+  return (
+    <div className="App">
+      <Signup />
+    </div>
+  );
 }
 
-export default App
+export default App;

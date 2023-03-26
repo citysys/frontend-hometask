@@ -1,0 +1,28 @@
+.input-wrapper {
+    position: relative;
+    height: 100%;
+  }
+  
+  .input-label {
+    color: $main-input-text-color;
+    position: absolute;
+    top: -8px;
+    right: 8px;
+    background-color: white;
+    padding: 0 5px;
+    font-size: 17px;
+  }
+  
+  input {
+    border-radius: 5px;
+    border: 1px solid $main-border-color;
+    width: 285px;
+    height: 43px;
+    padding-top: 20px; /* adjust the top padding to make room for the label */
+  }
+  
+
+.asterisk{
+    color: $main-dark-red;
+    font-weight: 700;
+}
