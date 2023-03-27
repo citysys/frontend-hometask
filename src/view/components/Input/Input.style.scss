@@ -1,7 +1,6 @@
 .input-wrapper {
   position: relative;
   height: 100%;
-  // flex-grow: 1;
 }
 
 .input-label {
@@ -39,6 +38,15 @@ height: 20px;
 border-width: thin;
 }
 
+.user-error
+{
+  visibility: hidden;
+  font-size: 13px;
+  color: red;
+  &.visible{
+    visibility: visible;
+  }
+}
 .asterisk{
   color: $main-dark-red;
   font-weight: 700;

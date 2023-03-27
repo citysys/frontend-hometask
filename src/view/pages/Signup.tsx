@@ -1,43 +1,14 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Input } from '../components/Input'
 import { SubmitButton } from '../components/SubmitButton'
-import { NewUserSchema } from '../../model/NewUser.model'
-
-interface iFormInputs {
-    fullName: string
-    id: number
-    birthDate: string
-    phoneNumber: string
-    email: string
-    city: string
-    street: string
-    houseNumber: number
-}
-
-const user1 = {
-    fullName: 'John Doe',
-    id: 319153726,
-    birthDate: '1990-01-01',
-    phoneNumber: '05242517190',
-    email: 'johndoeexampl@e.com',
-    city: 'Tel Aviv',
-    street: 'Main Street',
-    houseNumber: 42,
-}
-
-// const result1 = NewUserSchema.safeParse(user1)
-// if (result1.success) {
-// 	alert('User 1: good')
-// } else {
-// 	result1.error.errors.map((error) => {
-// 		console.log(error.message)
-// 	})
-// }
+import { NewUserSchema, NewUser } from '../../model/NewUser.model'
 
 const Signup: React.FC = () => {
-    const { handleSubmit, register } = useForm<iFormInputs>()
-
+    const { handleSubmit, register } = useForm<NewUser>()
+    const [userAlert, setUserAlert] = useState(false)
+    const validInputsCountRef = useRef(0)
+    const validInputsListRef = useRef<string[]>([])
     const inputFields = [
         { inputId: 'fullName', label: 'שם מלא:', inputType: 'text', register },
         { inputId: 'id', label: 'ת.ז', inputType: 'number', register },
@@ -51,17 +22,28 @@ const Signup: React.FC = () => {
     const sectionTitles: string[] = ['פרטים אישיים:', 'פרטי התקשרות:', 'כתובת:']
     const groupedFields = [inputFields.slice(0, 3), inputFields.slice(3, 5), inputFields.slice(5)]
 
-    const formSubmitHanlder: SubmitHandler<iFormInputs> = (data: iFormInputs) => {
-        console.log(typeof data.id)
+    const formSubmitHanlder: SubmitHandler<NewUser> = (data: NewUser) => {
+        if (validInputsCountRef.current !== 8) {
+            setUserAlert(true)
+            console.log(validInputsCountRef)
+            return
+        }
         const newUser = NewUserSchema.safeParse(data)
         if (newUser.success) {
-            alert('User 1: good')
+            setUserAlert(false)
+            console.log(newUser)
         } else {
             newUser.error.errors.map((error) => {
                 console.log(error)
             })
         }
-        console.log(newUser)
+    }
+
+    function countValidInputs(inputId: string) {
+        if (validInputsListRef.current.includes(inputId)) return
+        validInputsListRef.current.push(inputId)
+        validInputsCountRef.current++
+        console.log(validInputsCountRef.current)
     }
 
     return (
@@ -85,20 +67,18 @@ const Signup: React.FC = () => {
                                             <Input
                                                 {...field}
                                                 key={field.inputId}
-                                                {...register(field.inputId as keyof iFormInputs, { required: true })}
+                                                countValidInputs={countValidInputs}
+                                                {...register(field.inputId as keyof NewUser)}
                                             />
-                                            {/* {errors[field.inputId as keyof iFormInputs] && (
-												<span className='error'>{errors[field.inputId as keyof iFormInputs]?.message}</span>
-											)} */}
                                         </React.Fragment>
                                     ))}
                                 </div>
                             </div>
                         ))}
                     </div>
-
                     <div className='btn-container'>
-                        <SubmitButton className={'submit-btn'} buttonText={'שלח'} />
+                        <SubmitButton className={`submit-btn`} buttonText={'שלח'} />
+                        {userAlert && <span>יש למלא את כל השדות כדי לבצע הרשמה</span>}
                     </div>
                 </div>
             </form>
