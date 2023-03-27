@@ -1,0 +1,19 @@
+:root {
+  // -----------------    colors palette    -------------------
+  --color-black: #000000;
+  --color-light-black: #303030;
+  --color-white: #ffffff;
+  --color-light-gray: #BFBFBF;
+  --color-dark-gray: #636161;
+  --color-red: #B73D3D;
+  --color-dirty-blue: #507586;
+  --color-dark-blue: #4799BE;
+}
+
+body {
+  background-image: url(./assests/backgroundImg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  font-family: sans-serif;
+}
