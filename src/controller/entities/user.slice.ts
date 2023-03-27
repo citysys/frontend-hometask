@@ -15,7 +15,9 @@ export const userSlice: StateCreator<UserSlice> = (set) => ({
     emailReceive: true,
     agree: false
   },
-  setUser(newUser: NewUser){
+
+  setUser: (newUser: NewUser)=>{
     set({user: newUser})
-  }
+  },
+  
 });

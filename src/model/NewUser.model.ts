@@ -14,7 +14,10 @@ const checkId = (id: string): boolean => {
 
 export const NewUserSchema = z.object({
     name: z.string().regex(/[א-ת][א-ת]+(\ [א-ת][א-ת]+)+/, { message: 'שם מלא הכולל שם פרטי ושם משפחה המכיל אותיות ורווחים בלבד' }),
-    id: z.string().regex(/^[0-9]{9}$/, { message: 'מספר תעודת זהות יכול להכיל 9 ספרות בלבד' }),
+    id: z.string().regex(/^[0-9]{9}$/, { message: 'מספר תעודת זהות יכול להכיל 9 ספרות בלבד' })
+                    .refine(checkId,{
+                        message: 'ישנה טעות במספר טעות הזהות'
+                    }),
     birthDate: z.date(),
     phone: z.string().regex(/^0\d{9}$/, { message: 'מספר טלפון נייד חייב להכיל 9 ספרות ולהתחיל בקידומת 0' }),
     email: z.string().email({ message: 'כתובת דואר אלקטרוני אינה תקינה' }),
@@ -24,9 +27,7 @@ export const NewUserSchema = z.object({
     emailReceive: z.boolean(),
     agree: z.boolean(),
 })
-.refine(data=> checkId(data.id),{
-    message: 'ישנה טעות במספר טעות הזהות'
-})
+
 .refine(data=> (/\d/).test(data.houseNumber), {message:'מספר בית חייב להכיל מספר'})
 
 export type NewUser = z.infer<typeof NewUserSchema>;

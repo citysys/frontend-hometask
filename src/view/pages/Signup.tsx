@@ -5,125 +5,125 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NewUser } from "../../model";
 import { useStore } from "../../controller";
+import { Fragment } from "react";
 
 const formInputs = [
   {
-    name: 'name',
     category: 'personal',
-    label: 'שם מלא',
-    type: 'text',
-    defaultValue: '',
-    require: true
-  },
-  {
-    name: 'id',
-    category: 'personal',
-    label: 'ת.ז',
-    type: 'text',
-    defaultValue: '',
-    require: true
-  },
-  {
-    name: 'birthDate',
-    category: 'personal',
-    label: 'תאריך לידה',
-    type: 'date',
-    defaultValue: '',
-    require: true
-  },
-  {
-    name: 'phone',
+    label: 'פרטים אישיים',
+    fields: [
+      {
+        name: 'name',
+        label: 'שם מלא',
+        type: 'text',
+        defaultValue: '',
+        require: true
+      },
+      {
+        name: 'id',
+        label: 'ת.ז',
+        type: 'text',
+        defaultValue: '',
+        require: true
+      },
+      {
+        name: 'birthDate',
+        label: 'תאריך לידה',
+        type: 'date',
+        defaultValue: '',
+        require: true
+      },
+    ],
+
+  }, {
     category: 'contact',
-    label: 'נייד',
-    type: 'phone',
-    defaultValue: '',
-    require: true
+    label: 'פרטי התקשרות',
+    fields: [
+      {
+        name: 'phone',
+        label: 'נייד',
+        type: 'phone',
+        defaultValue: '',
+        require: true
+      },
+      {
+        name: 'email',
+        label: 'מייל',
+        type: 'email',
+        defaultValue: '',
+        require: true
+      },
+    ]
   },
   {
-    name: 'email',
-    category: 'contact',
-    label: 'מייל',
-    type: 'email',
-    defaultValue: '',
-    require: true
-  },
-  {
-    name: 'city',
     category: 'address',
-    label: 'עיר',
-    type: 'data_list',
-    defaultValue: '',
-    require: true
+    label: 'כתובת',
+    fields: [
+      {
+        name: 'city',
+        label: 'עיר',
+        type: 'data_list',
+        defaultValue: '',
+        require: true
+      },
+      {
+        name: 'street',
+        label: 'רחוב',
+        type: 'data_list',
+        defaultValue: '',
+        require: true
+      },
+      {
+        name: 'houseNumber',
+        label: 'מספר בית',
+        type: 'text',
+        defaultValue: '',
+        require: true
+      },
+    ],
   },
   {
-    name: 'street',
-    category: 'address',
-    label: 'רחוב',
-    type: 'text',
-    defaultValue: '',
-    require: true
+    category: 'rest',
+    label: '',
+    fields: [
+      {
+        name: 'emailReceive',
+        label: 'אני מסכים לקבל דיוור במייל',
+        type: 'checkbox',
+        defaultValue: true,
+        require: false
+      },
+      {
+        name: 'agree',
+        label: 'אני מסכים לתנאי השירות',
+        type: 'checkbox',
+        defaultValue: false,
+        require: false
+      },
+    ]
   },
-  {
-    name: 'houseNumber',
-    category: 'address',
-    label: 'מספר בית',
-    type: 'text',
-    defaultValue: '',
-    require: true
-  },
-  {
-    name: 'emailReceive',
-    category: 'end',
-    label: 'אני מסכים לקבל דיוור במייל',
-    type: 'checkbox',
-    defaultValue: true,
-    require: false
-  },
-  {
-    name: 'agree',
-    category: 'end',
-    label: 'אני מסכים לתנאי השירות',
-    type: 'checkbox',
-    defaultValue: false,
-    require: false
-  },
+
 ]
 
-const INITIAL_USER: any = {}
-for (const input of formInputs) {
-  INITIAL_USER[input.name] = input.defaultValue
-}
+//create an object of the fields with default value
+const INITIAL_USER = formInputs.reduce((totalAcc: any, sectionValue: any) => {
+  return {
+    ...totalAcc, ...sectionValue.fields.reduce((sectionAcc: any, fieldValue: any) => {
+      return {
+        ...sectionAcc, [fieldValue.name]: fieldValue.defaultValue
+      }
+    }, {})
+  }
+}, {})
 
-const setUser = useStore(state => state.setUser)
 
 const Signup: React.FC = () => {
+  const setUser = useStore(state => state.setUser)
 
   const { register, control, handleSubmit, formState } = useForm({ defaultValues: INITIAL_USER })
 
   const { errors } = formState
 
-  const inputsByCategory = (category: string): JSX.Element[] => (
-    formInputs
-      .filter(input => input.category === category)
-      .map(input =>
-        <div key={input.name}>
-          <label>
-            <span className="strict">
-              {input.require ? '*' : ''}
-            </span>
-            {input.label}:
-          </label>
-          <Input
-            className={input.category}
-            type={input.type}
-            register={() => register(input.name)}
-          />
-          <div className="error">
-            <h6>{errors[input.name]?.message?.toString()}</h6>
-          </div>
-        </div>
-      )
-  )
 
   //TODO change the type of any
   const onSave = (formValues: any): void => {
@@ -136,24 +136,35 @@ const Signup: React.FC = () => {
       className="signup container"
       onSubmit={handleSubmit(onSave)}
     >
-      <h5>פרטים אישיים</h5>
-      <div className="section">
-        {inputsByCategory('personal')}
-      </div>
-
-      <h5>פרטי התקשרות</h5>
-      <div className="section">
-        {inputsByCategory('contact')}
-      </div>
-
-      <h5>כתובת</h5>
-      <div className="section">
-        {inputsByCategory('address')}
-      </div>
-
-      <div className="end">
-        {inputsByCategory('end')}
-      </div>
+      {
+        formInputs.map(section =>
+        (
+          <Fragment key={section.category}>
+            <h5>{section.label}</h5>
+            <div className="section">
+              {
+                section.fields.map(input =>
+                  <div key={input.name}>
+                    <label>
+                      <span className="strict">
+                        {input.require ? '*' : ''}
+                      </span>
+                      {input.label}:
+                    </label>
+                    <Input
+                      className={input.name}
+                      type={input.type}
+                      register={() => register(input.name)}
+                    />
+                    <div className="error">
+                      <h6>{errors[input.name]?.message?.toString()}</h6>
+                    </div>
+                  </div>
+                )
+              }
+            </div>
+          </Fragment>
+        ))}
 
       <div>
         <SubmitButton className="submit" />

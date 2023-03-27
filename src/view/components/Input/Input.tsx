@@ -1,4 +1,5 @@
 import React from "react";
+import DataList from "./DataList";
 import "./Input.style.scss";
 
 export interface InputProps {
@@ -11,6 +12,12 @@ const Input: React.FC<InputProps> = ({ className, type, register }) => {
   return (
     <div className={className}>
       <input type={type} {...register()}/>
+      {
+      type==='data_list' &&
+      (
+      <DataList />
+      )
+      }
     </div>
   );
 };

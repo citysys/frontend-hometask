@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import buildingPicture from './real-estate.svg'
 
 const api_url = "https://data.gov.il/api/3/action/datastore_search?resource_id=";
 const cities_resource = "d4901968-dad3-4845-a9b0-a57d027f11ab&limit=1500";
@@ -7,13 +6,13 @@ const streets_resource = "9ad3862c-8391-4b2f-84a4-2d4c68625f4b&q=";
 
 
 const Test: React.FC = () => {
-    let [cities, setCities] = useState(['Afula'])
+    let [cities, setCities] = useState([])
     let [streets, setStreets] = useState([])
-    const cityName = useRef({result:{fields:{שם_ישוב:''}}})
+    const cityName = useRef({ result: { fields: { שם_ישוב: '' } } })
 
     useEffect(() => {
         (async function getCities(): Promise<void> {
-            const israelCities = await fetch(api_url+cities_resource)
+            const israelCities = await fetch(api_url + cities_resource)
                 .then(res => res.json())
             setCities(israelCities.result.records)
         })()
@@ -30,7 +29,7 @@ const Test: React.FC = () => {
     return (
         <div>
             <div>
-                <img src={buildingPicture} alt="buildings" />
+                <img src={'images/real-estate.svg'} alt="buildings" />
             </div>
             <input ref={cityName} type="text" list="city" onChange={getStreets} />
             <datalist id="city">

@@ -6,19 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { TypeOf, z } from "zod";
 import { useState } from "react";
 
-const user = z.object({
-  name: z.string().regex(/[א-ת]+(\ [א-ת]+)+/, { message: 'שם מלא הכולל שם פרטי ושם משפחה המכיל אותיות ורווחים בלבד' }),
-  id: z.string().regex(/^[0-9]{9}$/, { message: 'מספר תעודת זהות יכול להכיל 9 ספרות בלבד' }),
-  birthDate: z.date(),
-  phone: z.string().regex(/^0\d{9}$/, { message: 'מספר טלפון נייד חייב להכיל 9 ספרות ולהתחיל בקידומת 0' }),
-  email: z.string().email({ message: 'כתובת דואר אלקטרוני אינה תקינה' }),
-  city: z.string().regex(/[א-ת]+/, { message: 'עיר אינה נמצאת ברשימת הערים' }),
-  street: z.string().regex(/[א-ת]+/, { message: 'עיר אינה נמצאת ברשימת הערים' }),
-  houseNumber: z.string(),
-  mailReceive: z.boolean().optional(),
-  agree: z.boolean(),
-});
-
 const INITIAL_USER = {
   name: '',
   id: '',
