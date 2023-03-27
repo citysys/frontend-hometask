@@ -7,7 +7,7 @@ export interface InputProps {
   register: ()=> any
 }
 
-const Input: React.FC<InputProps> = ({ className, type, register }) => {  
+const Input: React.FC<InputProps> = ({ className, type, register }) => {
   return (
     <div className={className}>
       <input type={type} {...register()}/>

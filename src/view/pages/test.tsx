@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from 'react'
-import svg from './real-estate.svg'
+import React, { useEffect, useRef, useState } from 'react'
+import buildingPicture from './real-estate.svg'
 
-// const api_url = "https://data.gov.il/api/3/action/datastore_search";
-// // Cities endpoint
-// const cities_resource_id = "5c78e9fa-c2e2-4771-93ff-7f400a12f7ba";
-// // Streets endpoint
-// const streets_resource_id = "a7296d1a-f8c9-4b70-96c2-6ebb4352f8e3";
+const api_url = "https://data.gov.il/api/3/action/datastore_search?resource_id=";
+const cities_resource = "d4901968-dad3-4845-a9b0-a57d027f11ab&limit=1500";
+const streets_resource = "9ad3862c-8391-4b2f-84a4-2d4c68625f4b&q=";
+
 
 const Test: React.FC = () => {
     let [cities, setCities] = useState(['Afula'])
     let [streets, setStreets] = useState([])
+    const cityName = useRef({result:{fields:{שם_ישוב:''}}})
 
     useEffect(() => {
         (async function getCities(): Promise<void> {
-            const israelCities = await fetch("https://data.gov.il/api/3/action/datastore_search?resource_id=d4901968-dad3-4845-a9b0-a57d027f11ab&limit=1500")
+            const israelCities = await fetch(api_url+cities_resource)
                 .then(res => res.json())
             setCities(israelCities.result.records)
         })()
     }, [])
 
     const getStreets = async (): Promise<void> => {
-        const streetsInCity = await fetch("https://data.gov.il/api/3/action/datastore_search/a7296d1a-f8c9-4b70-96c2-6ebb4352f8e3")
+        const streetsInCity = await fetch(`${api_url}${streets_resource}${cityName.current.result.fields['שם_ישוב']}`)
             .then(res => res.json())
         console.log(streetsInCity)
         setStreets(streetsInCity.result.records)
@@ -30,19 +30,19 @@ const Test: React.FC = () => {
     return (
         <div>
             <div>
-                <img src={svg} alt="buildings" />
+                <img src={buildingPicture} alt="buildings" />
             </div>
-            <input type="text" list="city" onChange={getStreets} />
+            <input ref={cityName} type="text" list="city" onChange={getStreets} />
             <datalist id="city">
                 <option value="">בחר יישוב</option>
                 {cities.map(city =>
-                    <option key={city['שם_ישוב']}>
+                    <option key={city['סמל_ישוב']}>
                         {city['שם_ישוב']}
                     </option>)}
             </datalist>
 
-            <input type="text" list="city" />
-            <datalist>
+            <input type="text" list="street" />
+            <datalist id='street'>
                 <option value="">בחר רחוב</option>
                 {streets.map(street =>
                     <option key={street['שם_רחוב']}>

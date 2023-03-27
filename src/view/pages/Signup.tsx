@@ -3,45 +3,132 @@ import { Input } from "../components/Input";
 import { SubmitButton } from "../components/SubmitButton";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod'
-import { TypeOf, z } from "zod";
-import { useState } from "react";
+import { NewUser } from "../../model";
+import { useStore } from "../../controller";
 
-const user = z.object({
-  name: z.string().regex(/[א-ת]+(\ [א-ת]+)+/, { message: 'שם מלא הכולל שם פרטי ושם משפחה המכיל אותיות ורווחים בלבד' }),
-  id: z.string().regex(/^[0-9]{9}$/, { message: 'מספר תעודת זהות יכול להכיל 9 ספרות בלבד' }),
-  birthDate: z.date(),
-  phone: z.string().regex(/^0\d{9}$/, { message: 'מספר טלפון נייד חייב להכיל 9 ספרות ולהתחיל בקידומת 0' }),
-  email: z.string().email({ message: 'כתובת דואר אלקטרוני אינה תקינה' }),
-  city: z.string().regex(/[א-ת]+/, { message: 'עיר אינה נמצאת ברשימת הערים' }),
-  street: z.string().regex(/[א-ת]+/, { message: 'עיר אינה נמצאת ברשימת הערים' }),
-  houseNumber: z.string(),
-  mailReceive: z.boolean().optional(),
-  agree: z.boolean(),
-});
+const formInputs = [
+  {
+    name: 'name',
+    category: 'personal',
+    label: 'שם מלא',
+    type: 'text',
+    defaultValue: '',
+    require: true
+  },
+  {
+    name: 'id',
+    category: 'personal',
+    label: 'ת.ז',
+    type: 'text',
+    defaultValue: '',
+    require: true
+  },
+  {
+    name: 'birthDate',
+    category: 'personal',
+    label: 'תאריך לידה',
+    type: 'date',
+    defaultValue: '',
+    require: true
+  },
+  {
+    name: 'phone',
+    category: 'contact',
+    label: 'נייד',
+    type: 'phone',
+    defaultValue: '',
+    require: true
+  },
+  {
+    name: 'email',
+    category: 'contact',
+    label: 'מייל',
+    type: 'email',
+    defaultValue: '',
+    require: true
+  },
+  {
+    name: 'city',
+    category: 'address',
+    label: 'עיר',
+    type: 'data_list',
+    defaultValue: '',
+    require: true
+  },
+  {
+    name: 'street',
+    category: 'address',
+    label: 'רחוב',
+    type: 'text',
+    defaultValue: '',
+    require: true
+  },
+  {
+    name: 'houseNumber',
+    category: 'address',
+    label: 'מספר בית',
+    type: 'text',
+    defaultValue: '',
+    require: true
+  },
+  {
+    name: 'emailReceive',
+    category: 'end',
+    label: 'אני מסכים לקבל דיוור במייל',
+    type: 'checkbox',
+    defaultValue: true,
+    require: false
+  },
+  {
+    name: 'agree',
+    category: 'end',
+    label: 'אני מסכים לתנאי השירות',
+    type: 'checkbox',
+    defaultValue: false,
+    require: false
+  },
+]
 
-const INITIAL_USER = {
-  name: '',
-  id: '',
-  birthDate: '',
-  phone: '',
-  email: '',
-  city: '',
-  street: '',
-  houseNumber: '',
-  emailReceive: true,
-  agree: false
+const INITIAL_USER: any = {}
+for (const input of formInputs) {
+  INITIAL_USER[input.name] = input.defaultValue
 }
+
+const setUser = useStore(state => state.setUser)
 
 const Signup: React.FC = () => {
 
-  // const [userData, setUserDate] = useState(INITIAL_USER)
+  const { register, control, handleSubmit, formState } = useForm({ defaultValues: INITIAL_USER })
 
-  const { register, control, handleSubmit} = useForm({defaultValues: INITIAL_USER})
-  console.log({ register });
+  const { errors } = formState
 
+  const inputsByCategory = (category: string): JSX.Element[] => (
+    formInputs
+      .filter(input => input.category === category)
+      .map(input =>
+        <div key={input.name}>
+          <label>
+            <span className="strict">
+              {input.require ? '*' : ''}
+            </span>
+            {input.label}:
+          </label>
+          <Input
+            className={input.category}
+            type={input.type}
+            register={() => register(input.name)}
+          />
+          <div className="error">
+            <h6>{errors[input.name]?.message?.toString()}</h6>
+          </div>
+        </div>
+      )
+  )
 
+  //TODO change the type of any
   const onSave = (formValues: any): void => {
-    console.log({formValues});
+    console.log({ formValues })
+    setUser(formValues)
   }
 
   return (
@@ -49,91 +136,27 @@ const Signup: React.FC = () => {
       className="signup container"
       onSubmit={handleSubmit(onSave)}
     >
-      <div className="personal">
+      <h5>פרטים אישיים</h5>
+      <div className="section">
+        {inputsByCategory('personal')}
+      </div>
 
-        <h5>פרטים אישיים</h5>
-        <div className="section">
+      <h5>פרטי התקשרות</h5>
+      <div className="section">
+        {inputsByCategory('contact')}
+      </div>
 
-          <label>
-            <span>*</span> שם מלא
-            <Input className="name" type="text" register={()=> register('name')}/>
-          </label>
+      <h5>כתובת</h5>
+      <div className="section">
+        {inputsByCategory('address')}
+      </div>
 
-          <label>
-            <span>*</span> ת.ז
-            <Input className="id" type="text" register={()=> register('id')}/>
-          </label>
+      <div className="end">
+        {inputsByCategory('end')}
+      </div>
 
-          <label>
-            <span>*</span> תאריך לידה
-            <Input className="birthDate" type="date" register={()=> register('birthDate')}/>
-          </label>
-
-        </div>
-
-        <div className="contact">
-
-          <h5>פרטי התקשרות</h5>
-          <div className="section">
-
-            <label>
-              <span>*</span> נייד
-              <Input className="phone" type="text" register={()=> register('phone')}/>
-            </label>
-
-            <label>
-              <span>*</span> אימייל
-              <Input className="email" type="email" register={()=> register('email')}/>
-            </label>
-
-          </div>
-
-          <div className="address">
-
-            <h5>כתובת</h5>
-            <div className="section">
-
-              <label>
-                <span>*</span> עיר
-                <Input className="city" type="text" register={()=> register('city')}/>
-              </label>
-
-              <label>
-                <span>*</span> רחוב
-                <Input className="street" type="text" register={()=> register('street')}/>
-              </label>
-
-              <label>
-                <span>*</span> מספר בית
-                <Input className="houseNumber" type="text" register={()=> register('houseNumber')}/>
-              </label>
-
-            </div>
-
-            <div className="end">
-
-              <div className="section">
-
-                <label>
-                  <Input className="emailReceive" type="checkbox" register={()=> register('emailReceive')}/>
-                  אני מסכים לקבל דיוור במייל
-                </label>
-
-                <label>
-                  <Input className="agree" type="checkbox" register={()=> register('agree')}/>
-                  אני מסכים לתנאי השירות
-                </label>
-
-
-              </div>
-
-              <div>
-                <SubmitButton className="submit" />
-              </div>
-
-            </div>
-          </div>
-        </div>
+      <div>
+        <SubmitButton className="submit" />
       </div>
 
     </form>
