@@ -1,0 +1,17 @@
+$primary-color: #507586;
+
+body {
+  direction: rtl;
+  // background-image: url("./../images/background.jpeg");
+    position: absolute;
+    // width: 1130.07px;
+    // height: 1951px;
+    // left: 1918px;
+    // top: -15px;
+    background: url("./../images/background.jpeg");
+
+    //TODO fix image 
+    background: {
+      // transform: rotate(89.9deg);
+    }
+  }
