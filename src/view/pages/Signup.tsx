@@ -3,7 +3,8 @@ import { Input } from "../components/Input";
 import { SubmitButton } from "../components/SubmitButton";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from "zod";
+import { TypeOf, z } from "zod";
+import { useState } from "react";
 
 const user = z.object({
   name: z.string().regex(/[א-ת]+(\ [א-ת]+)+/, { message: 'שם מלא הכולל שם פרטי ושם משפחה המכיל אותיות ורווחים בלבד' }),
@@ -11,133 +12,130 @@ const user = z.object({
   birthDate: z.date(),
   phone: z.string().regex(/^0\d{9}$/, { message: 'מספר טלפון נייד חייב להכיל 9 ספרות ולהתחיל בקידומת 0' }),
   email: z.string().email({ message: 'כתובת דואר אלקטרוני אינה תקינה' }),
+  city: z.string().regex(/[א-ת]+/, { message: 'עיר אינה נמצאת ברשימת הערים' }),
+  street: z.string().regex(/[א-ת]+/, { message: 'עיר אינה נמצאת ברשימת הערים' }),
+  houseNumber: z.string(),
+  mailReceive: z.boolean().optional(),
+  agree: z.boolean(),
 });
 
-// const { register, control, handleSubmit } = useForm()
-
-const formInputs = [
-  {
-    category: 'personal',
-    label: 'שם מלא',
-    type: 'text',
-    value: '',
-    require: true
-  },
-  {
-    category: 'personal',
-    label: 'ת.ז',
-    type: 'text',
-    value: '',
-    require: true
-  },
-  {
-    category: 'personal',
-    label: 'תאריך לידה',
-    type: 'date',
-    value: '',
-    require: true
-  },
-  {
-    category: 'contact',
-    label: 'נייד',
-    type: 'phone',
-    value: '',
-    require: true
-  },
-  {
-    category: 'contact',
-    label: 'מייל',
-    type: 'email',
-    value: '',
-    require: true
-  },
-  {
-    category: 'address',
-    label: 'עיר',
-    type: 'text',
-    value: '',
-    require: true
-  },
-  {
-    category: 'address',
-    label: 'רחוב',
-    type: 'text',
-    value: '',
-    require: true
-  },
-  {
-    category: 'address',
-    label: 'מספר בית',
-    type: 'text',
-    value: '',
-    require: true
-  },
-  {
-    category: 'end',
-    label: 'אני מסכים לקבל דיוור במייל',
-    type: 'checkbox',
-    value: true,
-    require: false
-  },
-  {
-    category: 'end',
-    label: 'אני מסכים לתנאי השירות',
-    type: 'checkbox',
-    value: false,
-    require: false
-  },
-]
+const INITIAL_USER = {
+  name: '',
+  id: '',
+  birthDate: '',
+  phone: '',
+  email: '',
+  city: '',
+  street: '',
+  houseNumber: '',
+  emailReceive: true,
+  agree: false
+}
 
 const Signup: React.FC = () => {
 
-  const inputsByCategory = (category: string): JSX.Element[] => (
-    formInputs
-      .filter(input => input.category === category)
-      .map(input =>
-        <div>
-          <label key={input.label}>
-            <span className="strict">
-              {input.require ? '*' : ''}
-            </span>
-            {input.label}:
-          </label>
-          <Input
-            className={input.category}
-            type={input.type}
-          // {...register(`${input.label}`)}
-          />
-        </div>
-      )
-  )
+  // const [userData, setUserDate] = useState(INITIAL_USER)
 
-  const onSave = (/*values: typeof user*/): void => {
-    console.log(formInputs);
+  const { register, control, handleSubmit} = useForm({defaultValues: INITIAL_USER})
+  console.log({ register });
+
+
+  const onSave = (formValues: any): void => {
+    console.log({formValues});
   }
 
   return (
     <form
       className="signup container"
-      // onSubmit={handleSubmit(onSave)}
+      onSubmit={handleSubmit(onSave)}
     >
-      <h5>פרטים אישיים</h5>
-      <div className="section">
-        {inputsByCategory('personal')}
+      <div className="personal">
+
+        <h5>פרטים אישיים</h5>
+        <div className="section">
+
+          <label>
+            <span>*</span> שם מלא
+            <Input className="name" type="text" register={()=> register('name')}/>
+          </label>
+
+          <label>
+            <span>*</span> ת.ז
+            <Input className="id" type="text" register={()=> register('id')}/>
+          </label>
+
+          <label>
+            <span>*</span> תאריך לידה
+            <Input className="birthDate" type="date" register={()=> register('birthDate')}/>
+          </label>
+
+        </div>
+
+        <div className="contact">
+
+          <h5>פרטי התקשרות</h5>
+          <div className="section">
+
+            <label>
+              <span>*</span> נייד
+              <Input className="phone" type="text" register={()=> register('phone')}/>
+            </label>
+
+            <label>
+              <span>*</span> אימייל
+              <Input className="email" type="email" register={()=> register('email')}/>
+            </label>
+
+          </div>
+
+          <div className="address">
+
+            <h5>כתובת</h5>
+            <div className="section">
+
+              <label>
+                <span>*</span> עיר
+                <Input className="city" type="text" register={()=> register('city')}/>
+              </label>
+
+              <label>
+                <span>*</span> רחוב
+                <Input className="street" type="text" register={()=> register('street')}/>
+              </label>
+
+              <label>
+                <span>*</span> מספר בית
+                <Input className="houseNumber" type="text" register={()=> register('houseNumber')}/>
+              </label>
+
+            </div>
+
+            <div className="end">
+
+              <div className="section">
+
+                <label>
+                  <Input className="emailReceive" type="checkbox" register={()=> register('emailReceive')}/>
+                  אני מסכים לקבל דיוור במייל
+                </label>
+
+                <label>
+                  <Input className="agree" type="checkbox" register={()=> register('agree')}/>
+                  אני מסכים לתנאי השירות
+                </label>
+
+
+              </div>
+
+              <div>
+                <SubmitButton className="submit" />
+              </div>
+
+            </div>
+          </div>
+        </div>
       </div>
 
-      <h5>פרטי התקשרות</h5>
-      <div className="section">
-        {inputsByCategory('contact')}
-      </div>
-
-      <h5>כתובת</h5>
-      <div className="section">
-        {inputsByCategory('address')}
-      </div>
-
-      <div className="section end">
-        {inputsByCategory('end')}
-      </div>
-      <SubmitButton className="submit" />
     </form>
   );
 };
