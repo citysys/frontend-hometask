@@ -11,7 +11,7 @@ interface SearchBoxProps {
 }
 
 const SearchBox: React.FC<SearchBoxProps> = ({ data, label, required, chosenValue, setChosenValue, name }) => {
-  console.log(data);
+  // console.log(data);
   // const [chosenValue, setChosenValue] = useState("");
   const [filteredData, setFilteredData] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -25,7 +25,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ data, label, required, chosenValu
 
     const filtered = namesArray.filter((item: any) => item?.includes(value));
 
-    console.log(filtered);
+    // console.log(filtered);
     setFilteredData(filtered);
   };
 

@@ -1,5 +1,6 @@
 import React from "react";
 import "./Input.style.scss";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 export interface InputProps {
   className?: string;
@@ -19,19 +20,26 @@ const Input: React.FC<InputProps> = ({
   required,
   onChange,
 }) => {
-
   return (
     <div className={className + " " + "input-wrapper"}>
       <label className="input-label">
         {label}
         {required && <div className="required">*</div>}
       </label>
-      <input
+
+      <Field as={type} id={name} name={name} className="input" />
+
+      {/* <input
         type={type}
         className="input"
         onChange={onChange}
         id={name}
-      />
+        name={name}
+      /> */}
+
+      <div className="error">
+        <ErrorMessage name={name} />
+      </div>
     </div>
   );
 };

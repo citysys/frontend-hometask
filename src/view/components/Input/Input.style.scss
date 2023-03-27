@@ -21,13 +21,16 @@
   margin-bottom: 0.5rem;
   direction: rtl;
   text-align: right;
-  position: absolute;
+  position: fixed;
   // top: 0;
   line-height: 17px;
   color: #636161;
   background-color: white;
   font-weight: 400;
   font-size: 17px;
+  z-index: 2;
+  margin-right: 20px;
+  margin-top:-10px;
 
 }
 
@@ -40,10 +43,20 @@
   border-color: var(--color-light-gray);
   border-width: 1.08px;
   margin-left: 40px;
+  z-index: 1;
 }
 
 
 .required {
     color: #B73D3D;
     display: inline;
+}
+
+.error {
+  position: fixed;
+  color: red;
+  font-size: 18px;
+  // padding-right:40px;
+  padding-top: 40px;
+  z-index: 0.5;
 }
