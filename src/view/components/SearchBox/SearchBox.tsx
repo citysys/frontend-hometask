@@ -43,14 +43,19 @@ const SearchBox: React.FC<SearchBoxProps> = ({ data, label, required, chosenValu
   };
 
   return (
-    <div>
-      <Input
-        type="text"
+    <div style={{display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
+       <label className="input-label" style={{marginRight: '-170px'}}>
+        {label}
+        {required && <div className="required">*</div>}
+      </label>
+      <input
+        type="input"
         value={chosenValue}
         onChange={handleInputChange}
-        label={label}
+        // label={label}
         required={required}
         name={name}
+        className="input"
       />
       {showSuggestions && (
         <ul
@@ -61,7 +66,12 @@ const SearchBox: React.FC<SearchBoxProps> = ({ data, label, required, chosenValu
             listStyle: "none",
             position: "absolute",
             zIndex: 2,
-            width: "calc(100%-22px)"
+            borderColor: 'black',
+            borderWidth: '2px',
+            fontSize: '20px',
+            marginTop: '38px',
+            marginLeft: '70px',
+
           }}
         >
           {filteredData.map((item: any) => renderSuggestion(item))}

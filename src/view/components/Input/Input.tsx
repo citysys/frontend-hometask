@@ -1,6 +1,6 @@
 import React from "react";
 import "./Input.style.scss";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Field, ErrorMessage, useField } from "formik";
 
 export interface InputProps {
   className?: string;
@@ -20,6 +20,8 @@ const Input: React.FC<InputProps> = ({
   required,
   onChange,
 }) => {
+  const [field, meta, helpers] = useField(name);
+
   return (
     <div className={className + " " + "input-wrapper"}>
       <label className="input-label">
@@ -27,7 +29,13 @@ const Input: React.FC<InputProps> = ({
         {required && <div className="required">*</div>}
       </label>
 
-      <Field as={type} id={name} name={name} className="input" />
+      <Field
+        as={type}
+        id={name}
+        name={name}
+        className="input"
+        // onChange={onChange} this causes problem to my searchbox
+      />
 
       {/* <input
         type={type}

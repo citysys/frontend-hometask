@@ -16,21 +16,8 @@ interface FormValues {
   email: string;
   idNumber: string;
   phoneNumber: string;
+  birthDate: Date | null;
 }
-
-// const initialValues: FormValues = {
-//   fullName: "",
-//   email: "",
-//   idNumber: "",
-//   phoneNumber: "",
-// };
-
-// const validationSchema = Yup.object().shape({
-//   fullName: Yup.string().required("אנא מלא את שמך"),
-//   email: Yup.string().email("כתובת מייל לא חוקית").required("אנא מלא כתובת מייל"),
-//   idNumber: Yup.string().length(9).required(" אנא מלא תעודת זהות"),
-//   phoneNumber: Yup.string().length(10).required("אנא מלא מספר נייד"),
-// });
 
 const Signup: React.FC = () => {
   const [citiesData, setCitiesData] = useState();
@@ -49,13 +36,15 @@ const Signup: React.FC = () => {
     email: email,
     idNumber: idNumber,
     phoneNumber: phoneNumber,
+    birthDate: selectedDate || null,
   };
   
   const validationSchema = Yup.object().shape({
-    // // fullName: Yup.string().required("אנא מלא את שמך"),
-    // email: Yup.string().email("כתובת מייל לא חוקית").required("אנא מלא כתובת מייל"),
-    // // idNumber: Yup.string().length(9).required(" אנא מלא תעודת זהות"),
-    // // phoneNumber: Yup.string().length(10).required("אנא מלא מספר נייד"),
+    fullName: Yup.string().required("אנא מלא את שמך"),
+    email: Yup.string().email("כתובת מייל לא חוקית").required("אנא מלא כתובת מייל"),
+    idNumber: Yup.string().length(9, "ת.ז חייבת לכלול 9 ספרות").required(" אנא מלא תעודת זהות"),
+    phoneNumber: Yup.string().length(10, "מס' נייד חייב לכלול 10 ספרות").required("אנא מלא מספר נייד"),
+    birthDate: Yup.date().required(),
   });
 
 
@@ -162,6 +151,7 @@ const Signup: React.FC = () => {
                     label="תאריך לידה"
                     selectedDate={selectedDate}
                     setSelectedDate={setSelectedDate}
+                    name="birthDate"
                   />
                 </div>
               </div>
