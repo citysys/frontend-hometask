@@ -48,6 +48,8 @@ const Signup: React.FC = () => {
     email: Yup.string().email("כתובת מייל לא חוקית").required("אנא מלא כתובת מייל"),
     idNumber: Yup.string().length(9, "ת.ז חייבת לכלול 9 ספרות").required(" אנא מלא תעודת זהות"),
     phoneNumber: Yup.string().length(10, "מס' נייד חייב לכלול 10 ספרות").required("אנא מלא מספר נייד"),
+    city: Yup.string().required("אנא מלא עיר"),
+    street: Yup.string().required("אנא מלא שם רחוב"),
   });
 
 
@@ -108,18 +110,6 @@ const Signup: React.FC = () => {
     getStreets();
   }, []);
 
-
-  const handleExternalInputChange = (event: any) => {
-    // Get Formik context
-    const formik = event.currentTarget.formik;
-
-    // Get current values of form
-    const values = formik.values;
-
-    // Handle input change here
-    console.log("Current values:", values);
-  };
-
   return (
     <Formik
       initialValues={initialValues}
@@ -166,6 +156,7 @@ const Signup: React.FC = () => {
                     label="תאריך לידה"
                     selectedDate={selectedDate}
                     setSelectedDate={setSelectedDate}
+                    name="birthDate"
                   />
                 </div>
               </div>
@@ -200,6 +191,7 @@ const Signup: React.FC = () => {
                   chosenValue={city}
                   setChosenValue={setCity}
                   name="city"
+                  required
                 />
                 <SearchBox
                   data={streetsData}
@@ -207,6 +199,7 @@ const Signup: React.FC = () => {
                   chosenValue={street}
                   setChosenValue={setStreet}
                   name="street"
+                  required
                 />
               </div>
 

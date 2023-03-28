@@ -44,6 +44,7 @@ const Input: React.FC<InputProps> = ({
         id={name}
         name={name}
         className="input"
+
         // onChange={onChange} this causes problem to my searchbox
       />
 

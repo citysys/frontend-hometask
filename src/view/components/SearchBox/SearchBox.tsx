@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Input } from "../Input";
-import { useFormikContext } from 'formik';
+import { ErrorMessage, useFormikContext } from "formik";
 
 interface SearchBoxProps {
   data: any;
@@ -16,7 +16,14 @@ interface MyFormValues {
   [key: string]: any; // add index signature
 }
 
-const SearchBox: React.FC<SearchBoxProps> = ({ data, label, required, chosenValue, setChosenValue, name }) => {
+const SearchBox: React.FC<SearchBoxProps> = ({
+  data,
+  label,
+  required,
+  chosenValue,
+  setChosenValue,
+  name,
+}) => {
   // console.log(data);
   // const [chosenValue, setChosenValue] = useState("");
   const [filteredData, setFilteredData] = useState<string[]>([]);
@@ -56,8 +63,14 @@ const SearchBox: React.FC<SearchBoxProps> = ({ data, label, required, chosenValu
   };
 
   return (
-    <div style={{display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
-       <label className="input-label" style={{marginRight: '-170px'}}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignContent: "center",
+      }}
+    >
+      <label className="input-label" style={{ marginRight: "-170px" }}>
         {label}
         {required && <div className="required">*</div>}
       </label>
@@ -67,7 +80,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ data, label, required, chosenValu
         value={values[name]}
         onChange={handleInputChange}
         // label={label}
-        required={required}
+        // required={required}
         name={name}
         className="input"
       />
@@ -80,17 +93,20 @@ const SearchBox: React.FC<SearchBoxProps> = ({ data, label, required, chosenValu
             listStyle: "none",
             position: "absolute",
             zIndex: 2,
-            borderColor: 'black',
-            borderWidth: '2px',
-            fontSize: '20px',
-            marginTop: '38px',
-            marginLeft: '70px',
-
+            borderColor: "black",
+            borderWidth: "2px",
+            fontSize: "20px",
+            marginTop: "38px",
+            marginLeft: "70px",
           }}
         >
           {filteredData.map((item: any) => renderSuggestion(item))}
         </ul>
       )}
+
+      <div className="error">
+        <ErrorMessage name={name} />
+      </div>
     </div>
   );
 };
