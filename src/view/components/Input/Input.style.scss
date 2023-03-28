@@ -14,7 +14,7 @@
     width: 20px;
     height: 20px;
     position: relative;
-    color: #4799BE;
+    color: $check-box-tick-blue;
   }
   
   &.agreeEmail input[type="checkbox"]:checked::before,
@@ -38,7 +38,7 @@
 }
 
 .input-label {
-  color: $main-input-text-color;
+  color: $main-input-text-gray;
   position: absolute;
   top: -8px;
   right: 8px;
@@ -49,7 +49,7 @@
 
 input {
   border-radius: 5px;
-  border: 1px solid $main-border-color;
+  border: 1px solid $main-border-gray;
   width: calc(0.22*80vw);
   height: 43px;
   padding: 10px 15px; 
@@ -109,36 +109,14 @@ input[type=date]:valid::-webkit-datetime-edit-year-field {
 @media(max-width: 425px) {
   
   .input-wrapper {
-    &.agreeEmail input[type="checkbox"],
-    &.agreeTerms input[type="checkbox"] {
-      padding: 0px;
-      border-radius: 0;
-      appearance: none;
-      -webkit-appearance: none;
-      width: 20px;
-      height: 20px;
-      position: relative;
-      color: #4799BE;
-    }
-    
-    &.agreeEmail input[type="checkbox"]:checked::before,
-    &.agreeTerms input[type="checkbox"]:checked::before {
-      content: '\2713';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 18px;
-    }
   
     &.agreeEmail .input-label,
     &.agreeTerms .input-label {
       margin-right: 10px;
-    padding: 0;
-    font-size: 13px;
+      padding: 0;
+      font-size: 13px;
     }
   }
-  
   .user-error{
     display: none;
   }
