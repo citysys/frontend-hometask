@@ -62,12 +62,8 @@ const Signup: React.FC = () => {
     birthDate: Yup.string().required("אנא מלא תאריך הלידה"),
   });
 
-  // ----------
+
   const setFormValues = useFormStore((state) => state.setFormValues);
-
-  //----------------
-
-  // console.log(city);
 
   const checkCity = citiesData?.some((c: any) => c.name === city);
   console.log({ checkCity });
@@ -81,13 +77,10 @@ const Signup: React.FC = () => {
       const response = await axios.get(
         "https://data.gov.il/api/3/action/datastore_search?resource_id=5c78e9fa-c2e2-4771-93ff-7f400a12f7ba&limit=1500"
       );
-      // console.log(response?.data?.result?.records);
-      // console.log(response);
       const citiesDetailsData = response?.data?.result?.records;
       const filteredCityNamesData = citiesDetailsData.map((item: any) => ({
         name: item.שם_ישוב.slice(0, -1),
       }));
-      console.log(filteredCityNamesData);
       setCitiesData(filteredCityNamesData);
     } catch (error) {
       console.log(error);
@@ -100,23 +93,17 @@ const Signup: React.FC = () => {
         const response = await axios.get(
           "https://data.gov.il/api/3/action/datastore_search?resource_id=bf185c7f-1a4e-4662-88c5-fa118a244bda&limit=100000"
         );
-        // console.log(response?.data?.result?.records);
-        // console.log(response);
+
         const streetsDetailsData = response?.data?.result?.records;
-        console.log("city!! = ", city);
-
-        console.log({ streetsDetailsData });
-
+    
         const filteredStreets = streetsDetailsData.filter(
           (item: any) => item.city_name.slice(0, -1) === city
         );
 
-        console.log({ filteredStreets });
-
         const filteredStreetNameByCity = filteredStreets.map((item: any) => ({
           name: item.street_name.slice(0, -1),
         }));
-        // console.log({ filteredStreetNameByCity });
+
         setStreetsData(filteredStreetNameByCity);
       } catch (error) {
         console.log(error);
@@ -134,9 +121,6 @@ const Signup: React.FC = () => {
   }, [city]);
 
   const handleSubmit = (values: any) => {
-    // const checkIfCityIsReal = citiesData?.some((c: any) => c.name === city);
-    // console.log({ checkIfCityIsReal });
-
     if (checkCity && checkStreet) {
       setFormValues(values);
     } else {
@@ -151,13 +135,10 @@ const Signup: React.FC = () => {
       });
     }
 
-    // setFormValues(values);
     console.log("setFormValues => ", useFormStore.getState().formValues);
-    // console.log(values);
-    console.log("hi");
+ 
   };
 
-  console.log({ city });
 
   const handleCityValueChange = (value: string) => {
     setCity(value);
@@ -193,7 +174,6 @@ const Signup: React.FC = () => {
                 label="שם"
                 required
                 type="input"
-                onChange={(e) => setFullName(e.target.value)}
                 name="fullName"
               />
               <Input
@@ -202,7 +182,6 @@ const Signup: React.FC = () => {
                 name="idNumber"
                 required
                 type="input"
-                onChange={(e) => setIdNumber(e.target.value)}
               />
               <div style={{ marginRight: "-4%", marginTop: "8px" }}>
                 <DatePickerCalendar
@@ -223,7 +202,6 @@ const Signup: React.FC = () => {
                 name="phoneNumber"
                 required
                 type="input"
-                onChange={(e) => setPhoneNumber(e.target.value)}
               />
               <Input
                 className="input"
@@ -231,7 +209,6 @@ const Signup: React.FC = () => {
                 name="email"
                 required
                 type="input"
-                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 

@@ -9,7 +9,6 @@ export interface InputProps {
   name: string;
   required?: boolean;
   value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -18,20 +17,7 @@ const Input: React.FC<InputProps> = ({
   label,
   name,
   required,
-  onChange,
 }) => {
-
-  const handleExternalInputChange = (event: any) => {
-    // Get Formik context
-    const formik = event.currentTarget.formik;
-
-    // Get current values of form
-    const values = formik.values;
-
-    // Handle input change here
-    console.log("Current values:", values);
-  };
-
   return (
     <div className={className + " " + "input-wrapper"}>
       <label className="input-label">
@@ -44,18 +30,7 @@ const Input: React.FC<InputProps> = ({
         id={name}
         name={name}
         className="input"
-
-        // onChange={onChange} this causes problem to my searchbox
       />
-
-      {/* <input
-        type={type}
-        className="input"
-        onChange={onChange}
-        id={name}
-        name={name}
-      /> */}
-
       <div className="error">
         <ErrorMessage name={name} />
       </div>

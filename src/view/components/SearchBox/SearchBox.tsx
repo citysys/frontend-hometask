@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Input } from "../Input";
 import { ErrorMessage, useFormikContext } from "formik";
 
 interface SearchBoxProps {
@@ -15,48 +14,36 @@ interface SearchBoxProps {
 
 interface MyFormValues {
   name: string;
-  [key: string]: any; // add index signature
+  [key: string]: any;
 }
 
 const SearchBox: React.FC<SearchBoxProps> = ({
   data,
   label,
   required,
-  chosenValue,
-  setChosenValue,
   name,
   onChildValueChange,
-  isValidName
+  isValidName,
 }) => {
-  // console.log(data);
-  // const [chosenValue, setChosenValue] = useState("");
   const [filteredData, setFilteredData] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [value1, setValue1] = useState('');
+  const [value1, setValue1] = useState("");
 
-  //--formik
   const { values, setFieldValue } = useFormikContext<MyFormValues>();
-  //--formik
 
   const namesArray = data?.map((obj: any) => obj.name);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setValue1(value);
-    // setChosenValue(value);
     setFieldValue(name, event.target.value); // formik
     onChildValueChange(value);
-
     setShowSuggestions(value.length > 0);
-
     const filtered = namesArray.filter((item: any) => item?.includes(value));
-
-    // console.log(filtered);
     setFilteredData(filtered);
   };
 
   const handleSuggestionClick = (value: string) => {
-    // setChosenValue(value);
     setFieldValue(name, value);
     onChildValueChange(value);
     setShowSuggestions(false);
@@ -84,11 +71,8 @@ const SearchBox: React.FC<SearchBoxProps> = ({
       </label>
       <input
         type="input"
-        // value={chosenValue}
         value={values[name]}
         onChange={handleInputChange}
-        // label={label}
-        // required={required}
         name={name}
         className="input"
       />
@@ -114,8 +98,12 @@ const SearchBox: React.FC<SearchBoxProps> = ({
 
       <div className="error">
         <ErrorMessage name={name} />
-        {!isValidName && name === 'city' && value1.length > 0 && <div id={name}>שם עיר לא חוקי</div>}
-        {!isValidName && name === 'street' && value1.length > 0 && <div id={name}>שם רחוב לא חוקי</div>}
+        {!isValidName && name === "city" && value1.length > 0 && (
+          <div id={name}>שם עיר לא חוקי</div>
+        )}
+        {!isValidName && name === "street" && value1.length > 0 && (
+          <div id={name}>שם רחוב לא חוקי</div>
+        )}
       </div>
     </div>
   );

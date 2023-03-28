@@ -1,8 +1,6 @@
 import { styled } from "@mui/material/styles";
-import dayjs from "dayjs";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Input } from "../Input";
 import "./DatePickerCalendar.style.scss";
 import { ErrorMessage, useFormikContext } from "formik";
 
@@ -35,20 +33,15 @@ export interface DatePickerCalendarProps {
 
 interface MyFormValues {
   name: string;
-  [key: string]: any; // add index signature
+  [key: string]: any;
 }
 
 export const DatePickerCalendar: React.FC<DatePickerCalendarProps> = ({
-  selectedDate,
-  setSelectedDate,
   label,
-  name ="birthDate",
+  name = "birthDate",
 }) => {
-  //--formik
   const { values, setFieldValue } = useFormikContext<MyFormValues>();
-  //--formik
 
-  // eslint-disable-next-line react/no-unstable-nested-components
   const CustomInput = ({ onFocus, value }: any) => (
     <InputWrapper>
       <StyledInput onClick={onFocus} value={value} onChange={() => {}} />
@@ -60,17 +53,15 @@ export const DatePickerCalendar: React.FC<DatePickerCalendarProps> = ({
       <DatePicker
         dateFormat="MM/dd/yyyy"
         popperContainer={Popper}
-        customInput={<CustomInput value={values[name]}/>}
+        customInput={<CustomInput value={values[name]} />}
         selected={values[name]}
-        // onChange={(date: Date) => setSelectedDate(date)}}
         onChange={(date: Date) => setFieldValue(name, date)} // formik
         disabledKeyboardNavigation
         showYearDropdown
         scrollableYearDropdown
         yearDropdownItemNumber={100}
-
       />
-        <div className="d-error">
+      <div className="d-error">
         <ErrorMessage name={name} />
       </div>
     </>
