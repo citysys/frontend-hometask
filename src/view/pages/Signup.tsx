@@ -1,11 +1,25 @@
 import "./Signup.style.scss";
 import { Input } from "../components/Input";
 import { SubmitButton } from "../components/SubmitButton";
-import { useForm } from "react-hook-form";
+import { useForm, useController } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NewUserSchema } from "../../model";
 import { useStore } from "../../controller";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { Api } from "../../DAL/Api";
+
+interface Inputs {
+  category: string,
+  label: string,
+  fields: 
+    {
+      name: string,
+      label: string,
+      type: string,
+      defaultValue: string,
+      require: boolean
+    }[]
+}
 
 const formInputs = [
   {
@@ -118,6 +132,9 @@ const INITIAL_USER = formInputs.reduce((totalAcc: any, sectionValue: any) => {
 
 const Signup: React.FC = () => {
   const setUser = useStore(state => state.setUser)
+  const [cities, setCities] = useState([])
+  const [currentCity, setCurrentCity] = useState('')
+  const [streets, setStreets] = useState([])
 
   const { register, control, handleSubmit, formState } = useForm({
     defaultValues: INITIAL_USER,
@@ -125,8 +142,24 @@ const Signup: React.FC = () => {
   })
 
   const { errors } = formState
+  const { field: cityField } = useController({ name: 'city', control })
+  const { field: streetField } = useController({ name: 'street', control })
+
+  useEffect(() => {
+    (async function getCity() {    
+      setCities(await Api.getCities())
+    })()
+  }, [])
+
+  useEffect(() => {
+    (async function getStreet() {
+      setCities(await Api.getStreets(currentCity))
+    })()
+  }, [currentCity])
 
   const onSave = (formValues: any): void => {
+    console.log({ formValues })
+
     setUser(formValues)
   }
 
@@ -136,39 +169,34 @@ const Signup: React.FC = () => {
       onSubmit={handleSubmit(onSave)}
     >
       <div className="box">
-      {
-        formInputs.map(section =>
-        (
-          <Fragment key={section.category}>
-            <h5>{section.label}</h5>
-            <div className={section.category + " section"}>
-              {
-                section.fields.map(input =>
-                  <div key={input.name} className={errors[input.name] && 'invalid'}>
-                    <label>
-                      <span className="strict">
-                        {input.require ? '*' : ''}
-                      </span>
-                      {input.label}:
-                    </label>
-                    <Input
-                      className={input.name}
-                      type={input.type}
-                      register={() => register(input.name)}
-                    />
-                    <div className="error">
-                      <h5>{errors[input.name]?.message?.toString()}</h5>
+        {
+          formInputs.map(section =>
+          (
+            <div key={section.category}>
+              <h5>{section.label}</h5>
+              <div className={section.category + " section"}>
+                {
+                  section.fields.map(input =>
+                    <div key={input.name} className={errors[input.name] && 'invalid'}>
+                      <Input
+                        name={input.name}
+                        label={input.label}
+                        type={input.type}
+                        isRequire={input.require}
+                        errors={errors}
+                        register={() => register(input.name)}
+                        options={cities}
+                      />
                     </div>
-                  </div>
-                )
-              }
+                  )
+                }
+              </div>
             </div>
-          </Fragment>
-        ))}
+          ))}
 
-      <div>
-        <SubmitButton className="submit" />
-      </div>
+        <div>
+          <SubmitButton className="submit" />
+        </div>
       </div>
 
       <div className="image box rightBox">

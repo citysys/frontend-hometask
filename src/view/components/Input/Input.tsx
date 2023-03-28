@@ -2,23 +2,55 @@ import React from "react";
 import DataList from "./DataList";
 import "./Input.style.scss";
 
-export interface InputProps {
-  className: string;
-  type: string;
-  register: () => any
+interface Ifield {
+  value: string,
+  onChange: (field: any) => void
 }
 
-const Input: React.FC<InputProps> = ({ className, type, register }) => {
-  const list = type === 'data_list' ? { list: className } : {}
+export interface InputProps {
+  name: string;
+  label: string
+  type: string;
+  isRequire: boolean
+  register: () => any
+  options?: string[]
+  errors: any
+  field?: Ifield
+}
+
+const Input: React.FC<InputProps> = ({ name, label, type, isRequire, register, errors, options = [], field }) => {
+  let list = {}
+  if (type === 'data_list' || type === 'select') {
+    list = {
+      list: name,
+      // value: options?.find(({value})=> value=== className),
+      value: field?.value,
+      onChange: (field: Ifield) => field?.onChange(field?.value)
+    }
+  }
   return (
-    <div className={className}>
+    <div className={name}>
+      <div>
+        <label>
+          <span className="strict">
+            {isRequire ? '*' : ''}
+          </span>
+          {label}:
+        </label>
+      </div>
       <input type={type} {...list} {...register()} />
       {
         type === 'data_list' &&
         (
-          <DataList /*id={className}*/ />
+          <DataList
+            id={name}
+            options={options}
+          />
         )
       }
+      <div className="error">
+        <h5>{errors[name]?.message?.toString()}</h5>
+      </div>
     </div>
   );
 };

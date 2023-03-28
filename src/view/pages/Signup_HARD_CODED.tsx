@@ -3,8 +3,10 @@ import { Input } from "../components/Input";
 import { SubmitButton } from "../components/SubmitButton";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod'
-import { TypeOf, z } from "zod";
+import { NewUserSchema } from "../../model";
+import { useStore } from "../../controller";
 import { useState } from "react";
+import { Api } from "../../DAL/Api";
 
 const INITIAL_USER = {
   name: '',
@@ -20,13 +22,21 @@ const INITIAL_USER = {
 }
 
 const Signup: React.FC = () => {
+  const setUser = useStore(state => state.setUser)
+  const [cities, setCities] = useState([])
+  const [streets, setStreets] = useState([])
+  const [currentCity, setCurrentCity] = useState([])
 
-  // const [userData, setUserDate] = useState(INITIAL_USER)
+  const { register, control, handleSubmit, formState } = useForm({
+    defaultValues: INITIAL_USER,
+    resolver: zodResolver(NewUserSchema)
+  })
 
-  const { register, control, handleSubmit} = useForm({defaultValues: INITIAL_USER})
+  const { errors } = formState
+
 
   const onSave = (formValues: any): void => {
-    console.log({formValues});
+    setUser(formValues)
   }
 
   return (
@@ -41,17 +51,29 @@ const Signup: React.FC = () => {
 
           <label>
             <span>*</span> שם מלא
-            <Input className="name" type="text" register={()=> register('name')}/>
+            <Input
+              name="name"
+              type="text"
+              errors={errors.name}
+              register={() => register('name')} />
           </label>
 
           <label>
             <span>*</span> ת.ז
-            <Input className="id" type="text" register={()=> register('id')}/>
+            <Input
+              name="id"
+              type="text"
+              errors={errors.id} 
+              register={() => register('id')} />
           </label>
 
           <label>
             <span>*</span> תאריך לידה
-            <Input className="birthDate" type="date" register={()=> register('birthDate')}/>
+            <Input
+              name="birthDate"
+              type="date"
+              errors={errors.birthDate}
+              register={() => register('birthDate')} />
           </label>
 
         </div>
@@ -63,12 +85,20 @@ const Signup: React.FC = () => {
 
             <label>
               <span>*</span> נייד
-              <Input className="phone" type="text" register={()=> register('phone')}/>
+              <Input
+                name="phone"
+                type="text"
+                errors={errors.email}
+                register={() => register('phone')} />
             </label>
 
             <label>
               <span>*</span> אימייל
-              <Input className="email" type="email" register={()=> register('email')}/>
+              <Input
+                name="email"
+                type="email"
+                errors={errors.email}
+                register={() => register('email')} />
             </label>
 
           </div>
@@ -80,32 +110,52 @@ const Signup: React.FC = () => {
 
               <label>
                 <span>*</span> עיר
-                <Input className="city" type="text" register={()=> register('city')}/>
+                <Input
+                  name="city"
+                  type="text"
+                  errors={errors}
+                  register={() => register('city')} />
               </label>
 
               <label>
                 <span>*</span> רחוב
-                <Input className="street" type="text" register={()=> register('street')}/>
+                <Input
+                  name="street"
+                  type="text"
+                  errors={errors}
+                  register={() => register('street')} />
               </label>
 
               <label>
                 <span>*</span> מספר בית
-                <Input className="houseNumber" type="text" register={()=> register('houseNumber')}/>
+                <Input
+                  name="houseNumber"
+                  type="text"
+                  errors={errors}
+                  register={() => register('houseNumber')} />
               </label>
 
             </div>
 
-            <div className="end">
+            <div className="rest">
 
               <div className="section">
 
                 <label>
-                  <Input className="emailReceive" type="checkbox" register={()=> register('emailReceive')}/>
+                  <Input
+                    name="emailReceive"
+                    type="checkbox"
+                    errors={errors}
+                    register={() => register('emailReceive')} />
                   אני מסכים לקבל דיוור במייל
                 </label>
 
                 <label>
-                  <Input className="agree" type="checkbox" register={()=> register('agree')}/>
+                  <Input
+                    name="agree"
+                    type="checkbox"
+                    errors={errors}
+                    register={() => register('agree')} />
                   אני מסכים לתנאי השירות
                 </label>
 
