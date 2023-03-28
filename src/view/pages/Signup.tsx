@@ -1,10 +1,5 @@
 import React, { useEffect, useCallback, useState } from "react";
-import { Checkbox } from "../components/Checkbox";
-import { DatePickerCalendar } from "../components/DatePickerCalendar";
-import { Input } from "../components/Input";
-import { SearchBox } from "../components/SearchBox";
-import { Separator } from "../components/Separator";
-import { SubmitButton } from "../components/SubmitButton";
+import {Checkbox, DatePickerCalendar, Input, SearchBox, Separator, SubmitButton } from '../components'
 import "./Signup.style.scss";
 import axios from "axios";
 import { useFormStore } from "../../controller";
