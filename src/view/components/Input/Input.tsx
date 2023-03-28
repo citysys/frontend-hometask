@@ -1,6 +1,6 @@
 import React from "react";
 import "./Input.style.scss";
-import { Field, ErrorMessage, useField } from "formik";
+import { Field, ErrorMessage } from "formik";
 
 export interface InputProps {
   className?: string;
@@ -20,7 +20,17 @@ const Input: React.FC<InputProps> = ({
   required,
   onChange,
 }) => {
-  const [field, meta, helpers] = useField(name);
+
+  const handleExternalInputChange = (event: any) => {
+    // Get Formik context
+    const formik = event.currentTarget.formik;
+
+    // Get current values of form
+    const values = formik.values;
+
+    // Handle input change here
+    console.log("Current values:", values);
+  };
 
   return (
     <div className={className + " " + "input-wrapper"}>

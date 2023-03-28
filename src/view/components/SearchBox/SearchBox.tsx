@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Input } from "../Input";
+import { useFormikContext } from 'formik';
 
 interface SearchBoxProps {
   data: any;
@@ -10,17 +11,28 @@ interface SearchBoxProps {
   name: string;
 }
 
+interface MyFormValues {
+  name: string;
+  [key: string]: any; // add index signature
+}
+
 const SearchBox: React.FC<SearchBoxProps> = ({ data, label, required, chosenValue, setChosenValue, name }) => {
   // console.log(data);
   // const [chosenValue, setChosenValue] = useState("");
   const [filteredData, setFilteredData] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
+  //--formik
+  const { values, setFieldValue } = useFormikContext<MyFormValues>();
+  //--formik
+
   const namesArray = data?.map((obj: any) => obj.name);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setChosenValue(value);
+    // setChosenValue(value);
+    setFieldValue(name, event.target.value); // formik
+
     setShowSuggestions(value.length > 0);
 
     const filtered = namesArray.filter((item: any) => item?.includes(value));
@@ -30,7 +42,8 @@ const SearchBox: React.FC<SearchBoxProps> = ({ data, label, required, chosenValu
   };
 
   const handleSuggestionClick = (value: string) => {
-    setChosenValue(value);
+    // setChosenValue(value);
+    setFieldValue(name, value);
     setShowSuggestions(false);
   };
 
@@ -50,7 +63,8 @@ const SearchBox: React.FC<SearchBoxProps> = ({ data, label, required, chosenValu
       </label>
       <input
         type="input"
-        value={chosenValue}
+        // value={chosenValue}
+        value={values[name]}
         onChange={handleInputChange}
         // label={label}
         required={required}
