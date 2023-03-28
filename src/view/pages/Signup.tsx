@@ -66,7 +66,6 @@ const Signup: React.FC = () => {
                                         <React.Fragment key={field.inputId}>
                                             <Input
                                                 {...field}
-                                                index={index}
                                                 key={field.inputId}
                                                 countValidInputs={countValidInputs}
                                                 {...register(field.inputId as keyof NewUser)}
@@ -85,6 +84,9 @@ const Signup: React.FC = () => {
             </form>
             <div className='image-container'>
                 <img src='/real-estate.png' />
+            </div>
+            <div className='image-container-mobile'>
+                <img src='/real-estate-mobile.png' />
             </div>
         </main>
     )

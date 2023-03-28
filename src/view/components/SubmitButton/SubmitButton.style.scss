@@ -10,3 +10,10 @@
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-color: #507586;
 }
+
+@media(max-width: 425px) {
+    .submit-btn {
+      width: 40vw;
+      height: 43px;
+    }
+  }

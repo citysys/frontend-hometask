@@ -32,6 +32,10 @@
         height: 100%;
     }
 }
+.image-container-mobile
+{
+    display: none;
+}
 
 .form-container {
     direction: rtl;
@@ -84,7 +88,7 @@
     width: 100%;
     .header-title{
         color : #303030;
-        font-weight: 700;
+        font-weight: 600;
         font-size: 40px;
         letter-spacing: 0.09em;
     }
@@ -101,3 +105,79 @@
 .btn-container{
     margin: 0 auto;
 }
+
+@media(max-width: 425px) {
+    .main-container{
+        padding-top: 35px;
+        height: 1200px;
+        justify-content: center;
+        align-items: flex-start;
+    }
+  .signup-form{
+    height: fit-content;
+    width: 90%;
+    padding: 35px 50px 140px;
+    margin: auto 0;
+  }
+
+  .form-container{
+    width: 100%;
+    height: 100%;
+  }
+
+  .form-header{
+    flex-direction: column;
+    .header-title{
+        color : #303030;
+        font-weight: 600;
+        font-size: 36px;
+        letter-spacing: 0.09em;
+    }
+    .header-explanation{
+        font-size: 12px;
+        padding-left: 0px;
+        align-self: flex-start;
+    }
+}
+
+    .inputs-container{
+        .section-title
+        {
+            font-size: 12px;
+            font-weight: 400;
+            margin-left: 0;
+            .section-seperator{
+                width: 35vw;
+            }
+        }
+    
+        .inputs-section{
+            .inputs-row{
+                flex-direction: column;
+                gap: 27px;
+                 &.check-boxes-row{
+                    gap: 5px;
+                    margin-top: 27px;
+                }
+            }
+        }
+    }
+    .image-container
+    {
+        display: none;
+    }       
+    .image-container-mobile
+    {
+        display: block;
+        position: absolute;
+        left: 0px;
+        bottom: -340px;
+        img{
+
+            height: 90%;
+        }
+    }
+    .btn-container{
+        margin: 0 ;
+    }
+  }

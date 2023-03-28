@@ -7,7 +7,7 @@ export const NewUserSchema = z.object({
         .string()
         .min(9)
         .refine((id) => isValidId(id)),
-    birthDate: z.string(),
+    birthDate: z.string().min(6),
     phoneNumber: z.string().min(10).startsWith('05'),
     email: z.string().email(),
     city: z

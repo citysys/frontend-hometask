@@ -33,8 +33,7 @@ export async function isValidCity(city: string): Promise<boolean> {
         cityForStreetValidation = city
         return totalResults > 0
     } catch (error) {
-        console.error(error)
-        return false ///throw error
+        throw new Error('Failed to validate city')
     }
 }
 
@@ -45,8 +44,7 @@ export async function isValidStreet(street: string): Promise<boolean> {
     }
     try {
         const response = await axios.get('https://data.gov.il/api/3/action/datastore_search', { params: data })
-        const records: [] = response.data.result.records
-        console.log(records)
+        const records: [iRecord] = response.data.result.records
 
         if (!records) return false
         const matchingRecords = records.filter(
@@ -54,7 +52,6 @@ export async function isValidStreet(street: string): Promise<boolean> {
         )
         return matchingRecords.length > 0
     } catch (error) {
-        console.error(error)
-        return false
+        throw new Error('Failed to validate street')
     }
 }

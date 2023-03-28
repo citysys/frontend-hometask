@@ -4,7 +4,6 @@ import { isValidCity, isValidStreet } from '../../../model/validation.service'
 import { UseFormRegister } from 'react-hook-form'
 
 interface iInputProps {
-    index: number
     inputId: string
     label: string
     inputType: string
@@ -12,7 +11,7 @@ interface iInputProps {
     countValidInputs: (inputId: string) => void
 }
 
-const Input = forwardRef(({ index, inputId, label, inputType, register, countValidInputs }: iInputProps, ref: ForwardedRef<HTMLInputElement>) => {
+const Input = forwardRef(({ inputId, label, inputType, register, countValidInputs }: iInputProps, ref: ForwardedRef<HTMLInputElement>) => {
     const [errorMsg, setErrorMsg] = useState<boolean>(false)
     const [apiErrorMsg, setApiErrorMsg] = useState<boolean>(false)
 
@@ -58,7 +57,7 @@ const Input = forwardRef(({ index, inputId, label, inputType, register, countVal
     return (
         <div className={`input-wrapper ${inputId}`}>
             <label className='input-label'>
-                <span className='asterisk'>*</span>
+                {inputId !== 'agreeEmail' && inputId !== 'agreeTerms' && <span className='asterisk'>*</span>}
                 {label}
                 {inputId !== 'agreeEmail' && inputId !== 'agreeTerms' && ':'}
             </label>
