@@ -7,6 +7,7 @@ import { Separator } from "../components/Separator";
 import { SubmitButton } from "../components/SubmitButton";
 import "./Signup.style.scss";
 import axios from "axios";
+import { useFormStore } from "../../controller";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -32,7 +33,6 @@ const Signup: React.FC = () => {
   const [city, setCity] = useState("");
   const [street, setStreet] = useState("");
 
-
   const initialValues: FormValues = {
     fullName: fullName,
     email: email,
@@ -42,23 +42,26 @@ const Signup: React.FC = () => {
     city: city,
     street: street,
   };
-  
+
   const validationSchema = Yup.object().shape({
     fullName: Yup.string().required("אנא מלא את שמך"),
-    email: Yup.string().email("כתובת מייל לא חוקית").required("אנא מלא כתובת מייל"),
-    idNumber: Yup.string().length(9, "ת.ז חייבת לכלול 9 ספרות").required(" אנא מלא תעודת זהות"),
-    phoneNumber: Yup.string().length(10, "מס' נייד חייב לכלול 10 ספרות").required("אנא מלא מספר נייד"),
+    email: Yup.string()
+      .email("כתובת מייל לא חוקית")
+      .required("אנא מלא כתובת מייל"),
+    idNumber: Yup.string()
+      .length(9, "ת.ז חייבת לכלול 9 ספרות")
+      .required(" אנא מלא תעודת זהות"),
+    phoneNumber: Yup.string()
+      .length(10, "מס' נייד חייב לכלול 10 ספרות")
+      .required("אנא מלא מספר נייד"),
     city: Yup.string().required("אנא מלא עיר"),
     street: Yup.string().required("אנא מלא שם רחוב"),
     birthDate: Yup.string().required("אנא מלא תאריך הלידה"),
   });
 
-
   // ----------
-  const handleSubmit = (values: FormValues) => {
-    console.log(values);
-  };
-
+  const setFormValues = useFormStore((state) => state.setFormValues);
+   
   //----------------
 
   // console.log(city);
@@ -111,124 +114,126 @@ const Signup: React.FC = () => {
     getStreets();
   }, []);
 
+  const handleSubmit = (values : any) => {
+    setFormValues(values);
+    console.log('setFormValues => ', useFormStore.getState().formValues)
+    console.log(values);
+    console.log("hi");
+  };
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={values => {
-        console.log(values)
-      console.log('hi')
-      }} 
+      onSubmit={handleSubmit}
     >
-      
-        <Form>
-          <div className="container">
-            <div className="inner-container">
-              <div>
-                <div className="label">:הרשמה</div>
-                <div className="required-label">
-                  {" "}
-                  *שדות המסומנים בכוכבית הם שדות חובה
-                </div>
+      <Form>
+        <div className="container">
+          <div className="inner-container">
+            <div>
+              <div className="label">:הרשמה</div>
+              <div className="required-label">
+                {" "}
+                *שדות המסומנים בכוכבית הם שדות חובה
               </div>
-
-              {/* 1 */}
-
-              <Separator label="פרטים אישיים" />
-              <div className="section">
-                <Input
-                  className="input"
-                  label="שם"
-                  required
-                  type="input"
-                  onChange={(e) => setFullName(e.target.value)}
-                  name="fullName"
-                />
-                <Input
-                  className="input"
-                  label="ת.ז"
-                  name="idNumber"
-                  required
-                  type="input"
-                  onChange={(e) => setIdNumber(e.target.value)}
-                />
-                <div style={{ marginRight: "-4%", marginTop: "8px" }}>
-                  <DatePickerCalendar
-                    label="תאריך לידה"
-                    selectedDate={selectedDate}
-                    setSelectedDate={setSelectedDate}
-                    name="birthDate"
-                  />
-                </div>
-              </div>
-
-              {/* 2 */}
-              <Separator label="פרטי התקשרות" />
-              <div className="section">
-                <Input
-                  className="input"
-                  label="נייד"
-                  name="phoneNumber"
-                  required
-                  type="input"
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                />
-                <Input
-                  className="input"
-                  label="מייל"
-                  name="email"
-                  required
-                  type="input"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-
-              {/* 3 */}
-              <Separator label="כתובת" />
-              <div className="section">
-                <SearchBox
-                  data={citiesData}
-                  label={"עיר"}
-                  chosenValue={city}
-                  setChosenValue={setCity}
-                  name="city"
-                  required
-                />
-                <SearchBox
-                  data={streetsData}
-                  label={"רחוב"}
-                  chosenValue={street}
-                  setChosenValue={setStreet}
-                  name="street"
-                  required
-                />
-              </div>
-
-              <img
-                src="./src/assests/buildings.png"
-                style={{
-                  width: "35%",
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  marginBottom: "12px",
-                }}
-              />
-
-              <div className="section" style={{marginTop: '50px'}}>
-                <Checkbox label="אני מסכים לקבל דיוור במייל ובמסרון" />
-                <br />
-              </div>
-
-              <div className="section">
-                <Checkbox label="אני מסכים לתנאי השירות" />
-              </div>
-
-              <SubmitButton className="send-btn" label="שלח" />
             </div>
+
+            {/* 1 */}
+
+            <Separator label="פרטים אישיים" />
+            <div className="section">
+              <Input
+                className="input"
+                label="שם"
+                required
+                type="input"
+                onChange={(e) => setFullName(e.target.value)}
+                name="fullName"
+              />
+              <Input
+                className="input"
+                label="ת.ז"
+                name="idNumber"
+                required
+                type="input"
+                onChange={(e) => setIdNumber(e.target.value)}
+              />
+              <div style={{ marginRight: "-4%", marginTop: "8px" }}>
+                <DatePickerCalendar
+                  label="תאריך לידה"
+                  selectedDate={selectedDate}
+                  setSelectedDate={setSelectedDate}
+                  name="birthDate"
+                />
+              </div>
+            </div>
+
+            {/* 2 */}
+            <Separator label="פרטי התקשרות" />
+            <div className="section">
+              <Input
+                className="input"
+                label="נייד"
+                name="phoneNumber"
+                required
+                type="input"
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+              <Input
+                className="input"
+                label="מייל"
+                name="email"
+                required
+                type="input"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            {/* 3 */}
+            <Separator label="כתובת" />
+            <div className="section">
+              <SearchBox
+                data={citiesData}
+                label={"עיר"}
+                chosenValue={city}
+                setChosenValue={setCity}
+                name="city"
+                required
+              />
+              <SearchBox
+                data={streetsData}
+                label={"רחוב"}
+                chosenValue={street}
+                setChosenValue={setStreet}
+                name="street"
+                required
+              />
+            </div>
+
+            <img
+              src="./src/assests/buildings.png"
+              style={{
+                width: "35%",
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                marginBottom: "12px",
+              }}
+            />
+
+            <div className="section" style={{ marginTop: "50px" }}>
+              <Checkbox label="אני מסכים לקבל דיוור במייל ובמסרון" />
+              <br />
+            </div>
+
+            <div className="section">
+              <Checkbox label="אני מסכים לתנאי השירות" />
+            </div>
+
+            <SubmitButton className="send-btn" label="שלח" />
           </div>
-        </Form>
-      
+        </div>
+      </Form>
     </Formik>
   );
 };

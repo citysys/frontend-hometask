@@ -1,5 +1,5 @@
-import { useStore } from "../store";
+import { useFormStore } from "../formStore";
 
 const createUser = () => {
-  const state = useStore((state) => state);
+  const state = useFormStore((state) => state);
 };
