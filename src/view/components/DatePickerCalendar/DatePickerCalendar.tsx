@@ -55,7 +55,7 @@ export const DatePickerCalendar: React.FC<DatePickerCalendarProps> = ({
         popperContainer={Popper}
         customInput={<CustomInput value={values[name]} />}
         selected={values[name]}
-        onChange={(date: Date) => setFieldValue(name, date)} // formik
+        onChange={(date: Date) => setFieldValue(name, date)}
         disabledKeyboardNavigation
         showYearDropdown
         scrollableYearDropdown

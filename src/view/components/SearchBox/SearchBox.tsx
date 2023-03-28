@@ -36,7 +36,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setValue1(value);
-    setFieldValue(name, event.target.value); // formik
+    setFieldValue(name, event.target.value);
     onChildValueChange(value);
     setShowSuggestions(value.length > 0);
     const filtered = namesArray.filter((item: any) => item?.includes(value));

@@ -51,7 +51,6 @@ const Signup: React.FC = () => {
       .length(10, "מס' נייד חייב לכלול 10 ספרות")
       .matches(/^[0-9]*$/, "מס' נייד חייב לכלול ספרות בלבד")
       .required("אנא מלא מספר נייד"),
-    // city: Yup.string().test('שם עיר חוקי', 'שם עיר לא חוקי', (value) => { citiesData?.some((c: any) => c.name === value)}).required("אנא מלא עיר"),
     city: Yup.string().required("אנא מלא עיר"),
     street: Yup.string().required("אנא מלא שם רחוב"),
     birthDate: Yup.string().required("אנא מלא תאריך הלידה"),
