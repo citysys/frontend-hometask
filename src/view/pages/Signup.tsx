@@ -149,13 +149,11 @@ const Signup: React.FC = () => {
 
   useEffect(() => {
     (async function getStreet() {
-      console.log(currentCity);
       setStreets(await Api.getStreets(currentCity))
     })()
   }, [currentCity])
 
   const onSave = (formValues: any): void => {
-    console.log({ formValues })
     setUser(formValues)
   }
 

@@ -7,7 +7,6 @@ export interface DataListProps {
 }
 
 const DataList: React.FC<DataListProps> = ({id, options}) => {
-    // console.log(options);
     return (
         <datalist id={id}>
             {options.map(option => <option key={option} value={option}/>)}
