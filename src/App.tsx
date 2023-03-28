@@ -4,9 +4,8 @@ import Test from "./view/pages/test";
 function App() {
   return (
     <div className="App">
-      Hello World!
-      <Test />
       <Signup />
+      <Test />
     </div>
   );
 }

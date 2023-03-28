@@ -21,10 +21,8 @@ const Test: React.FC = () => {
     const getStreets = async (): Promise<void> => {
         const streetsInCity = await fetch(`${api_url}${streets_resource}${cityName.current.result.fields['שם_ישוב']}`)
             .then(res => res.json())
-        console.log(streetsInCity)
         setStreets(streetsInCity.result.records)
     }
-
 
     return (
         <div>
@@ -48,7 +46,6 @@ const Test: React.FC = () => {
                         {street['שם_רחוב']}
                     </option>)}
             </datalist>
-
 
         </div>
     )

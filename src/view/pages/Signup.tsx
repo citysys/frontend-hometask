@@ -3,7 +3,7 @@ import { Input } from "../components/Input";
 import { SubmitButton } from "../components/SubmitButton";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod'
-import { NewUser } from "../../model";
+import { NewUserSchema } from "../../model";
 import { useStore } from "../../controller";
 import { Fragment } from "react";
 
@@ -42,14 +42,14 @@ const formInputs = [
       {
         name: 'phone',
         label: 'נייד',
-        type: 'phone',
+        type: 'text',
         defaultValue: '',
         require: true
       },
       {
         name: 'email',
         label: 'מייל',
-        type: 'email',
+        type: 'text',
         defaultValue: '',
         require: true
       },
@@ -116,16 +116,16 @@ const INITIAL_USER = formInputs.reduce((totalAcc: any, sectionValue: any) => {
   }
 }, {})
 
-
 const Signup: React.FC = () => {
   const setUser = useStore(state => state.setUser)
 
-  const { register, control, handleSubmit, formState } = useForm({ defaultValues: INITIAL_USER })
+  const { register, control, handleSubmit, formState } = useForm({
+    defaultValues: INITIAL_USER,
+    resolver: zodResolver(NewUserSchema)
+  })
 
   const { errors } = formState
 
-
-  //TODO change the type of any
   const onSave = (formValues: any): void => {
     console.log({ formValues })
     setUser(formValues)
@@ -157,7 +157,7 @@ const Signup: React.FC = () => {
                       register={() => register(input.name)}
                     />
                     <div className="error">
-                      <h6>{errors[input.name]?.message?.toString()}</h6>
+                      <h5>{errors[input.name]?.message?.toString()}</h5>
                     </div>
                   </div>
                 )

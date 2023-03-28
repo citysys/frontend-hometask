@@ -11,8 +11,6 @@ const DataList: React.FC<DataListProps> = () => {
         (async function getCities(): Promise<void> {
             const israelCities = await fetch(api_url + cities_resource)
                 .then(res => res.json())
-            console.log({ yos: israelCities.result.records });
-
             setCities(israelCities.result.records)
         })()
     }, [])
