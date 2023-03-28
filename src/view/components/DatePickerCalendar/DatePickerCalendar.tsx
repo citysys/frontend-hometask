@@ -70,6 +70,9 @@ export const DatePickerCalendar: React.FC<DatePickerCalendarProps> = ({
         yearDropdownItemNumber={100}
 
       />
+        <div className="d-error">
+        <ErrorMessage name={name} />
+      </div>
     </>
   );
 };

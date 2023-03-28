@@ -50,6 +50,7 @@ const Signup: React.FC = () => {
     phoneNumber: Yup.string().length(10, "מס' נייד חייב לכלול 10 ספרות").required("אנא מלא מספר נייד"),
     city: Yup.string().required("אנא מלא עיר"),
     street: Yup.string().required("אנא מלא שם רחוב"),
+    birthDate: Yup.string().required("אנא מלא תאריך הלידה"),
   });
 
 
