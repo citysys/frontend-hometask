@@ -8,19 +8,6 @@ import { useStore } from "../../controller";
 import { Fragment, useEffect, useState } from "react";
 import { Api } from "../../DAL/Api";
 
-interface Inputs {
-  category: string,
-  label: string,
-  fields: 
-    {
-      name: string,
-      label: string,
-      type: string,
-      defaultValue: string,
-      require: boolean
-    }[]
-}
-
 const formInputs = [
   {
     category: 'personal',
@@ -30,6 +17,7 @@ const formInputs = [
         name: 'name',
         label: 'שם מלא',
         type: 'text',
+        description:'',
         defaultValue: '',
         require: true
       },
@@ -37,6 +25,7 @@ const formInputs = [
         name: 'id',
         label: 'ת.ז',
         type: 'text',
+        description:'',
         defaultValue: '',
         require: true
       },
@@ -44,7 +33,8 @@ const formInputs = [
         name: 'birthDate',
         label: 'תאריך לידה',
         type: 'date',
-        defaultValue: '',
+        description:'',
+        defaultValue: '1800-01-01',
         require: true
       },
     ],
@@ -57,6 +47,7 @@ const formInputs = [
         name: 'phone',
         label: 'נייד',
         type: 'text',
+        description:'',
         defaultValue: '',
         require: true
       },
@@ -64,6 +55,7 @@ const formInputs = [
         name: 'email',
         label: 'מייל',
         type: 'text',
+        description:'',
         defaultValue: '',
         require: true
       },
@@ -77,6 +69,7 @@ const formInputs = [
         name: 'city',
         label: 'עיר',
         type: 'data_list',
+        description:'',
         defaultValue: '',
         require: true
       },
@@ -84,6 +77,7 @@ const formInputs = [
         name: 'street',
         label: 'רחוב',
         type: 'data_list',
+        description:'',
         defaultValue: '',
         require: true
       },
@@ -91,6 +85,7 @@ const formInputs = [
         name: 'houseNumber',
         label: 'מספר בית',
         type: 'text',
+        description:'',
         defaultValue: '',
         require: true
       },
@@ -102,14 +97,16 @@ const formInputs = [
     fields: [
       {
         name: 'emailReceive',
-        label: 'אני מסכים לקבל דיוור במייל',
+        label: '',
+        description: 'אני מסכים לקבל דיוור במייל',
         type: 'checkbox',
         defaultValue: true,
         require: false
       },
       {
         name: 'agree',
-        label: 'אני מסכים לתנאי השירות',
+        label: '',
+        description: 'אני מסכים לתנאי השירות',
         type: 'checkbox',
         defaultValue: false,
         require: false
@@ -132,34 +129,33 @@ const INITIAL_USER = formInputs.reduce((totalAcc: any, sectionValue: any) => {
 
 const Signup: React.FC = () => {
   const setUser = useStore(state => state.setUser)
-  const [cities, setCities] = useState([])
-  const [currentCity, setCurrentCity] = useState('')
-  const [streets, setStreets] = useState([])
+  const [cities, setCities] = useState([] as string[])
+  const [streets, setStreets] = useState([] as string[])
 
-  const { register, control, handleSubmit, formState } = useForm({
+  const { register, control, handleSubmit, formState, getValues } = useForm({
     defaultValues: INITIAL_USER,
     resolver: zodResolver(NewUserSchema)
   })
-
+  const currentCity = getValues('city')
   const { errors } = formState
   const { field: cityField } = useController({ name: 'city', control })
   const { field: streetField } = useController({ name: 'street', control })
 
   useEffect(() => {
-    (async function getCity() {    
+    (async function getCity() {
       setCities(await Api.getCities())
     })()
   }, [])
 
   useEffect(() => {
     (async function getStreet() {
-      setCities(await Api.getStreets(currentCity))
+      console.log(currentCity);
+      setStreets(await Api.getStreets(currentCity))
     })()
   }, [currentCity])
 
   const onSave = (formValues: any): void => {
     console.log({ formValues })
-
     setUser(formValues)
   }
 
@@ -168,39 +164,49 @@ const Signup: React.FC = () => {
       className="signup container"
       onSubmit={handleSubmit(onSave)}
     >
-      <div className="box">
-        {
-          formInputs.map(section =>
-          (
-            <div key={section.category}>
-              <h5>{section.label}</h5>
-              <div className={section.category + " section"}>
-                {
-                  section.fields.map(input =>
-                    <div key={input.name} className={errors[input.name] && 'invalid'}>
-                      <Input
-                        name={input.name}
-                        label={input.label}
-                        type={input.type}
-                        isRequire={input.require}
-                        errors={errors}
-                        register={() => register(input.name)}
-                        options={cities}
-                      />
-                    </div>
-                  )
-                }
-              </div>
-            </div>
-          ))}
-
-        <div>
-          <SubmitButton className="submit" />
-        </div>
+      <div className="header">
+        <h1 className="title">הרשמה</h1>
+        <p className="instruction">שדות המסומנים בכוכבית הם שדות חובה*</p>
       </div>
+      <div className="fieldsContainer">
+        <div className="box">
+          {
+            formInputs.map(section =>
+            (
+              <div key={section.category}>
+                <h5>{section.label}</h5>
+                <div className={section.category + " section"}>
+                  {
+                    section.fields.map(input =>
+                      <div key={input.name} className={errors[input.name] && 'invalid'}>
+                        <Input
+                          name={input.name}
+                          label={input.label}
+                          type={input.type}
+                          isRequire={input.require}
+                          description={input.description}
+                          errors={errors}
+                          register={() => register(input.name)}
+                          options={input.name === 'city' ? cities :
+                            (input.name === 'street' ? streets : [])}
+                        // field={input.name === 'city' ? cityField : streetField}
+                        />
+                      </div>
+                    )
+                  }
+                </div>
+              </div>
+            ))}
 
-      <div className="image box rightBox">
-        <img src={'images/real-estate.svg'} alt="buildings" />
+          <div>
+            <SubmitButton className="submit" />
+          </div>
+        </div>
+
+        <div className="image box rightBox">
+          <img src={'images/real-estate.svg'} alt="buildings" />
+        </div>
+
       </div>
     </form>
   );

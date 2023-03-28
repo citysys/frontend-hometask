@@ -12,20 +12,21 @@ export interface InputProps {
   label: string
   type: string;
   isRequire: boolean
+  description?: string
   register: () => any
   options?: string[]
   errors: any
   field?: Ifield
 }
 
-const Input: React.FC<InputProps> = ({ name, label, type, isRequire, register, errors, options = [], field }) => {
+const Input: React.FC<InputProps> = ({ name, label, type, isRequire, register, errors, options = [], field, description = '' }) => {
   let list = {}
   if (type === 'data_list' || type === 'select') {
     list = {
       list: name,
       // value: options?.find(({value})=> value=== className),
       value: field?.value,
-      onChange: (field: Ifield) => field?.onChange(field?.value)
+      onChange: () => field?.onChange(() => field?.value)
     }
   }
   return (
@@ -35,19 +36,24 @@ const Input: React.FC<InputProps> = ({ name, label, type, isRequire, register, e
           <span className="strict">
             {isRequire ? '*' : ''}
           </span>
-          {label}:
+          {label}{label? ":" : ""}
         </label>
       </div>
-      <input type={type} {...list} {...register()} />
-      {
-        type === 'data_list' &&
-        (
-          <DataList
-            id={name}
-            options={options}
-          />
-        )
-      }
+
+      <div className="input">
+        <input type={type} {...list} {...register()} />
+        {
+          type === 'data_list' &&
+          (
+            <DataList
+              id={name}
+              options={options}
+            />
+          )
+        }
+      {description}
+      </div>
+
       <div className="error">
         <h5>{errors[name]?.message?.toString()}</h5>
       </div>

@@ -9,7 +9,7 @@ function App() {
       <div className="hello">
         שלום {store.user.name || 'אורח'}
       </div>
-      <Signup />
+        <Signup />
     </div>
   );
 }

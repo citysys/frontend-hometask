@@ -2,19 +2,53 @@ $alert-color: #b73d3d;
 
 .container {
   display: flex;
-  // justify-content: center;
-  // margin: auto;
+  flex-direction: column;
   flex-wrap: wrap;
+  width: 90vw;
   margin: auto;
+  padding: 20px;
 
   background: rgba(255, 255, 255, 0.7);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
-    inset 4px 4px 22px rgba(214, 228, 237, 0.15);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 4px 4px 22px rgba(214, 228, 237, 0.15);
   backdrop-filter: blur(12px);
-  /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 10.8305px;
-  
+
+  .header {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 20px;
+  }
+
+  .title {
+    position: absolute;
+    width: 339px;
+    height: 40px;
+    left: calc(50% - 339px / 2 + 532.5px);
+    top: calc(50% - 40px / 2 - 381.5px);
+
+    font-family: "Open Sans Hebrew Condensed";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 100%;
+    /* identical to box height, or 40px */
+
+    text-align: center;
+    letter-spacing: 0.09em;
+
+    color: #303030;
+  }
+
+  .fieldsContainer {
+    display: flex;
+    padding: 0 20px;
+  }
+
+  .instruction {
+    color: $alert-color;
+  }
+
   .box {
     display: flex;
     flex-direction: column;
@@ -30,82 +64,49 @@ $alert-color: #b73d3d;
       }
       input {
         background-color: #b73d3d;
-        width: 262.70px;
+        width: 262.7px;
         height: 39.94px;
       }
 
-      input[type=checkbox] {
+      input[type="checkbox"] {
         width: auto;
       }
-
-      // label {
-      //   width: 66px;
-      //   height: 16px;
-      //   margin-left: 30px;
-      // }
     }
-    
+
     .section {
       display: flex;
       flex-wrap: wrap;
-      
+
       div {
         margin: 5px;
       }
-      
-      .strict {
-        color: $alert-color;
-      }
-      
-      .error {
-        color: $alert-color;
-      }
-      
+
       .rest {
         display: inline-block;
       }
-      
-      input{
-        background: #FFFFFF;
-    border: 1.08305px solid #BFBFBF;
-    border-radius: 5.41525px;
-  }
-  
-  // label {
-  //   font-family: 'Open Sans Hebrew';
-  //   font-style: normal;
-  //   font-weight: 400;
-  //   font-size: 17px;
-  //   line-height: 100%;
-  //   /* identical to box height, or 17px */
-  // }
-  
-  .invalid {
-    input {
-      border: 2px solid red;
+
+      input {
+        background: #ffffff;
+        border: 1.08305px solid #bfbfbf;
+        border-radius: 5.41525px;
+      }
+
+      .houseNumber {
+        input {
+          width: 40%;
+        }
+      }
     }
   }
-  
-  .houseNumber {
-    input {
-      width: 40%;
-    }
+
+  .image {
+    width: 40vw;
+    height: 40vw;
   }
-  
-}
-}
 
-.image {
-  
-  // width: 40vw;
-  // height: 40vw;
+  .rightBox {
+    flex-direction: row;
+    justify-content: end;
+    align-self: flex-end;
+  }
 }
-
-.rightBox{
-  flex-direction: row;
-  justify-content: end;
-  align-self: flex-end;
-}
-  
-}
- 

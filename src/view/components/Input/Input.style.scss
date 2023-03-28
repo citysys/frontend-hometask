@@ -1,0 +1,19 @@
+$alert-color: #b73d3d;
+
+.input {
+    display: flex;
+}
+
+.strict {
+    color: $alert-color;
+}
+
+.error {
+    color: $alert-color;
+}
+
+.invalid {
+    input {
+      border: 2px solid red;
+    }
+  }
