@@ -7,5 +7,3 @@ type Store = UserSlice
 export const useStore = create<Store>((...slices) => ({
     ...userSlice(...slices),
 }))
-
-console.log(useStore)

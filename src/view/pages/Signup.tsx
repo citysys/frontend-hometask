@@ -1,54 +1,54 @@
 import React, { useRef, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { useStore } from '../../controller/store'
 import { Input } from '../components/Input'
 import { SubmitButton } from '../components/SubmitButton'
 import { NewUserSchema, NewUser } from '../../model/NewUser.model'
+import { createUser } from '../../controller/entities/user.actions'
 
 const Signup: React.FC = () => {
-    const { handleSubmit, register } = useForm<NewUser>()
-    const [userAlert, setUserAlert] = useState(false)
-    const validInputsCountRef = useRef(0)
+    const { handleSubmit, register, reset } = useForm<NewUser>()
+    const [userAlert, setUserAlert] = useState<boolean>(false)
+    const validInputsCountRef = useRef<number>(0)
     const validInputsListRef = useRef<string[]>([])
     const inputFields = [
-        { inputId: 'fullName', label: 'שם מלא:', inputType: 'text', register },
+        { inputId: 'fullName', label: 'שם מלא', inputType: 'text', register },
         { inputId: 'id', label: 'ת.ז', inputType: 'number', register },
-        { inputId: 'birthDate', label: 'תאריך לידה:', inputType: 'date', register },
-        { inputId: 'phoneNumber', label: 'נייד:', inputType: 'number', register },
-        { inputId: 'email', label: 'מייל:', inputType: 'email', register },
-        { inputId: 'city', label: 'עיר:', inputType: 'text', register },
-        { inputId: 'street', label: 'רחוב:', inputType: 'text', register },
-        { inputId: 'houseNumber', label: 'מספר בית:', inputType: 'number', register },
+        { inputId: 'birthDate', label: 'תאריך לידה', inputType: 'date', register },
+        { inputId: 'phoneNumber', label: 'נייד', inputType: 'number', register },
+        { inputId: 'email', label: 'מייל', inputType: 'email', register },
+        { inputId: 'city', label: 'עיר', inputType: 'text', register },
+        { inputId: 'street', label: 'רחוב', inputType: 'text', register },
+        { inputId: 'houseNumber', label: 'מספר בית', inputType: 'number', register },
+        { inputId: 'agreeEmail', label: 'אני מסכים לקבל דיוור במייל', inputType: 'checkbox', register },
+        { inputId: 'agreeTerms', label: 'אני מסכים לתנאי השירות', inputType: 'checkbox', register },
     ]
     const sectionTitles: string[] = ['פרטים אישיים:', 'פרטי התקשרות:', 'כתובת:']
-    const groupedFields = [inputFields.slice(0, 3), inputFields.slice(3, 5), inputFields.slice(5)]
+    const groupedFields = [inputFields.slice(0, 3), inputFields.slice(3, 5), inputFields.slice(5, 8), inputFields.slice(8)]
 
-    const formSubmitHanlder: SubmitHandler<NewUser> = (data: NewUser) => {
-        if (validInputsCountRef.current !== 8) {
+    const formSubmitHandler: SubmitHandler<NewUser> = async (data: NewUser) => {
+        if (validInputsCountRef.current <= 8) {
             setUserAlert(true)
-            console.log(validInputsCountRef)
             return
         }
-        const newUser = NewUserSchema.safeParse(data)
-        if (newUser.success) {
-            setUserAlert(false)
-            console.log(newUser)
-        } else {
-            newUser.error.errors.map((error) => {
-                console.log(error)
-            })
-        }
+        const newUserResult = await NewUserSchema.parseAsync(data)
+        console.log(newUserResult)
+        setUserAlert(false)
+        createUser(newUserResult)
+        const state = useStore.getState()
+        console.log('State after:', state)
+        reset()
     }
 
     function countValidInputs(inputId: string) {
         if (validInputsListRef.current.includes(inputId)) return
         validInputsListRef.current.push(inputId)
         validInputsCountRef.current++
-        console.log(validInputsCountRef.current)
     }
 
     return (
         <main className='main-container'>
-            <form onSubmit={handleSubmit(formSubmitHanlder)} className='signup-form'>
+            <form onSubmit={handleSubmit(formSubmitHandler)} className='signup-form'>
                 <div className='image-container'>
                     <img src='/real-estate.png' />
                 </div>

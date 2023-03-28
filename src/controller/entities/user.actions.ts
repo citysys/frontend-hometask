@@ -1,5 +1,6 @@
-import { useStore } from "../store";
+import { NewUser } from '../../model'
+import { useStore } from '../store'
 
-const createUser = () => {
-  const state = useStore((state) => state);
-};
+export const createUser = (data: NewUser) => {
+    useStore.getState().setUser(data)
+}
