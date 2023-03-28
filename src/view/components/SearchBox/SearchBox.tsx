@@ -9,6 +9,7 @@ interface SearchBoxProps {
   chosenValue?: string;
   setChosenValue?: any;
   name: string;
+  onChildValueChange: (value: string) => void;
 }
 
 interface MyFormValues {
@@ -23,6 +24,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
   chosenValue,
   setChosenValue,
   name,
+  onChildValueChange 
 }) => {
   // console.log(data);
   // const [chosenValue, setChosenValue] = useState("");
@@ -39,6 +41,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
     const value = event.target.value;
     // setChosenValue(value);
     setFieldValue(name, event.target.value); // formik
+    onChildValueChange(value);
 
     setShowSuggestions(value.length > 0);
 
@@ -51,6 +54,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
   const handleSuggestionClick = (value: string) => {
     // setChosenValue(value);
     setFieldValue(name, value);
+    onChildValueChange(value);
     setShowSuggestions(false);
   };
 
