@@ -4,13 +4,23 @@ body {
   direction: rtl;
   background-image: url("./../images/background.jpeg");
     position: absolute;
+    display: flex;
 
     //TODO fix image 
     background: {
-      // transform: rotate(89.9deg);
+      transform: rotate(89.9deg);
     }
   }
 
-  .hello{
-    color: whitesmoke;
+  .App{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+
+    .hello{
+      color: whitesmoke;
+    }
   }
+

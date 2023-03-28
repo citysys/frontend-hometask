@@ -125,11 +125,8 @@ const Signup: React.FC = () => {
   })
 
   const { errors } = formState
-  console.log({formState});
-  
 
   const onSave = (formValues: any): void => {
-    console.log({ formValues })
     setUser(formValues)
   }
 
@@ -138,15 +135,16 @@ const Signup: React.FC = () => {
       className="signup container"
       onSubmit={handleSubmit(onSave)}
     >
+      <div className="box">
       {
         formInputs.map(section =>
         (
           <Fragment key={section.category}>
             <h5>{section.label}</h5>
-            <div className={section.category +" section"}>
+            <div className={section.category + " section"}>
               {
                 section.fields.map(input =>
-                  <div key={input.name}>
+                  <div key={input.name} className={errors[input.name] && 'invalid'}>
                     <label>
                       <span className="strict">
                         {input.require ? '*' : ''}
@@ -171,7 +169,9 @@ const Signup: React.FC = () => {
       <div>
         <SubmitButton className="submit" />
       </div>
-      <div className="image">
+      </div>
+
+      <div className="image box rightBox">
         <img src={'images/real-estate.svg'} alt="buildings" />
       </div>
     </form>

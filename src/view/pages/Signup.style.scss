@@ -1,60 +1,111 @@
 $alert-color: #b73d3d;
 
 .container {
+  display: flex;
+  // justify-content: center;
+  // margin: auto;
+  flex-wrap: wrap;
+  margin: auto;
+
   background: rgba(255, 255, 255, 0.7);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
-  inset 4px 4px 22px rgba(214, 228, 237, 0.15);
+    inset 4px 4px 22px rgba(214, 228, 237, 0.15);
   backdrop-filter: blur(12px);
   /* Note: backdrop-filter has minimal browser support */
-  
+
   border-radius: 10.8305px;
-}
-
-.section {
-  display: flex;
   
-  div {
-    margin: 5px;
-  }
-  
-  .strict {
-    color: $alert-color;
-  }
-  
-  .error {
-    color: $alert-color;
-  }
-  
-  .rest {
-    display: inline-block;
-  }
-
-  .image {
-    position: relative;
-    z-index: -1;
+  .box {
     display: flex;
-    margin-left: 100000px;
+    flex-direction: column;
+
+    @media screen and (max-width: 600px) {
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+      justify-content: center;
+      div {
+        display: block;
+        width: 90vw;
+      }
+      input {
+        background-color: #b73d3d;
+        width: 262.70px;
+        height: 39.94px;
+      }
+
+      input[type=checkbox] {
+        width: auto;
+      }
+
+      // label {
+      //   width: 66px;
+      //   height: 16px;
+      //   margin-left: 30px;
+      // }
+    }
+    
+    .section {
+      display: flex;
+      flex-wrap: wrap;
+      
+      div {
+        margin: 5px;
+      }
+      
+      .strict {
+        color: $alert-color;
+      }
+      
+      .error {
+        color: $alert-color;
+      }
+      
+      .rest {
+        display: inline-block;
+      }
+      
+      input{
+        background: #FFFFFF;
+    border: 1.08305px solid #BFBFBF;
+    border-radius: 5.41525px;
   }
-
-  // input {
-  //   // position: absolute;
-  //   left: 0%;
-  //   right: 0%;
-  //   top: 14.89%;
-  //   bottom: 0%;
-  // }
-
+  
   // label {
-  //   background-color: white;
-  //   font-family: "Open Sans Hebrew";
+  //   font-family: 'Open Sans Hebrew';
   //   font-style: normal;
   //   font-weight: 400;
   //   font-size: 17px;
   //   line-height: 100%;
   //   /* identical to box height, or 17px */
-
-  //   text-align: right;
-  //   letter-spacing: -0.02em;
   // }
+  
+  .invalid {
+    input {
+      border: 2px solid red;
+    }
+  }
+  
+  .houseNumber {
+    input {
+      width: 40%;
+    }
+  }
+  
+}
 }
 
+.image {
+  
+  // width: 40vw;
+  // height: 40vw;
+}
+
+.rightBox{
+  flex-direction: row;
+  justify-content: end;
+  align-self: flex-end;
+}
+  
+}
+ 
