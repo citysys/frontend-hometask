@@ -40,7 +40,7 @@
 .label {
   display: flex;
   flex-direction: row-reverse;
-  color: #303030;
+  color: var(--color-light-black);
   font-size: 40px;
   font-weight: 700;
   margin-top: 75px;
@@ -59,7 +59,7 @@
 }
 
 .required-label {
-  color: #b73d3d;
+  color: var(--color-red);
   font-weight: 700;
   font-size: 13px;
   margin-left: 60%;
@@ -97,7 +97,7 @@
 }
 
 .send-btn {
-  background-color: #507586;
+  background-color: var(--color-dirty-blue);
   border-radius: 12px;
   position: absolute;
   width: 462px;

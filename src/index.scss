@@ -3,11 +3,11 @@
   --color-black: #000000;
   --color-light-black: #303030;
   --color-white: #ffffff;
-  --color-light-gray: #BFBFBF;
+  --color-light-gray: #bfbfbf;
   --color-dark-gray: #636161;
-  --color-red: #B73D3D;
+  --color-red: #b73d3d;
   --color-dirty-blue: #507586;
-  --color-dark-blue: #4799BE;
+  --color-dark-blue: #4799be;
 }
 
 body {
@@ -18,9 +18,8 @@ body {
   font-family: sans-serif;
 }
 
-
-// @media (max-width: 300px) {
-//   body {
-//     background-size: cover;
-//   }
-// }
+@media (max-width: 800px) {
+  body {
+    height: 1500px;
+  }
+}

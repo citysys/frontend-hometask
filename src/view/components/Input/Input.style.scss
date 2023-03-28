@@ -19,7 +19,7 @@
   text-align: right;
   position: fixed;
   line-height: 17px;
-  color: #636161;
+  color: var(--color-dark-gray);
   background-color: white;
   font-weight: 400;
   font-size: 17px;
@@ -50,7 +50,7 @@
 }
 
 .required {
-  color: #b73d3d;
+  color: var(--color-red);
   display: inline;
 }
 
