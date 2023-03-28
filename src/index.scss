@@ -1,16 +1,10 @@
 $primary-color: #507586;
 
 body {
-  width: 100%;
   direction: rtl;
   background-image: url("./../images/background.jpeg");
     position: absolute;
     display: flex;
-
-    //TODO fix image 
-    background: {
-      transform: rotate(89.9deg);
-    }
   }
 
   .App{

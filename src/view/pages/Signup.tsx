@@ -164,11 +164,11 @@ const Signup: React.FC = () => {
       className="signup container"
       onSubmit={handleSubmit(onSave)}
     >
+      <div className="fieldsContainer box">
       <div className="header">
         <h1 className="title">הרשמה</h1>
         <p className="instruction">שדות המסומנים בכוכבית הם שדות חובה*</p>
       </div>
-      <div className="fieldsContainer">
         <div className="box">
           {
             formInputs.map(section =>

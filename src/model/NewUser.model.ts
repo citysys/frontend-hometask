@@ -15,7 +15,7 @@ const idNumberValidator = (id: string): boolean => {
 const houseNumberValidator = (houseNumber: string)=> (/\d/).test(houseNumber)
 
 export const NewUserSchema = z.object({
-    name: z.string().regex(/[א-ת][א-ת]+(\ [א-ת][א-ת]+)+/,
+    name: z.string().regex(/^[א-ת][א-ת]+(\ [א-ת][א-ת]+)+$/,
                          { message: 'אנא הזן שם פרטי ומשפחה המכיל אותיות ורווחים בלבד' }),
 
     id: z.string().regex(/^[0-9]{9}$/, { message: 'מספר זהות חייב להכיל 9 ספרות בדיוק' })
