@@ -26,9 +26,6 @@ const Test: React.FC = () => {
 
     return (
         <div>
-            <div>
-                <img src={'images/real-estate.svg'} alt="buildings" />
-            </div>
             <input ref={cityName} type="text" list="city" onChange={getStreets} />
             <datalist id="city">
                 <option value="">בחר יישוב</option>

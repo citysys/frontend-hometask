@@ -16,7 +16,7 @@ const Input: React.FC<InputProps> = ({ className, type, register }) => {
       {
         type === 'data_list' &&
         (
-          <DataList />
+          <DataList /*id={className}*/ />
         )
       }
     </div>

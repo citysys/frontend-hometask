@@ -125,6 +125,8 @@ const Signup: React.FC = () => {
   })
 
   const { errors } = formState
+  console.log({formState});
+  
 
   const onSave = (formValues: any): void => {
     console.log({ formValues })
@@ -141,7 +143,7 @@ const Signup: React.FC = () => {
         (
           <Fragment key={section.category}>
             <h5>{section.label}</h5>
-            <div className="section">
+            <div className={section.category +" section"}>
               {
                 section.fields.map(input =>
                   <div key={input.name}>
@@ -169,7 +171,9 @@ const Signup: React.FC = () => {
       <div>
         <SubmitButton className="submit" />
       </div>
-
+      <div className="image">
+        <img src={'images/real-estate.svg'} alt="buildings" />
+      </div>
     </form>
   );
 };
