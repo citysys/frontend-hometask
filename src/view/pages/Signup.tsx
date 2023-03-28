@@ -4,7 +4,7 @@ import "./Signup.style.scss";
 import axios from "axios";
 import { useFormStore } from "../../controller";
 
-import { Formik, Form, Field, ErrorMessage, useFormikContext } from "formik";
+import { Formik, Form} from "formik";
 import * as Yup from "yup";
 
 interface FormValues {
