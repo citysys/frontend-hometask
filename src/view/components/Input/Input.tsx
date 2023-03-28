@@ -1,18 +1,20 @@
 import React, { useState, forwardRef, ForwardedRef } from 'react'
-import { NewUserSchema } from '../../../model'
+import { NewUser, NewUserSchema } from '../../../model'
 import { isValidCity, isValidStreet } from '../../../model/validation.service'
+import { UseFormRegister } from 'react-hook-form'
 
-type InputProps = {
+interface iInputProps {
+    index: number
     inputId: string
     label: string
     inputType: string
-    register: any
-    countValidInputs: any
+    register: UseFormRegister<NewUser>
+    countValidInputs: (inputId: string) => void
 }
 
-const Input = forwardRef(({ inputId, label, inputType, register, countValidInputs }: InputProps, ref: ForwardedRef<HTMLInputElement>) => {
-    const [errorMsg, setErrorMsg] = useState(false)
-    const [apiErrorMsg, setApiErrorMsg] = useState(false)
+const Input = forwardRef(({ index, inputId, label, inputType, register, countValidInputs }: iInputProps, ref: ForwardedRef<HTMLInputElement>) => {
+    const [errorMsg, setErrorMsg] = useState<boolean>(false)
+    const [apiErrorMsg, setApiErrorMsg] = useState<boolean>(false)
 
     async function onchange({ target }: React.ChangeEvent<HTMLInputElement>) {
         const inputValue: string | number = target.value
@@ -52,15 +54,30 @@ const Input = forwardRef(({ inputId, label, inputType, register, countValidInput
             target.style.borderColor = 'red'
         }
     }
+
     return (
-        <div className='input-wrapper'>
+        <div className={`input-wrapper ${inputId}`}>
             <label className='input-label'>
                 <span className='asterisk'>*</span>
-                {label} :
+                {label}
+                {inputId !== 'agreeEmail' && inputId !== 'agreeTerms' && ':'}
             </label>
-            <input autoComplete='whatever' {...register(inputId)} type={inputType} id={inputId} onBlur={onchange} ref={ref} required />
-            {<span className={`user-error ${errorMsg ? 'visible' : ''}`}>{`האם אתה בטוח שהשדה תקין ?`}</span>}
-            {<span className={`user-error ${apiErrorMsg ? 'visible' : ''}`}>{`לא מצאנו את ה${label} במאגר הנתונים שלנו`}</span>}
+            <input
+                autoComplete='whatever'
+                {...register(inputId as keyof NewUser)}
+                type={inputType}
+                id={inputId}
+                onBlur={onchange}
+                ref={ref}
+                required
+            />
+            {inputId !== 'street' && inputId !== 'city' && inputId !== 'agreeEmail' && inputId !== 'agreeTerms' && (
+                <span className={`user-error ${errorMsg ? 'visible' : ''}`}>{`האם אתה בטוח שהשדה תקין ?`}</span>
+            )}
+
+            {(inputId === 'street' || inputId === 'city') && (
+                <span className={`user-error ${apiErrorMsg ? 'visible' : ''}`}>{`לא מצאנו את ה${label} במאגר הנתונים שלנו`}</span>
+            )}
         </div>
     )
 })

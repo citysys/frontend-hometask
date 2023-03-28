@@ -1,8 +1,15 @@
 import axios from 'axios'
 
+interface iRecord {
+    rank: number
+    סמל_ישוב: string
+    סמל_רחוב: string
+    שם_ישוב: string
+    שם_רחוב: string
+}
+
 let cityForStreetValidation = ''
 export function isValidId(id: string): boolean {
-    if (id.length > 9) return false
     const paddedId = id.length < 9 ? ('00000000' + id).slice(-9) : id
     return (
         Array.from(paddedId, Number).reduce((counter, digit, i) => {
@@ -27,7 +34,7 @@ export async function isValidCity(city: string): Promise<boolean> {
         return totalResults > 0
     } catch (error) {
         console.error(error)
-        return false
+        return false ///throw error
     }
 }
 
@@ -38,9 +45,13 @@ export async function isValidStreet(street: string): Promise<boolean> {
     }
     try {
         const response = await axios.get('https://data.gov.il/api/3/action/datastore_search', { params: data })
-        const records = response.data.result.records
+        const records: [] = response.data.result.records
+        console.log(records)
+
         if (!records) return false
-        const matchingRecords = records.filter((record: any) => record.שם_ישוב.trim() === cityForStreetValidation && record.שם_רחוב.includes(street))
+        const matchingRecords = records.filter(
+            (record: iRecord) => record.שם_ישוב.trim() === cityForStreetValidation && record.שם_רחוב.includes(street)
+        )
         return matchingRecords.length > 0
     } catch (error) {
         console.error(error)

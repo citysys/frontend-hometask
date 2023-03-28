@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { useStore } from '../../controller/store'
 import { Input } from '../components/Input'
 import { SubmitButton } from '../components/SubmitButton'
 import { NewUserSchema, NewUser } from '../../model/NewUser.model'
@@ -11,6 +10,7 @@ const Signup: React.FC = () => {
     const [userAlert, setUserAlert] = useState<boolean>(false)
     const validInputsCountRef = useRef<number>(0)
     const validInputsListRef = useRef<string[]>([])
+
     const inputFields = [
         { inputId: 'fullName', label: 'שם מלא', inputType: 'text', register },
         { inputId: 'id', label: 'ת.ז', inputType: 'number', register },
@@ -20,9 +20,10 @@ const Signup: React.FC = () => {
         { inputId: 'city', label: 'עיר', inputType: 'text', register },
         { inputId: 'street', label: 'רחוב', inputType: 'text', register },
         { inputId: 'houseNumber', label: 'מספר בית', inputType: 'number', register },
-        { inputId: 'agreeEmail', label: 'אני מסכים לקבל דיוור במייל', inputType: 'checkbox', register },
+        { inputId: 'agreeEmail', label: 'אני מסכים לקבל דיוור במייל ובמסרון', inputType: 'checkbox', register },
         { inputId: 'agreeTerms', label: 'אני מסכים לתנאי השירות', inputType: 'checkbox', register },
     ]
+
     const sectionTitles: string[] = ['פרטים אישיים:', 'פרטי התקשרות:', 'כתובת:']
     const groupedFields = [inputFields.slice(0, 3), inputFields.slice(3, 5), inputFields.slice(5, 8), inputFields.slice(8)]
 
@@ -32,11 +33,8 @@ const Signup: React.FC = () => {
             return
         }
         const newUserResult = await NewUserSchema.parseAsync(data)
-        console.log(newUserResult)
         setUserAlert(false)
         createUser(newUserResult)
-        const state = useStore.getState()
-        console.log('State after:', state)
         reset()
     }
 
@@ -49,9 +47,6 @@ const Signup: React.FC = () => {
     return (
         <main className='main-container'>
             <form onSubmit={handleSubmit(formSubmitHandler)} className='signup-form'>
-                <div className='image-container'>
-                    <img src='/real-estate.png' />
-                </div>
                 <div className='form-container'>
                     <header className='form-header'>
                         <span className='header-title'>הרשמה :</span>
@@ -60,12 +55,18 @@ const Signup: React.FC = () => {
                     <div className='inputs-container'>
                         {groupedFields.map((fields, index) => (
                             <div className='inputs-section' key={index}>
-                                <h2>{sectionTitles[index]}</h2>
-                                <div className='inputs-row'>
-                                    {fields.map((field) => (
+                                {index < 3 && (
+                                    <h2 className={'section-title'}>
+                                        {sectionTitles[index]}
+                                        {<span className='section-seperator'></span>}{' '}
+                                    </h2>
+                                )}
+                                <div className={`inputs-row  ${index === 3 ? 'check-boxes-row' : ''}`}>
+                                    {fields.map((field, index) => (
                                         <React.Fragment key={field.inputId}>
                                             <Input
                                                 {...field}
+                                                index={index}
                                                 key={field.inputId}
                                                 countValidInputs={countValidInputs}
                                                 {...register(field.inputId as keyof NewUser)}
@@ -82,6 +83,9 @@ const Signup: React.FC = () => {
                     </div>
                 </div>
             </form>
+            <div className='image-container'>
+                <img src='/real-estate.png' />
+            </div>
         </main>
     )
 }
