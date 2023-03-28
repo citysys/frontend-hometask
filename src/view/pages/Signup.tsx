@@ -61,11 +61,7 @@ const Signup: React.FC = () => {
   const setFormValues = useFormStore((state) => state.setFormValues);
 
   const checkCity = citiesData?.some((c: any) => c.name === city);
-  console.log({ checkCity });
-
-  console.log({ street });
   const checkStreet = streetsData?.some((c: any) => c.name === street);
-  console.log({ checkStreet });
 
   const getCities = async () => {
     try {
