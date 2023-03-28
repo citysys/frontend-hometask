@@ -139,7 +139,7 @@ const Signup: React.FC = () => {
  
   };
 
-
+  
   const handleCityValueChange = (value: string) => {
     setCity(value);
   };
@@ -239,21 +239,15 @@ const Signup: React.FC = () => {
 
             <img
               src="./src/assests/buildings.png"
-              style={{
-                width: "35%",
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                marginBottom: "12px",
-              }}
+              className="buildings-img"
             />
 
-            <div className="section" style={{ marginTop: "50px" }}>
+            <div className="checkbox-separator" style={{ marginTop: "50px" }}>
               <Checkbox label="אני מסכים לקבל דיוור במייל ובמסרון" />
               <br />
             </div>
 
-            <div className="section">
+            <div className="checkbox-separator">
               <Checkbox label="אני מסכים לתנאי השירות" />
             </div>
 

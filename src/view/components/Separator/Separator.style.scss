@@ -3,6 +3,12 @@
   flex-direction: row-reverse;
   margin-bottom: 47px;
   margin-top: 40px;
+
+  @media (max-width: 800px) {
+    display: flex;
+    width: 500px;
+    justify-content: flex-start;
+  }
 }
 
 .mini-label {
@@ -16,4 +22,10 @@
   width: 611px;
   height: 1px;
   margin-top:0.5%;
+
+  @media (max-width: 800px) {
+    display: flex;
+    width: 120px;
+    justify-content: flex-end;
+  }
 }

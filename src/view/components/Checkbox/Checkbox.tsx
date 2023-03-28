@@ -20,7 +20,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ label, onChange, checked }) => {
   };
 
   return (
-    <div id={`checkbox-toggle${label}`} style={{ marginBottom: "15px" }}>
+    <div id={`checkbox-toggle${label}`} className="checkbox-wrapper">
       <label className="checkbox-label">
         {label}
         <input type="checkbox"/>
