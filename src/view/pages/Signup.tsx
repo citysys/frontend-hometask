@@ -24,7 +24,7 @@ interface FormValues {
 
 const Signup: React.FC = () => {
   const [citiesData, setCitiesData] = useState([]);
-  const [streetsData, setStreetsData] = useState();
+  const [streetsData, setStreetsData] = useState([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>();
   const [fullName, setFullName] = useState("");
   const [idNumber, setIdNumber] = useState("");
@@ -64,14 +64,17 @@ const Signup: React.FC = () => {
 
   // ----------
   const setFormValues = useFormStore((state) => state.setFormValues);
-   
+
   //----------------
 
   // console.log(city);
 
-  const check =  citiesData?.some((c:any) => c.name === 'חדרה')
-  console.log({check});
+  const checkCity = citiesData?.some((c: any) => c.name === city);
+  console.log({ checkCity });
 
+  console.log({ street });
+  const checkStreet = streetsData?.some((c: any) => c.name === street);
+  console.log({ checkStreet });
 
   const getCities = async () => {
     try {
@@ -84,40 +87,43 @@ const Signup: React.FC = () => {
       const filteredCityNamesData = citiesDetailsData.map((item: any) => ({
         name: item.שם_ישוב.slice(0, -1),
       }));
-      console.log( filteredCityNamesData );
+      console.log(filteredCityNamesData);
       setCitiesData(filteredCityNamesData);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getStreets = useCallback(async (city: string) => {
-    try {
-      const response = await axios.get(
-        "https://data.gov.il/api/3/action/datastore_search?resource_id=bf185c7f-1a4e-4662-88c5-fa118a244bda&limit=100000"
-      );
-      // console.log(response?.data?.result?.records);
-      // console.log(response);
-      const streetsDetailsData = response?.data?.result?.records;
-      console.log('city!! = ', city)
+  const getStreets = useCallback(
+    async (city: string) => {
+      try {
+        const response = await axios.get(
+          "https://data.gov.il/api/3/action/datastore_search?resource_id=bf185c7f-1a4e-4662-88c5-fa118a244bda&limit=100000"
+        );
+        // console.log(response?.data?.result?.records);
+        // console.log(response);
+        const streetsDetailsData = response?.data?.result?.records;
+        console.log("city!! = ", city);
 
-      console.log({streetsDetailsData})
+        console.log({ streetsDetailsData });
 
-      const filteredStreets = streetsDetailsData.filter(
-        (item: any) => item.city_name.slice(0, -1) === city
-      );
+        const filteredStreets = streetsDetailsData.filter(
+          (item: any) => item.city_name.slice(0, -1) === city
+        );
 
-      console.log({ filteredStreets });
+        console.log({ filteredStreets });
 
-      const filteredStreetNameByCity = filteredStreets.map((item: any) => ({
-        name: item.street_name,
-      }));
-      // console.log({ filteredStreetNameByCity });
-      setStreetsData(filteredStreetNameByCity);
-    } catch (error) {
-      console.log(error);
-    }
-  },[city, street]);
+        const filteredStreetNameByCity = filteredStreets.map((item: any) => ({
+          name: item.street_name.slice(0, -1),
+        }));
+        // console.log({ filteredStreetNameByCity });
+        setStreetsData(filteredStreetNameByCity);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [city, street]
+  );
 
   useEffect(() => {
     getCities();
@@ -127,15 +133,31 @@ const Signup: React.FC = () => {
     getStreets(city);
   }, [city]);
 
-  const handleSubmit = (values : any) => {
-    setFormValues(values);
-    console.log('setFormValues => ', useFormStore.getState().formValues)
-    console.log(values);
+  const handleSubmit = (values: any) => {
+    // const checkIfCityIsReal = citiesData?.some((c: any) => c.name === city);
+    // console.log({ checkIfCityIsReal });
+
+    if (checkCity && checkStreet) {
+      setFormValues(values);
+    } else {
+      setFormValues({
+        fullName: "",
+        email: "",
+        idNumber: "",
+        phoneNumber: "",
+        birthDate: null,
+        city: "",
+        street: "",
+      });
+    }
+
+    // setFormValues(values);
+    console.log("setFormValues => ", useFormStore.getState().formValues);
+    // console.log(values);
     console.log("hi");
   };
 
-
-  console.log({city});
+  console.log({ city });
 
   const handleCityValueChange = (value: string) => {
     setCity(value);
@@ -224,6 +246,7 @@ const Signup: React.FC = () => {
                 name="city"
                 required
                 onChildValueChange={handleCityValueChange}
+                isValidName={checkCity}
               />
               <SearchBox
                 data={streetsData}
@@ -233,6 +256,7 @@ const Signup: React.FC = () => {
                 name="street"
                 required
                 onChildValueChange={handleStreetValueChange}
+                isValidName={checkStreet}
               />
             </div>
 

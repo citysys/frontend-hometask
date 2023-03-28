@@ -10,6 +10,7 @@ interface SearchBoxProps {
   setChosenValue?: any;
   name: string;
   onChildValueChange: (value: string) => void;
+  isValidName: boolean;
 }
 
 interface MyFormValues {
@@ -24,12 +25,14 @@ const SearchBox: React.FC<SearchBoxProps> = ({
   chosenValue,
   setChosenValue,
   name,
-  onChildValueChange 
+  onChildValueChange,
+  isValidName
 }) => {
   // console.log(data);
   // const [chosenValue, setChosenValue] = useState("");
   const [filteredData, setFilteredData] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [value1, setValue1] = useState('');
 
   //--formik
   const { values, setFieldValue } = useFormikContext<MyFormValues>();
@@ -39,6 +42,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
+    setValue1(value);
     // setChosenValue(value);
     setFieldValue(name, event.target.value); // formik
     onChildValueChange(value);
@@ -110,6 +114,8 @@ const SearchBox: React.FC<SearchBoxProps> = ({
 
       <div className="error">
         <ErrorMessage name={name} />
+        {!isValidName && name === 'city' && value1.length > 0 && <div id={name}>שם עיר לא חוקי</div>}
+        {!isValidName && name === 'street' && value1.length > 0 && <div id={name}>שם רחוב לא חוקי</div>}
       </div>
     </div>
   );
