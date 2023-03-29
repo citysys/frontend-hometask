@@ -29,6 +29,7 @@ export interface DatePickerCalendarProps {
   setSelectedDate?: any;
   label?: string;
   name?: string;
+  required?: boolean;
 }
 
 interface MyFormValues {
@@ -39,6 +40,7 @@ interface MyFormValues {
 export const DatePickerCalendar: React.FC<DatePickerCalendarProps> = ({
   label,
   name = "birthDate",
+  required
 }) => {
   const { values, setFieldValue } = useFormikContext<MyFormValues>();
 
@@ -49,7 +51,7 @@ export const DatePickerCalendar: React.FC<DatePickerCalendarProps> = ({
   );
   return (
     <>
-      <label className="d-label">{label}</label>
+      <label className="d-label">{label}  {required && <div className="required">*</div>}</label>
       <DatePicker
         dateFormat="MM/dd/yyyy"
         popperContainer={Popper}

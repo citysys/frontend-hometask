@@ -183,7 +183,7 @@ const Signup: React.FC = () => {
                 type="input"
               />
               <div className="date-picker-wrapper input input-wrapper">
-                <DatePickerCalendar label="תאריך לידה" name="birthDate" />
+                <DatePickerCalendar label="תאריך לידה" name="birthDate" required/>
               </div>
             </div>
 
