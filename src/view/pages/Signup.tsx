@@ -22,6 +22,7 @@ interface FormValues {
   birthDate: Date | null;
   city: string;
   street: string;
+  homeNumber: string;
 }
 
 const Signup: React.FC = () => {
@@ -35,6 +36,7 @@ const Signup: React.FC = () => {
     email: "",
     idNumber: "",
     phoneNumber: "",
+    homeNumber: "",
     birthDate: null,
     city: city,
     street: street,
@@ -62,6 +64,7 @@ const Signup: React.FC = () => {
       .length(10, "מס' נייד חייב לכלול 10 ספרות")
       .matches(/^[0-9]*$/, "מס' נייד חייב לכלול ספרות בלבד")
       .required("אנא מלא מספר נייד"),
+    homeNumber: Yup.string().required("אנא מלא מס' בית"),
     city: Yup.string().required("אנא מלא עיר"),
     street: Yup.string().required("אנא מלא שם רחוב"),
     birthDate: Yup.string().required("אנא מלא תאריך הלידה"),
@@ -155,7 +158,7 @@ const Signup: React.FC = () => {
       <Form>
         <div className="container">
           <div className="inner-container">
-            <div className="label">:הרשמה</div>
+            <div className="label">הרשמה:</div>
             <div className="required-label">
               {" "}
               *שדות המסומנים בכוכבית הם שדות חובה
@@ -167,7 +170,7 @@ const Signup: React.FC = () => {
             <div className="section">
               <Input
                 className="input"
-                label="שם"
+                label="שם מלא"
                 required
                 type="input"
                 name="fullName"
@@ -179,7 +182,7 @@ const Signup: React.FC = () => {
                 required
                 type="input"
               />
-              <div className="date-picker-wrapper">
+              <div className="date-picker-wrapper input input-wrapper">
                 <DatePickerCalendar label="תאריך לידה" name="birthDate" />
               </div>
             </div>
@@ -227,6 +230,13 @@ const Signup: React.FC = () => {
                 onChildValueChange={handleStreetValueChange}
                 isValidName={checkStreet}
                 className="input"
+              />
+              <Input
+                className="input house"
+                label="מספר בית‎"
+                name="homeNumber"
+                required
+                type="input"
               />
             </div>
 

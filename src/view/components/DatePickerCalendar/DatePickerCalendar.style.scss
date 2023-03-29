@@ -1,34 +1,27 @@
 .d-label {
-    font-size: 0.8rem;
-    margin-bottom: 0.5rem;
-    direction: rtl;
-    text-align: right;
-    position: absolute;
-    line-height: 17px;
-    color: var(--color-dark-gray);
-    background-color: white;
-    font-weight: 400;
-    font-size: 17px;
-    z-index: 1;
-    margin-top: -10px;
-    margin-left: 115px;
-    pointer-events: none; 
-  
-  }
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  text-align: right;
+  position: absolute;
+  line-height: 17px;
+  color: var(--color-dark-gray);
+  background-color: white;
+  font-weight: 400;
+  font-size: 17px;
+  z-index: 1;
+  margin-top: -10px;
+  margin-left: 115px;
+  pointer-events: none;
+  width: max-content;
+  right: 20px;
+}
 
-  .d-error {
-    position: fixed;
-    color: red;
-    font-size: 16px;
-    padding-top: 4px;
-    z-index: 0.5;
-    margin-left: 70px;
-    
-
-
-    @media (max-width: 800px) {
-     padding-top: 38px;
-     margin-left: 70px;
-     z-index: 0;
-    }
-  }
+.d-error {
+  position: fixed;
+  color: red;
+  font-size: 16px;
+  padding-top: 4px;
+  z-index: 0.5;
+  margin-left: 70px;
+  margin-top: 35px;
+}

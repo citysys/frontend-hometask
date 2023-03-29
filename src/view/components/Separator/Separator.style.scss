@@ -1,13 +1,14 @@
+@import "src/styles/vars.scss";
+
 .separator-label {
   display: flex;
-  flex-direction: row-reverse;
   margin-bottom: 47px;
   margin-top: 40px;
 
-  @media (max-width: 800px) {
-    display: flex;
-    width: 500px;
-    justify-content: flex-start;
+  margin-left: 70px;
+
+  @media #{$mobile} {
+    margin-left: unset;
   }
 }
 
@@ -18,14 +19,7 @@
   font-size: 14px;
 }
 
-.line-img {
-  width: 611px;
-  height: 1px;
-  margin-top:0.5%;
-
-  @media (max-width: 800px) {
-    display: flex;
-    width: 120px;
-    justify-content: flex-end;
-  }
+.divider {
+  border-bottom: 1px solid #3333;
+  width: 100%;
 }

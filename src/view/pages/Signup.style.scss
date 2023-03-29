@@ -1,10 +1,10 @@
+@import "/src/styles/vars.scss";
+
 .inner-container {
   display: flex;
-  padding-right: 108px;
+  padding: 100px;
+  padding-left: 350px;
   flex-direction: column;
-  position: absolute;
-  width: 1424px;
-  height: 953px;
   margin: 0 auto;
   background: rgba(255, 255, 255, 0.7);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
@@ -12,131 +12,106 @@
   backdrop-filter: blur(12px);
   border-radius: 10.8305px;
 
-  @media (max-width: 800px) {
-    width: 398px;
-    height: 1100px;
-    left: 16px;
-    top: 77px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 15%;
+  @media #{$mobile} {
+    max-width: 500px;
+    padding: 4rem;
   }
 }
 
 .section {
   display: flex;
-  flex-direction: row-reverse;
 
-  @media (max-width: 800px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 200px;
-    flex-wrap: wrap;
+  @media #{$mobile} {
+    flex-flow: column;
   }
 }
 
 .label {
   display: flex;
-  flex-direction: row-reverse;
   color: var(--color-light-black);
   font-size: 40px;
   font-weight: 700;
-  margin-top: 75px;
-
-  @media (max-width: 800px) {
-    margin-top: -80px;
-    padding-left: 370px;
-  }
 }
 
 .container {
-  display: flex;
-  justify-content: center;
+  max-width: 1200px;
+  max-height: 900px;
+  margin: 0 auto;
 }
 
 .required-label {
   color: var(--color-red);
   font-weight: 700;
   font-size: 13px;
-  margin-left: 38%;
+  // margin-left: 38%;
+  direction: ltr;
 
-  @media (max-width: 800px) {
-    padding-right: 65px;
-    display: flex;
-    width: 100%;
-    margin-right: -90%;
-    margin-top: 10px;
+  @media #{$mobile} {
+    direction: rtl;
+
   }
 }
 
 .separator-label {
   display: flex;
-  flex-direction: row-reverse;
   margin-bottom: 47px;
   margin-top: 40px;
+  align-items: center;
+  @media #{$mobile} {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
 }
 
 .checkbox-separator {
   display: flex;
-  flex-direction: row-reverse;
   margin-bottom: 10px;
   margin-top: 10px;
   justify-content: flex-start;
-
-  @media (max-width: 800px) {
-    // padding-right: 65px;
-    display: flex;
-    width: 100%;
-    // margin-right: 10%;
-    margin-right: -25%;
-  }
 }
 
 .send-btn {
   background-color: var(--color-dirty-blue);
   border-radius: 12px;
-  position: absolute;
   width: 462px;
   height: 43px;
   color: white;
   font-size: 21.5px;
-  margin-top: 55%;
-  margin-left: 55%;
+  margin-top: 5%;
+  margin-right: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 800px) {
-    font-size: 21.5px;
-    width: 157px;
-    top: 700px;
-    margin-right: -11%;
+  @media #{$mobile} {
+    width: 60%;
+    margin-right: 0;
   }
 }
 
 .buildings-img {
-  width: 35%;
+  width: 30%;
   position: absolute;
   bottom: 0;
   left: 0;
   margin-bottom: 12px;
 
-  @media (max-width: 800px) {
-    width: 25%;
+  @media #{$mobile} {
+    transform: translate(-40%, 40%);
   }
 }
 
 .date-picker-wrapper {
-  margin-right: -4%;
-  margin-top: 8px;
-
-  @media (max-width: 800px) {
-    display: flex;
-    width: 100%;
-    //changes to respoinsive new :
-    // margin-right: 10%;
-    margin-left: 68%;
+  input {
+    width: 180%;
+    margin: 0;
   }
+
+  @media #{$mobile} {
+    max-width: 50%;
+  }
+}
+
+.input.house {
+  max-width: 160px;
 }

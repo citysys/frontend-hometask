@@ -9,8 +9,8 @@ export interface SeparatorProps {
 const Separator: React.FC<SeparatorProps> = ({ label }) => {
   return (
     <div className="separator-label">
-      <div className="mini-label">:{label}</div>
-      <img src='./src/assests/line.png' className="line-img"/>
+      <div className="mini-label">{label}:</div>
+      <div  className="divider"/>
     </div>
   );
 };
