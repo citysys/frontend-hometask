@@ -1,0 +1,36 @@
+$alert-color: #b73d3d;
+
+.input {
+    display: flex;
+}
+
+.strict {
+    color: $alert-color;
+}
+
+.error {
+    color: $alert-color;
+}
+
+.invalid {
+    input {
+      border: 2px solid red;
+    }
+  }
+
+  input {
+    background: #ffffff;
+    border: 1.08305px solid #bfbfbf;
+    border-radius: 5.41525px;
+
+    @media screen and (max-width: 600px) {
+        input {
+            width: 262.7px;
+            height: 39.94px;
+          }
+          input[type="checkbox"] {
+            width: 1rem;
+            height: 1rem;
+          }
+    }
+  }

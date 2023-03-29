@@ -1,10 +1,15 @@
+import { useStore } from "./controller";
 import Signup from "./view/pages/Signup";
+import Test from "./view/pages/test";
 
 function App() {
+  const store = useStore()
   return (
     <div className="App">
-      Hello World!
-      <Signup />
+      <div className="hello">
+        שלום {store.user.name || 'אורח'}
+      </div>
+        <Signup />
     </div>
   );
 }
