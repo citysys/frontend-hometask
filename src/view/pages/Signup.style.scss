@@ -1,0 +1,102 @@
+$alert-color: #b73d3d;
+
+.container {
+  display: flex;
+  width: 90vw;
+  margin: auto;
+
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 4px 4px 22px rgba(214, 228, 237, 0.15);
+  backdrop-filter: blur(12px);
+
+  border-radius: 10.8305px;
+
+  @media screen and (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    justify-content: center;
+    div {
+      display: block;
+      width: 90vw;
+    }
+  }
+
+  .signup{
+    padding-bottom: 50px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    @media screen and (max-width: 600px) {
+      flex-direction: column;
+    }
+  }
+
+  .title {
+    font-family: "Open Sans Hebrew Condensed";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 100%;
+
+    text-align: center;
+    letter-spacing: 0.09em;
+
+    color: #303030;
+  }
+
+  .fieldsContainer {
+    display: flex;
+    padding: 0 20px;
+  }
+
+  .instruction {
+    color: $alert-color;
+  }
+
+  .box {
+    display: flex;
+    flex-direction: column;
+
+    .section {
+      display: flex;
+      flex-wrap: wrap;
+
+      div {
+        margin: 5px;
+      }
+
+      .houseNumber {
+        input {
+          width: 40%;
+        }
+      }
+    }
+
+    .sectionHead {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+
+      .hr {
+        width: 50%;
+        position: absolute;
+      }
+    }
+
+    .rest {
+      flex-direction: column;
+    }
+  }
+
+  .image {
+    justify-content: end;
+    align-self: flex-end;
+    width: 40vw;
+    height: 40vw;
+  }
+}
