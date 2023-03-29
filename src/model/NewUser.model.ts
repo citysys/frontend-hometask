@@ -26,7 +26,7 @@ export const NewUserSchema = z.object({
                     .refine(idNumberValidator,{message: 'ישנה טעות במספר תעודת הזהות'}),
 
     birthDate: z.coerce.date({invalid_type_error: 'אנא בחר תאריך', required_error: 'אנא בחר תאריך'})
-                                .min(new Date("1900-01-01"), { message: "נראה כי אתה קצת יותר מידי מבוגר" })
+                                .min(new Date("1920-01-01"), { message: "נראה כי אתה קצת יותר מידי מבוגר" })
                                 .max(new Date(), { message: "כנראה שעוד לא נולדת" }),
     phone: z.string().regex(/^05\d{8}$/,
      { message: 'מספר נייד מכיל 10 ספרות ומתחיל בקידומת 05' }),

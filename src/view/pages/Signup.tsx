@@ -34,7 +34,7 @@ const formInputs = [
         label: 'תאריך לידה',
         type: 'date',
         description: '',
-        defaultValue: '1800-01-01',
+        defaultValue: '1900-01-01',
         require: true
       },
     ],
