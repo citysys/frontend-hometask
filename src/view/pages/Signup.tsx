@@ -157,54 +157,60 @@ const Signup: React.FC = () => {
   }
 
   return (
-    <form
-      className="signup container"
-      onSubmit={handleSubmit(onSave)}
-    >
-      <div className="fieldsContainer box">
-        <div className="header">
-          <h1 className="title">הרשמה</h1>
-          <p className="instruction">*שדות המסומנים בכוכבית הם שדות חובה</p>
-        </div>
-        <div className="inputs">
-          {
-            formInputs.map(section =>
-            (
-              <div key={section.category}>
-                <h5>{section.label}</h5>
-                <div className={section.category + " section"}>
-                  {
-                    section.fields.map(input =>
-                      <div key={input.name} className={errors[input.name] && 'invalid'}>
-                        <Input
-                          name={input.name}
-                          label={input.label}
-                          type={input.type}
-                          isRequire={input.require}
-                          description={input.description}
-                          errors={errors}
-                          register={() => register(input.name)}
-                          options={input.name === 'city' ? cities :
-                            (input.name === 'street' ? streets : [])}
-                        />
-                      </div>
-                    )
-                  }
-                </div>
-              </div>
-            ))}
+    <div className="container">
 
-          <div>
-            <SubmitButton className="submit" />
+      <form
+        className="signup"
+        onSubmit={handleSubmit(onSave)}
+      >
+        <div className="fieldsContainer box">
+          <div className="header">
+            <h1 className="title">הרשמה</h1>
+            <p className="instruction">*שדות המסומנים בכוכבית הם שדות חובה</p>
           </div>
+          <div className="inputs">
+            {
+              formInputs.map(section =>
+              (
+                <div key={section.category}>
+                  <h5>{section.label}</h5>
+                  <hr className="hr" />
+                  <div className={section.category + " section"}>
+                    {
+                      section.fields.map(input =>
+                        <div key={input.name} className={errors[input.name] && 'invalid'}>
+                          <Input
+                            name={input.name}
+                            label={input.label}
+                            type={input.type}
+                            isRequire={input.require}
+                            description={input.description}
+                            errors={errors}
+                            register={() => register(input.name)}
+                            options={input.name === 'city' ? cities :
+                              (input.name === 'street' ? streets : [])}
+                          />
+                        </div>
+                      )
+                    }
+                  </div>
+                </div>
+              ))}
+
+            <div>
+              <SubmitButton className="submit" />
+            </div>
+          </div>
+
         </div>
 
-        <div className="image box leftBox">
-          <img src={'images/real-estate.svg'} alt="buildings" />
-        </div>
-
+      </form>
+      <div className="image box">
+        <img src={'images/real-estate.svg'} alt="buildings" />
       </div>
-    </form>
+
+    </div>
+
   );
 };
 
