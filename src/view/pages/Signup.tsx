@@ -1,12 +1,12 @@
 import "./Signup.style.scss";
 import { Input } from "../components/Input";
 import { SubmitButton } from "../components/SubmitButton";
-import { useForm, useController } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NewUserSchema } from "../../model";
 import { useStore } from "../../controller";
-import { Fragment, useEffect, useState } from "react";
-import { Api } from "../../DAL/Api";
+import { useEffect } from "react";
+
 
 const formInputs = [
   {
@@ -17,7 +17,7 @@ const formInputs = [
         name: 'name',
         label: 'שם מלא',
         type: 'text',
-        description:'',
+        description: '',
         defaultValue: '',
         require: true
       },
@@ -25,7 +25,7 @@ const formInputs = [
         name: 'id',
         label: 'ת.ז',
         type: 'text',
-        description:'',
+        description: '',
         defaultValue: '',
         require: true
       },
@@ -33,7 +33,7 @@ const formInputs = [
         name: 'birthDate',
         label: 'תאריך לידה',
         type: 'date',
-        description:'',
+        description: '',
         defaultValue: '1800-01-01',
         require: true
       },
@@ -47,7 +47,7 @@ const formInputs = [
         name: 'phone',
         label: 'נייד',
         type: 'text',
-        description:'',
+        description: '',
         defaultValue: '',
         require: true
       },
@@ -55,7 +55,7 @@ const formInputs = [
         name: 'email',
         label: 'מייל',
         type: 'text',
-        description:'',
+        description: '',
         defaultValue: '',
         require: true
       },
@@ -69,7 +69,7 @@ const formInputs = [
         name: 'city',
         label: 'עיר',
         type: 'data_list',
-        description:'',
+        description: '',
         defaultValue: '',
         require: true
       },
@@ -77,7 +77,7 @@ const formInputs = [
         name: 'street',
         label: 'רחוב',
         type: 'data_list',
-        description:'',
+        description: '',
         defaultValue: '',
         require: true
       },
@@ -85,7 +85,7 @@ const formInputs = [
         name: 'houseNumber',
         label: 'מספר בית',
         type: 'text',
-        description:'',
+        description: '',
         defaultValue: '',
         require: true
       },
@@ -134,12 +134,12 @@ const Signup: React.FC = () => {
   const streets = useStore(state => state.streets)
   const setStreets = useStore(state => state.setStreets)
 
-  const { register, handleSubmit, formState, getValues } = useForm({
+  const { register, handleSubmit, formState, watch } = useForm({
     defaultValues: INITIAL_USER,
     resolver: zodResolver(NewUserSchema)
   })
 
-  const currentCity = getValues('city')
+  const currentCity = watch('city')
   const { errors } = formState
 
   useEffect(() => {
@@ -147,7 +147,7 @@ const Signup: React.FC = () => {
   }, [])
 
   useEffect(() => {
-      setStreets(currentCity)
+    setStreets(currentCity)
   }, [currentCity])
 
   const onSave = (formValues: any): void => {
@@ -160,10 +160,10 @@ const Signup: React.FC = () => {
       onSubmit={handleSubmit(onSave)}
     >
       <div className="fieldsContainer box">
-      <div className="header">
-        <h1 className="title">הרשמה</h1>
-        <p className="instruction">*שדות המסומנים בכוכבית הם שדות חובה</p>
-      </div>
+        <div className="header">
+          <h1 className="title">הרשמה</h1>
+          <p className="instruction">*שדות המסומנים בכוכבית הם שדות חובה</p>
+        </div>
         <div className="inputs">
           {
             formInputs.map(section =>
