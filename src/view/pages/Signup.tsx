@@ -165,9 +165,9 @@ const Signup: React.FC = () => {
       <div className="fieldsContainer box">
       <div className="header">
         <h1 className="title">הרשמה</h1>
-        <p className="instruction">שדות המסומנים בכוכבית הם שדות חובה*</p>
+        <p className="instruction">*שדות המסומנים בכוכבית הם שדות חובה</p>
       </div>
-        <div className="box">
+        <div className="inputs">
           {
             formInputs.map(section =>
             (
@@ -201,7 +201,7 @@ const Signup: React.FC = () => {
           </div>
         </div>
 
-        <div className="image box rightBox">
+        <div className="image box leftBox">
           <img src={'images/real-estate.svg'} alt="buildings" />
         </div>
 
