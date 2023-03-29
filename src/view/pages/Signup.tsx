@@ -3,7 +3,7 @@ import { Input } from "../components/Input";
 import { SubmitButton } from "../components/SubmitButton";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod'
-import { NewUserSchema } from "../../model";
+import { cityValidate, NewUserSchema } from "../../model";
 import { useStore } from "../../controller";
 import { useEffect } from "react";
 
@@ -147,7 +147,9 @@ const Signup: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    setStreets(currentCity)
+    if (cityValidate(currentCity)) {
+      setStreets(currentCity)
+    }
   }, [currentCity])
 
   const onSave = (formValues: any): void => {

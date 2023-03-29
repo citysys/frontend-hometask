@@ -13,9 +13,8 @@ const idNumberValidator = (id: string): boolean => {
     }) % 10 === 0;
 }
 
-const cityValidation = (city: string): boolean => useStore.getState().cities.includes(city)
-const streetValidation = (street: string): boolean => useStore.getState().streets.includes(street)
-
+export const cityValidate = (city: string): boolean => useStore.getState().cities.includes(city)
+const streetValidate = (street: string): boolean => useStore.getState().streets.includes(street)
 
 const houseNumberValidator = (houseNumber: string)=> (/\d/).test(houseNumber)
 
@@ -24,7 +23,7 @@ export const NewUserSchema = z.object({
                          { message: 'אנא הזן שם פרטי ומשפחה המכיל אותיות ורווחים בלבד' }),
 
     id: z.string().regex(/^[0-9]{9}$/, { message: 'מספר זהות חייב להכיל 9 ספרות בדיוק' })
-                    .refine(idNumberValidator,{message: 'ישנה טעות במספר טעות הזהות'}),
+                    .refine(idNumberValidator,{message: 'ישנה טעות במספר תעודת הזהות'}),
 
     birthDate: z.coerce.date({invalid_type_error: 'אנא בחר תאריך', required_error: 'אנא בחר תאריך'})
                                 .min(new Date("1900-01-01"), { message: "נראה כי אתה קצת יותר מידי מבוגר" })
@@ -34,9 +33,9 @@ export const NewUserSchema = z.object({
 
     email: z.string().email({ message: 'כתובת דואר אלקטרוני אינה תקינה' }),
 
-    city: z.string().refine(cityValidation , { message: 'עיר אינה נמצאת ברשימת הערים' }),
+    city: z.string().refine(cityValidate , { message: 'עיר אינה נמצאת ברשימת הערים' }),
 
-    street: z.string().refine(streetValidation, { message: 'עיר אינה נמצאת ברשימת הערים' }),
+    street: z.string().refine(streetValidate, { message: 'עיר אינה נמצאת ברשימת הערים' }),
 
     houseNumber: z.string().refine(houseNumberValidator, {message:'מספר בית חייב להכיל מספר'}),
 
