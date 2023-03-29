@@ -129,28 +129,25 @@ const INITIAL_USER = formInputs.reduce((totalAcc: any, sectionValue: any) => {
 
 const Signup: React.FC = () => {
   const setUser = useStore(state => state.setUser)
-  const [cities, setCities] = useState([] as string[])
-  const [streets, setStreets] = useState([] as string[])
+  const cities = useStore(state => state.cities)
+  const setCities = useStore(state => state.setCities)
+  const streets = useStore(state => state.streets)
+  const setStreets = useStore(state => state.setStreets)
 
-  const { register, control, handleSubmit, formState, getValues } = useForm({
+  const { register, handleSubmit, formState, getValues } = useForm({
     defaultValues: INITIAL_USER,
     resolver: zodResolver(NewUserSchema)
   })
+
   const currentCity = getValues('city')
   const { errors } = formState
-  const { field: cityField } = useController({ name: 'city', control })
-  const { field: streetField } = useController({ name: 'street', control })
 
   useEffect(() => {
-    (async function getCity() {
-      setCities(await Api.getCities())
-    })()
+    setCities()
   }, [])
 
   useEffect(() => {
-    (async function getStreet() {
-      setStreets(await Api.getStreets(currentCity))
-    })()
+      setStreets(currentCity)
   }, [currentCity])
 
   const onSave = (formValues: any): void => {
@@ -187,7 +184,6 @@ const Signup: React.FC = () => {
                           register={() => register(input.name)}
                           options={input.name === 'city' ? cities :
                             (input.name === 'street' ? streets : [])}
-                        // field={input.name === 'city' ? cityField : streetField}
                         />
                       </div>
                     )

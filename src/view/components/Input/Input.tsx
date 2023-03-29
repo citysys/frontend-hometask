@@ -2,11 +2,6 @@ import React from "react";
 import DataList from "./DataList";
 import "./Input.style.scss";
 
-// interface Ifield {
-//   value: string,
-//   onChange: (field: any) => void
-// }
-
 export interface InputProps {
   name: string;
   label: string
@@ -16,17 +11,13 @@ export interface InputProps {
   register: () => any
   options?: string[]
   errors: any
-  // field?: Ifield
 }
 
-const Input: React.FC<InputProps> = ({ name, label, type, isRequire, register, errors, options = [],/* field,*/ description = '' }) => {
+const Input: React.FC<InputProps> = ({ name, label, type, isRequire, register, errors, options = [], description = '' }) => {
   let list = {}
   if (type === 'data_list' || type === 'select') {
     list = {
       list: name,
-      // value: options?.find(({value})=> value=== className),
-      // value: field?.value,
-      // onChange: () => field?.onChange(() => field?.value)
     }
   }
   return (

@@ -1,4 +1,4 @@
-import { useStore } from "../store";
+import { useStore } from "../../store";
 
 const createUser = () => {
   const state = useStore((state) => state);

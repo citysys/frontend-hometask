@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { useStore } from "../controller";
 
 //took from upNext
 //https://www.upnext.co.il/articles/israeli-id-numer-validation/
@@ -11,6 +12,10 @@ const idNumberValidator = (id: string): boolean => {
         return counter + (step > 9 ? step - 9 : step);
     }) % 10 === 0;
 }
+
+const cityValidation = (city: string): boolean => useStore.getState().cities.includes(city)
+const streetValidation = (street: string): boolean => useStore.getState().streets.includes(street)
+
 
 const houseNumberValidator = (houseNumber: string)=> (/\d/).test(houseNumber)
 
@@ -29,15 +34,15 @@ export const NewUserSchema = z.object({
 
     email: z.string().email({ message: 'כתובת דואר אלקטרוני אינה תקינה' }),
 
-    city: z.string().regex(/[א-ת]+/, { message: 'עיר אינה נמצאת ברשימת הערים' }),
+    city: z.string().refine(cityValidation , { message: 'עיר אינה נמצאת ברשימת הערים' }),
 
-    street: z.string().regex(/[א-ת]+/, { message: 'עיר אינה נמצאת ברשימת הערים' }),
+    street: z.string().refine(streetValidation, { message: 'עיר אינה נמצאת ברשימת הערים' }),
 
     houseNumber: z.string().refine(houseNumberValidator, {message:'מספר בית חייב להכיל מספר'}),
 
     emailReceive: z.boolean(),
 
-    agree: z.literal(true, {errorMap: () => ({ message: "על מנת להירשם עליך להסכים לתנאי השירות" })}),
+    agree: z.literal<boolean>(true, {errorMap: () => ({ message: "על מנת להירשם עליך להסכים לתנאי השירות" })}),
 })
 
 export type NewUser = z.infer<typeof NewUserSchema>;

@@ -1,4 +1,4 @@
-import { NewUser } from './../../model/NewUser.model';
+import { NewUser } from '../../../model/NewUser.model';
 import { StateCreator } from "zustand";
 import { UserSlice } from "./user.types";
 

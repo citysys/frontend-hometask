@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Api } from '../../../DAL/Api'
 
 export interface DataListProps { 
     id: string
