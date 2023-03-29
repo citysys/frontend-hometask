@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ErrorMessage, useFormikContext } from "formik";
 
 interface SearchBoxProps {
+  className?: string;
   data: any;
   label?: string;
   required?: boolean;
@@ -18,6 +19,7 @@ interface MyFormValues {
 }
 
 const SearchBox: React.FC<SearchBoxProps> = ({
+  className,
   data,
   label,
   required,
@@ -58,14 +60,8 @@ const SearchBox: React.FC<SearchBoxProps> = ({
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-      }}
-    >
-      <label className="input-label" style={{ marginRight: "-170px" }}>
+    <div className={className + " " + "input-wrapper"}>
+      <label className="input-label">
         {label}
         {required && <div className="required">*</div>}
       </label>

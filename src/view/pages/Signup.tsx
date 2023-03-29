@@ -181,7 +181,7 @@ const Signup: React.FC = () => {
                 required
                 type="input"
               />
-              <div style={{ marginRight: "-4%", marginTop: "8px" }}>
+              <div className="date-picker-wrapper">
                 <DatePickerCalendar label="תאריך לידה" name="birthDate" />
               </div>
             </div>
@@ -217,6 +217,7 @@ const Signup: React.FC = () => {
                 required
                 onChildValueChange={handleCityValueChange}
                 isValidName={checkCity}
+                className="input"
               />
               <SearchBox
                 data={streetsData}
@@ -227,12 +228,13 @@ const Signup: React.FC = () => {
                 required
                 onChildValueChange={handleStreetValueChange}
                 isValidName={checkStreet}
+                className="input"
               />
             </div>
 
             <img src="./src/assests/buildings.png" className="buildings-img" />
 
-            <div className="checkbox-separator" style={{ marginTop: "50px" }}>
+            <div className="checkbox-separator">
               <Checkbox label="אני מסכים לקבל דיוור במייל ובמסרון" />
               <br />
             </div>

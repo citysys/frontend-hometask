@@ -47,6 +47,7 @@
 
   @media (max-width: 800px) {
     margin-top: -80px;
+    padding-left: 370px;
   }
 }
 
@@ -84,10 +85,11 @@
   justify-content: flex-start;
 
   @media (max-width: 800px) {
-    padding-right: 65px;
+    // padding-right: 65px;
     display: flex;
     width: 100%;
-    margin-right: 10%;
+    // margin-right: 10%;
+    margin-right: -25%;
   }
 }
 
@@ -109,6 +111,7 @@
     font-size: 21.5px;
     width: 157px;
     top: 700px;
+    margin-right: -11%;
   }
 }
 
@@ -121,5 +124,18 @@
 
   @media (max-width: 800px) {
     width: 25%;
+  }
+}
+
+.date-picker-wrapper {
+  margin-right: -4%;
+  margin-top: 8px;
+
+  @media (max-width: 800px) {
+    display: flex;
+    width: 100%;
+    //changes to respoinsive new :
+    // margin-right: 10%;
+    margin-left: 68%;
   }
 }
