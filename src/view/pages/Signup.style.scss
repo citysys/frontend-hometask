@@ -95,13 +95,13 @@ $alert-color: #b73d3d;
     }
   }
 
-  .image {
-    width: 40vw;
-    height: 40vw;
-  }
-
   .leftBox {
     justify-content: end;
     align-self: flex-end;
+    
+    .image {
+      width: 40vw;
+      height: 40vw;
+    }
   }
 }
