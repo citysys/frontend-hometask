@@ -1,12 +1,11 @@
 $primary-color: #507586;
 
 button {
-    margin: 20px;
     background-color: $primary-color;
     border: none;
     border-radius: 11.9444px;
-    margin: auto;
-    width: 30%;
+    margin-right: 30%;
+    width: 60%;
     height: 43px;
     color: white;
     font-family: 'Fredoka';
@@ -14,4 +13,9 @@ button {
     font-size: 21.5px;
     line-height: 100%;
     letter-spacing: 0.02em;
+
+    @media screen and (max-width: 600px){
+        width: 30%;
+        margin-right: 20px;
+    }
 }
