@@ -2,7 +2,6 @@ $alert-color: #b73d3d;
 
 .container {
   display: flex;
-  flex-direction: column;
   width: 90vw;
   margin: auto;
 
@@ -25,10 +24,14 @@ $alert-color: #b73d3d;
       width: 262.7px;
       height: 39.94px;
     }
-    input[type=checkbox] {
+    input[type="checkbox"] {
       width: 1rem;
       height: 1rem;
     }
+  }
+
+  .signup{
+    padding-bottom: 50px;
   }
 
   .header {
@@ -63,10 +66,6 @@ $alert-color: #b73d3d;
     color: $alert-color;
   }
 
-  .hr {
-    width: 50%;
-  }
-
   .box {
     display: flex;
     flex-direction: column;
@@ -92,6 +91,17 @@ $alert-color: #b73d3d;
       }
     }
 
+    .sectionHead {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+
+      .hr {
+        width: 50%;
+        position: absolute;
+      }
+    }
+
     .rest {
       flex-direction: column;
     }
@@ -100,7 +110,7 @@ $alert-color: #b73d3d;
   .image {
     justify-content: end;
     align-self: flex-end;
-    // width: 40vw;
-    // height: 40vw;
+    width: 40vw;
+    height: 40vw;
   }
 }

@@ -160,7 +160,7 @@ const Signup: React.FC = () => {
     <div className="container">
 
       <form
-        className="signup"
+        className="signup box"
         onSubmit={handleSubmit(onSave)}
       >
         <div className="fieldsContainer box">
@@ -172,7 +172,7 @@ const Signup: React.FC = () => {
             {
               formInputs.map(section =>
               (
-                <div key={section.category}>
+                <div key={section.category} className={'sectionHead'}>
                   <h5>{section.label}</h5>
                   <hr className="hr" />
                   <div className={section.category + " section"}>
