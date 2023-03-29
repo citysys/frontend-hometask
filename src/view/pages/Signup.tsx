@@ -1,10 +1,17 @@
 import React, { useEffect, useCallback, useState } from "react";
-import {Checkbox, DatePickerCalendar, Input, SearchBox, Separator, SubmitButton } from '../components'
+import {
+  Checkbox,
+  DatePickerCalendar,
+  Input,
+  SearchBox,
+  Separator,
+  SubmitButton,
+} from "../components";
 import "./Signup.style.scss";
 import axios from "axios";
 import { useFormStore } from "../../controller";
 
-import { Formik, Form} from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 interface FormValues {
@@ -20,20 +27,15 @@ interface FormValues {
 const Signup: React.FC = () => {
   const [citiesData, setCitiesData] = useState([]);
   const [streetsData, setStreetsData] = useState([]);
-  const [selectedDate, setSelectedDate] = useState<Date | null>();
-  const [fullName, setFullName] = useState("");
-  const [idNumber, setIdNumber] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
   const [street, setStreet] = useState("");
 
   const initialValues: FormValues = {
-    fullName: fullName,
-    email: email,
-    idNumber: idNumber,
-    phoneNumber: phoneNumber,
-    birthDate: selectedDate || null,
+    fullName: "",
+    email: "",
+    idNumber: "",
+    phoneNumber: "",
+    birthDate: null,
     city: city,
     street: street,
   };
@@ -44,9 +46,18 @@ const Signup: React.FC = () => {
       .email("כתובת מייל לא חוקית")
       .required("אנא מלא כתובת מייל"),
     idNumber: Yup.string()
-      .length(9, "ת.ז חייבת לכלול 9 ספרות")
-      .matches(/^[0-9]*$/, "מס' ת.ז חייב לכלול ספרות בלבד")
-      .required(" אנא מלא תעודת זהות"),
+      .matches(/^[0-9]{9}$/, "ת.ז חייבת לכלול 9 ספרות בלבד")
+      .test("תקין", "ת.ז לא תקין", (value) => {
+        const id = value?.toString()?.trim();
+        let sum = 0;
+        let incNum;
+        for (let i = 0; i < 9; i++) {
+          incNum = Number(id![i]) * ((i % 2) + 1);
+          sum += incNum > 9 ? incNum - 9 : incNum;
+        }
+        return sum % 10 === 0;
+      })
+      .required("אנא מלא תעודת זהות"),
     phoneNumber: Yup.string()
       .length(10, "מס' נייד חייב לכלול 10 ספרות")
       .matches(/^[0-9]*$/, "מס' נייד חייב לכלול ספרות בלבד")
@@ -55,7 +66,6 @@ const Signup: React.FC = () => {
     street: Yup.string().required("אנא מלא שם רחוב"),
     birthDate: Yup.string().required("אנא מלא תאריך הלידה"),
   });
-
 
   const setFormValues = useFormStore((state) => state.setFormValues);
 
@@ -85,7 +95,7 @@ const Signup: React.FC = () => {
         );
 
         const streetsDetailsData = response?.data?.result?.records;
-    
+
         const filteredStreets = streetsDetailsData.filter(
           (item: any) => item.city_name.slice(0, -1) === city
         );
@@ -126,10 +136,8 @@ const Signup: React.FC = () => {
     }
 
     console.log("setFormValues => ", useFormStore.getState().formValues);
- 
   };
 
-  
   const handleCityValueChange = (value: string) => {
     setCity(value);
   };
@@ -174,12 +182,7 @@ const Signup: React.FC = () => {
                 type="input"
               />
               <div style={{ marginRight: "-4%", marginTop: "8px" }}>
-                <DatePickerCalendar
-                  label="תאריך לידה"
-                  selectedDate={selectedDate}
-                  setSelectedDate={setSelectedDate}
-                  name="birthDate"
-                />
+                <DatePickerCalendar label="תאריך לידה" name="birthDate" />
               </div>
             </div>
 
@@ -227,10 +230,7 @@ const Signup: React.FC = () => {
               />
             </div>
 
-            <img
-              src="./src/assests/buildings.png"
-              className="buildings-img"
-            />
+            <img src="./src/assests/buildings.png" className="buildings-img" />
 
             <div className="checkbox-separator" style={{ marginTop: "50px" }}>
               <Checkbox label="אני מסכים לקבל דיוור במייל ובמסרון" />
