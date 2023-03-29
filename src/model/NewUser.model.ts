@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { isValidCity, isValidId, isValidStreet } from './validation.service'
+import { isValidId } from './services/validation.service'
 
 export const NewUserSchema = z.object({
     fullName: z.string().regex(/^[א-ת\s]+$/),
@@ -10,16 +10,8 @@ export const NewUserSchema = z.object({
     birthDate: z.string().min(6),
     phoneNumber: z.string().min(10).startsWith('05'),
     email: z.string().email(),
-    city: z
-        .string()
-        .min(2)
-        .regex(/^[א-ת\s]+$/)
-        .refine((city) => isValidCity(city)),
-    street: z
-        .string()
-        .min(2)
-        .regex(/^[א-ת\s]+$/)
-        .refine((street) => isValidStreet(street)),
+    city: z.string(),
+    street: z.string(),
     houseNumber: z.string().min(1),
 })
 

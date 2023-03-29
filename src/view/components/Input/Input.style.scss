@@ -47,13 +47,16 @@
   font-size: 14px;
 }
 
-input {
+input, select {
   border-radius: 5px;
   border: 1px solid $main-border-gray;
   width: calc(0.22*80vw);
   height: 43px;
   padding: 10px 15px; 
   font-size: 14px;
+  &:focus{
+    outline: none;
+  }
   &#birthDate{
     width: calc(0.135*80vw);
   }
