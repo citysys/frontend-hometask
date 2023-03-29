@@ -155,12 +155,10 @@ const Signup: React.FC = () => {
       <Form>
         <div className="container">
           <div className="inner-container">
-            <div>
-              <div className="label">:הרשמה</div>
-              <div className="required-label">
-                {" "}
-                *שדות המסומנים בכוכבית הם שדות חובה
-              </div>
+            <div className="label">:הרשמה</div>
+            <div className="required-label">
+              {" "}
+              *שדות המסומנים בכוכבית הם שדות חובה
             </div>
 
             {/* 1 */}
