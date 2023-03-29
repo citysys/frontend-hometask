@@ -1,0 +1,119 @@
+.signup {
+    max-width: 80%;
+    height: 953px;
+    max-height: 100%;
+    left: 0px;
+    top: 0px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.7);
+    background-image: url("../images/realestate.png");
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    background-size: 607px 639px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 4px 4px 22px rgba(214, 228, 237, 0.15);
+    backdrop-filter: blur(12px);
+    /* Note: backdrop-filter has minimal browser support */
+    border-radius: 10.8305px;
+    padding: 0 5% 10% 5%;
+}
+.signup__splitter {
+    border-bottom: 1px solid #bfbfbf;
+    max-width: 611px;
+}
+.signup__image {
+    background-image: url("../images/realestate.png");
+    background-size: cover;
+    width: 639px;
+    height: 761px;
+}
+.signup__title {
+    margin: 0;
+    padding: 7% 0 4% 0;
+}
+
+.input__container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 4% 0 3% 0;
+    gap: 40px;
+}
+.signup__form-section-title {
+    max-width: 77px;
+    font-weight: 400;
+    font-size: 12px;
+}
+.signup__splitter {
+    min-width: 45%;
+}
+.title__input__container {
+    display: flex;
+    flex-direction: row;
+    gap: 4%;
+}
+.signup__form-input {
+    width: 15rem;
+    min-height: 2rem;
+    border: 1px solid #bfbfbf;
+    border-radius: 5.41525px;
+    padding: 1% 0;
+}
+.signup__form-section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+.signup__form-name {
+    margin: 0;
+    top: 10;
+    background-color: #fff;
+    max-width: 71px;
+    position: absolute;
+    top: -12%;
+    right: 8%;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 100%;
+    z-index: 10;
+}
+.signup__form-birthday {
+    max-width: 94px;
+}
+.signup__form-house {
+    max-width: 84px;
+}
+.signup__form-input-date {
+    width: 10rem;
+    padding: 2% 0;
+}
+.signup__form-input-house {
+    max-width: 110px;
+    padding: 2% 0;
+}
+.signup__form-checkbox {
+    box-sizing: border-box;
+    width: 21px;
+    height: 21px;
+    border: 1px solid #636161;
+}
+
+.mui-checkbox {
+    gap: 10px;
+    padding: 5px;
+}
+.input {
+    padding: 1%;
+}
+.css-b62m3t-container {
+    border: none;
+}
+.css-3iigni-container {
+    border: none;
+}
+
+@media screen and (max-width: 1024px) {
+    /* CSS rules to apply for screens with a minimum width of 768px */
+    .signup {
+        background-image: none;
+    }
+}

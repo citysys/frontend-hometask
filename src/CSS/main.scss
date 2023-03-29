@@ -1,0 +1,61 @@
+.App {
+    background: url("../src/images/BG.svg") no-repeat;
+    background-size: cover;
+    max-width: 1728px;
+    width: 100%;
+    max-height: 100%;
+    margin: 0 auto;
+    padding: 3% 3% 5%;
+    position: relative;
+}
+
+@media screen and (min-width: 1025px) {
+    /* CSS rules to apply for screens with a minimum width of 768px */
+    .background-image {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    /* CSS rules to apply for screens with a max width of 768px */
+    .background-image {
+        width: 400px;
+        height: 450px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        overflow: visible;
+        z-index: 0;
+    }
+}
+@media screen and (max-width: 900px) {
+    /* CSS rules to apply for screens with a max width of 768px */
+    .background-image {
+        width: 250px;
+        height: 280px;
+    }
+}
+@media screen and (max-width: 768px) {
+    /* CSS rules to apply for screens with a max width of 768px */
+    .App {
+        padding-bottom: 15%;
+    }
+}
+@media screen and (max-width: 574px) {
+    /* CSS rules to apply for screens with a max width of 768px */
+    .App {
+        padding-bottom: 30%;
+    }
+}
+@media screen and (max-width: 506px) {
+    /* CSS rules to apply for screens with a max width of 768px */
+    .App {
+        padding-bottom: 50%;
+    }
+}
+@media screen and (max-width: 425px) {
+    /* CSS rules to apply for screens with a max width of 768px */
+    .App {
+        padding-bottom: 70%;
+    }
+}
