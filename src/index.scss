@@ -1,0 +1,28 @@
+html,
+body {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  // -----------------    colors palette    -------------------
+  --color-black: #000000;
+  --color-light-black: #303030;
+  --color-white: #ffffff;
+  --color-light-gray: #bfbfbf;
+  --color-dark-gray: #636161;
+  --color-red: #b73d3d;
+  --color-dirty-blue: #507586;
+  --color-dark-blue: #4799be;
+}
+
+body {
+  background-image: url(./assests/backgroundImg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  font-family: sans-serif;
+}

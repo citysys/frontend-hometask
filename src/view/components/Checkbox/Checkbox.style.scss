@@ -1,0 +1,80 @@
+.checkbox {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  padding-left: 25px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+
+  /* hide the default checkbox */
+  input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  /* create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #eee;
+    border-radius: 3px;
+
+    /* add a checkmark icon */
+    &:after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 6px;
+      top: 2px;
+      width: 4px;
+      height: 8px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+
+  /* display the checkmark when the checkbox is checked */
+  input[type="checkbox"]:checked + .checkmark:after {
+    display: block;
+  }
+
+  /* style the checkbox label */
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    /* prevent clicking on the checkbox */
+    input[type="checkbox"] {
+      pointer-events: none;
+    }
+  }
+
+  /* add hover effects */
+  &:hover input[type="checkbox"] + .checkmark {
+    background-color: #ccc;
+  }
+
+  /* add active effects */
+  &:active input[type="checkbox"] + .checkmark {
+    background-color: #bbb;
+  }
+
+  .checkbox-wrapper {
+    margin-bottom: 15px;
+  }
+}
+
+.checkbox-title {
+  color: var(--color-dark-gray);
+  font-weight: 700;
+  font-size: 16px;
+}

@@ -1,0 +1,61 @@
+@import "src/styles/vars.scss";
+
+:root {
+  --input-label-color: var(--color-dark-gray);
+  --input-border-color: var(--color-light-gray);
+  --input-required-color: var(--color-red);
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column-reverse;
+  margin-bottom: 1rem;
+  width: 285px;
+  justify-content: flex-end;
+
+  @media #{$mobile} {
+    width: 100%;
+  }
+}
+
+.input-label {
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  text-align: right;
+  position: fixed;
+  line-height: 17px;
+  color: var(--color-dark-gray);
+  background-color: white;
+  font-weight: 400;
+  font-size: 17px;
+  z-index: 2;
+  margin-right: 20px;
+  margin-top: -10px;
+}
+
+.input {
+  position: relative;
+  border-radius: 5.42px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  text-align: right;
+  border-color: var(--color-light-gray);
+  border-width: 1.08px;
+  margin-left: 40px;
+
+  @media #{$mobile} {
+    margin-left: 0;
+  }
+}
+
+.required {
+  color: var(--color-red);
+  display: inline;
+}
+
+.error {
+  position: fixed;
+  color: red;
+  font-size: 16px;
+  margin-top: 40px;
+}
