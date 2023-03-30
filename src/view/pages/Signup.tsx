@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Checkbox,
   DatePickerCalendar,
@@ -8,8 +8,9 @@ import {
   SubmitButton,
 } from "../components";
 import "./Signup.style.scss";
-import axios from "axios";
 import { useFormStore } from "../../controller";
+import { getCities, getStreets } from "../../api";
+import { useTranslation } from 'react-i18next';
 
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -26,6 +27,7 @@ interface FormValues {
 }
 
 const Signup: React.FC = () => {
+  const { t } = useTranslation();
   const [citiesData, setCitiesData] = useState([]);
   const [streetsData, setStreetsData] = useState([]);
   const [city, setCity] = useState("");
@@ -43,13 +45,13 @@ const Signup: React.FC = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    fullName: Yup.string().required("אנא מלא את שמך"),
+    fullName: Yup.string().required(`${t('yup.name')}`),
     email: Yup.string()
-      .email("כתובת מייל לא חוקית")
-      .required("אנא מלא כתובת מייל"),
+      .email(`${t('yup.email.invalid')}`)
+      .required(`${t('yup.email.empty')}`),
     idNumber: Yup.string()
-      .matches(/^[0-9]{9}$/, "ת.ז חייבת לכלול 9 ספרות בלבד")
-      .test("תקין", "ת.ז לא תקין", (value) => {
+      .matches(/^[0-9]{9}$/, `${t('yup.idNumber.invalid1')}`)
+      .test(`${t('yup.idNumber.valid')}`, `${t('yup.idNumber.invalid2')}`, (value) => {
         const id = value?.toString()?.trim();
         let sum = 0;
         let incNum;
@@ -59,15 +61,15 @@ const Signup: React.FC = () => {
         }
         return sum % 10 === 0;
       })
-      .required("אנא מלא תעודת זהות"),
+      .required(`${t('yup.idNumber.empty')}`),
     phoneNumber: Yup.string()
-      .length(10, "מס' נייד חייב לכלול 10 ספרות")
-      .matches(/^[0-9]*$/, "מס' נייד חייב לכלול ספרות בלבד")
-      .required("אנא מלא מספר נייד"),
-    homeNumber: Yup.string().required("אנא מלא מס' בית"),
-    city: Yup.string().required("אנא מלא עיר"),
-    street: Yup.string().required("אנא מלא שם רחוב"),
-    birthDate: Yup.string().required("אנא מלא תאריך הלידה"),
+      .length(10, `${t('yup.phoneNumber.invalidLen')}`)
+      .matches(/^[0-9]*$/, `${t('yup.phoneNumber.invalidChar')}`)
+      .required(`${t('yup.phoneNumber.empty')}`),
+    homeNumber: Yup.string().required(`${t('yup.homeNumber.empty')}`),
+    city: Yup.string().required(`${t('yup.city.empty')}`),
+    street: Yup.string().required(`${t('yup.street.empty')}`),
+    birthDate: Yup.string().required(`${t('yup.birthDate.empty')}`),
   });
 
   const setFormValues = useFormStore((state) => state.setFormValues);
@@ -75,52 +77,22 @@ const Signup: React.FC = () => {
   const checkCity = citiesData?.some((c: any) => c.name === city);
   const checkStreet = streetsData?.some((c: any) => c.name === street);
 
-  const getCities = async () => {
-    try {
-      const response = await axios.get(
-        "https://data.gov.il/api/3/action/datastore_search?resource_id=5c78e9fa-c2e2-4771-93ff-7f400a12f7ba&limit=1500"
-      );
-      const citiesDetailsData = response?.data?.result?.records;
-      const filteredCityNamesData = citiesDetailsData.map((item: any) => ({
-        name: item.שם_ישוב.slice(0, -1),
-      }));
-      setCitiesData(filteredCityNamesData);
-    } catch (error) {
-      console.log(error);
-    }
+  const getCitiesData = async () => {
+    const data = await getCities();
+    setCitiesData(data);
   };
 
-  const getStreets = useCallback(
-    async (city: string) => {
-      try {
-        const response = await axios.get(
-          "https://data.gov.il/api/3/action/datastore_search?resource_id=bf185c7f-1a4e-4662-88c5-fa118a244bda&limit=100000"
-        );
-
-        const streetsDetailsData = response?.data?.result?.records;
-
-        const filteredStreets = streetsDetailsData.filter(
-          (item: any) => item.city_name.slice(0, -1) === city
-        );
-
-        const filteredStreetNameByCity = filteredStreets.map((item: any) => ({
-          name: item.street_name.slice(0, -1),
-        }));
-
-        setStreetsData(filteredStreetNameByCity);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    [city, street]
-  );
+  const getStreetsData = async () => {
+    const data = await getStreets(city);
+    setStreetsData(data);
+  };
 
   useEffect(() => {
-    getCities();
+    getCitiesData();
   }, []);
 
   useEffect(() => {
-    getStreets(city);
+    getStreetsData();
   }, [city]);
 
   const handleSubmit = (values: any) => {
@@ -183,7 +155,11 @@ const Signup: React.FC = () => {
                 type="input"
               />
               <div className="date-picker-wrapper input input-wrapper">
-                <DatePickerCalendar label="תאריך לידה" name="birthDate" required/>
+                <DatePickerCalendar
+                  label="תאריך לידה"
+                  name="birthDate"
+                  required
+                />
               </div>
             </div>
 
