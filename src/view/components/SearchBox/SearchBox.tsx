@@ -80,7 +80,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
             textAlign: "right",
             listStyle: "none",
             position: "absolute",
-            zIndex: 2,
+            zIndex: 3,
             borderColor: "black",
             borderWidth: "2px",
             fontSize: "20px",
